@@ -1,0 +1,20 @@
+Create Tilemap from actual Pacman map.
+
+Create or find tileset.
+
+Load tileset.
+
+Create player graphic.
+	Animation?
+
+Create Ghost graphic(s).
+	Different grahpics for different ghosts.
+	Animation?
+	
+Player movement mechanics (esp. for Android version)
+	Control mechanism
+		Keys for Windows/flash
+		Android?
+
+Ghost movement mechanics.
+	Pathfinding.
