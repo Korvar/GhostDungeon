@@ -187,6 +187,11 @@ class ApplicationMain {
             return Assets.getBitmapData ("assets/data/default.png");
          
 		
+		if (inName=="assets/data/Dungeon_Walls.csv")
+			 
+			 return Assets.getText ("assets/data/Dungeon_Walls.csv");
+         
+		
 		if (inName=="assets/data/fontData10pt.png")
 			 
             return Assets.getBitmapData ("assets/data/fontData10pt.png");
@@ -195,6 +200,11 @@ class ApplicationMain {
 		if (inName=="assets/data/fontData11pt.png")
 			 
             return Assets.getBitmapData ("assets/data/fontData11pt.png");
+         
+		
+		if (inName=="assets/data/GhostDungeonTiles.png")
+			 
+            return Assets.getBitmapData ("assets/data/GhostDungeonTiles.png");
          
 		
 		if (inName=="assets/data/handle.png")
@@ -319,8 +329,10 @@ class NME_assets_data_button_y_png extends nme.display.BitmapData { public funct
 class NME_assets_data_courier_ttf extends nme.text.Font { }
 class NME_assets_data_cursor_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_default_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+class NME_assets_data_dungeon_walls_csv extends nme.utils.ByteArray { }
 class NME_assets_data_fontdata10pt_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_fontdata11pt_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
+class NME_assets_data_ghostdungeontiles_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_handle_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_logo_png extends nme.display.BitmapData { public function new () { super (0, 0); } }
 class NME_assets_data_logo_corners_png extends nme.display.BitmapData { public function new () { super (0, 0); } }

@@ -77,10 +77,14 @@ class Assets {
 			resourceTypes.set ("assets/data/cursor.png", "image");
 			resourceClasses.set ("assets/data/default.png", NME_assets_data_default_png);
 			resourceTypes.set ("assets/data/default.png", "image");
+			resourceClasses.set ("assets/data/Dungeon_Walls.csv", NME_assets_data_dungeon_walls_csv);
+			resourceTypes.set ("assets/data/Dungeon_Walls.csv", "text");
 			resourceClasses.set ("assets/data/fontData10pt.png", NME_assets_data_fontdata10pt_png);
 			resourceTypes.set ("assets/data/fontData10pt.png", "image");
 			resourceClasses.set ("assets/data/fontData11pt.png", NME_assets_data_fontdata11pt_png);
 			resourceTypes.set ("assets/data/fontData11pt.png", "image");
+			resourceClasses.set ("assets/data/GhostDungeonTiles.png", NME_assets_data_ghostdungeontiles_png);
+			resourceTypes.set ("assets/data/GhostDungeonTiles.png", "image");
 			resourceClasses.set ("assets/data/handle.png", NME_assets_data_handle_png);
 			resourceTypes.set ("assets/data/handle.png", "image");
 			resourceClasses.set ("assets/data/logo.png", NME_assets_data_logo_png);
