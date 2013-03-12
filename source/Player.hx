@@ -9,20 +9,29 @@ import org.flixel.FlxSprite;
 class Player extends FlxGroup
 {
 
+	public var behind:FlxSprite;
+	public var body:FlxSprite;
+	public var feet:FlxSprite;
+	public var legs:FlxSprite;
+	public var torso:FlxSprite;
+	public var belt:FlxSprite;
+	public var head:FlxSprite;
+	public var hands:FlxSprite;
+	public var weapon:FlxSprite;
 
 	public function new() 
 	{
 		super();
 		
-		var behind:FlxSprite = new FlxSprite();
-		var body:FlxSprite = new FlxSprite();
-		var feet:FlxSprite = new FlxSprite();
-		var legs:FlxSprite = new FlxSprite();
-		var torso:FlxSprite = new FlxSprite();
-		var belt:FlxSprite = new FlxSprite();
-		var head:FlxSprite = new FlxSprite();
-		var hands:FlxSprite = new FlxSprite();
-		var weapon:FlxSprite = new FlxSprite();
+		behind = new FlxSprite();
+		body = new FlxSprite();
+		feet = new FlxSprite();
+		legs = new FlxSprite();
+		torso = new FlxSprite();
+		belt = new FlxSprite();
+		head = new FlxSprite();
+		hands = new FlxSprite();
+		weapon = new FlxSprite();
 		
 		weapon.loadGraphic("assets/data/Player/walkcycle/WEAPON_shield_cutout_body.png", true, false, 64, 64);
 		hands.loadGraphic("assets/data/Player/walkcycle/HANDS_plate_armor_gloves.png", true, false, 64, 64);
@@ -44,7 +53,7 @@ class Player extends FlxGroup
 		body.ID = 8;
 		behind.ID = 9;
 		
-		//add(behind);
+		// add(behind);
 		add(body);
 		add(feet);
 		add(legs);
@@ -53,18 +62,41 @@ class Player extends FlxGroup
 		add(head);
 		//add(hands);
 		//add(weapon);
-		
+
+
 		sort("ID", FlxGroup.DESCENDING);
 		
+		addAnimation("walkup", [1, 2, 3, 4, 5, 6, 7, 8], 16, true);
+		addAnimation("walkleft", [10, 11, 12, 13, 14, 15, 16, 17], 16, true);
+		addAnimation("walkdown", [19, 20, 21, 22, 23, 24, 25, 26], 16, true);			
+		addAnimation("walkright", [28, 29, 30, 31, 32, 33, 34, 35], 16, true);			
+		play("walkright");
+			
+
+	}
+	
+	public function addAnimation(name:String, frames:Array<Int>, frameRate:Int, looping:Bool)
+	{
 		for (item in members)
 		{
-			cast(item, FlxSprite).addAnimation("walkup", [1, 2, 3, 4, 5, 6, 7, 8], 8, true);
-			cast(item, FlxSprite).addAnimation("walkleft", [10, 11, 12, 13, 14, 15, 16, 17], 8, true);
-			cast(item, FlxSprite).addAnimation("walkdown", [19, 20, 21, 22, 23, 24, 25, 26], 8, true);			
-			cast(item, FlxSprite).addAnimation("walkright", [28, 29, 30, 31, 32, 33, 34, 35], 8, true);			
-			cast(item, FlxSprite).play("walkright");
-			
+			cast(item, FlxSprite).addAnimation(name, frames, frameRate, looping);
 		}
+	}
+	
+	public function play(AnimName:String, Force:Bool = false)
+	{
+		for (item in members)
+		{
+			cast(item, FlxSprite).play(AnimName, Force);
+		}
+	}
+	
+	override public function update()
+	{
+		super.update();
+		
+		
+		
 	}
 	
 }
