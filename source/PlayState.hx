@@ -10,6 +10,8 @@ import nme.Assets;
 class PlayState extends FlxState
 {
 
+	var player:Player;
+	
 	public function new() 
 	{
 		super();
@@ -17,6 +19,8 @@ class PlayState extends FlxState
 		var DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
 		add(DungeonWalls);
+		player = new Player();
+		add(player);
 	}
 	
 }
