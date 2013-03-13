@@ -39,7 +39,7 @@ class PlayState extends FlxState
 	function setUpPlayer():Player
 	{
 		var layers:Array<String>;
-		var tempPLayer:Player;
+		var tempPlayer:Player;
 		
 		layers=["assets/data/Player/walkcycle/WEAPON_shield_cutout_body.png",
 		"assets/data/Player/walkcycle/HANDS_plate_armor_gloves.png",
@@ -51,13 +51,13 @@ class PlayState extends FlxState
 		"assets/data/Player/walkcycle/BODY_male.png",
 		"assets/data/Player/walkcycle/BEHIND_quiver.png"];
 		
-		tempPLayer = new Player(64, 64, null, layers, 64, 64);
-		tempPLayer.addAnimation("walkup", walkUpAnim, 16, true);
-		tempPLayer.addAnimation("walkleft", walkLeftAnim, 16, true);
-		tempPLayer.addAnimation("walkdown", walkDownAnim, 16, true);			
-		tempPLayer.addAnimation("walkright", walkRightAnim, 16, true);
+		tempPlayer = new Player(64, 64, null, layers, 64, 64);
+		tempPlayer.addAnimation("walkup", walkUpAnim, 16, true);
+		tempPlayer.addAnimation("walkleft", walkLeftAnim, 16, true);
+		tempPlayer.addAnimation("walkdown", walkDownAnim, 16, true);			
+		tempPlayer.addAnimation("walkright", walkRightAnim, 16, true);
 		
-		return tempPLayer;
+		return tempPlayer;
 
 	}
 	
