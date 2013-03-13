@@ -11,7 +11,7 @@ class LayeredSprite extends FlxSprite
 {
 	public var layers:FlxGroup;
 
-	// Layers is a list of graphic names that will be loaded into the sprite.  Layers[0] will be the "base"
+	// "Layers" is a list of graphic names that will be loaded into the sprite.  Layers[0] will be the "base"
 	// layer that will be the actual sprite; the others will be in the FlxGroup "layers"
 	public function new(X:Float = 0, Y:Float = 0, SimpleGraphic:Dynamic = null, Layers:Array<String>, Width:Int = 0, Height:Int = 0) 
 	{
@@ -23,7 +23,7 @@ class LayeredSprite extends FlxSprite
 		{
 			var tempSprite = new FlxSprite();
 			tempSprite.loadGraphic(Layers[i], true, false, Width, Height);
-			tempSprite.moves = false; // remove automatic movement, so it can be controlled by the base sprite
+			tempSprite.moves = false; // remove automatic movement; layers are controlled by the base sprite
 			tempSprite.ID = i;
 			layers.add(tempSprite);
 		}

@@ -27,26 +27,19 @@ class PlayState extends FlxState
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
 		add(DungeonWalls);
 		
-		walkUpAnim = [1, 2, 3, 4, 5, 6, 7, 8];
-		walkLeftAnim = [10, 11, 12, 13, 14, 15, 16, 17];
-		walkDownAnim = [19, 20, 21, 22, 23, 24, 25, 26];			
-		walkRightAnim = [28, 29, 30, 31, 32, 33, 34, 35];
+		setUpAnimations();
 		
-		
-		player = new Player();
+		player = setUpPlayer();
 		add(player);
-		
-		player2 = setUpPlayer();
-		add(player2);
-		add(player2.layers);
-		player2.play("walkleft");
-		player2.acceleration = new FlxPoint(5, 5);
+		add(player.layers);
+		player.play("walkleft");
+		player.acceleration = new FlxPoint(5, 5);
 	}
 	
-	function setUpPlayer():LayeredSprite
+	function setUpPlayer():Player
 	{
 		var layers:Array<String>;
-		var tempLSprite:LayeredSprite;
+		var tempPLayer:Player;
 		
 		layers=["assets/data/Player/walkcycle/WEAPON_shield_cutout_body.png",
 		"assets/data/Player/walkcycle/HANDS_plate_armor_gloves.png",
@@ -58,14 +51,21 @@ class PlayState extends FlxState
 		"assets/data/Player/walkcycle/BODY_male.png",
 		"assets/data/Player/walkcycle/BEHIND_quiver.png"];
 		
-		tempLSprite = new LayeredSprite(64, 64, null, layers, 64, 64);
-		trace(player2);
-		tempLSprite.addAnimation("walkup", walkUpAnim, 16, true);
-		tempLSprite.addAnimation("walkleft", walkLeftAnim, 16, true);
-		tempLSprite.addAnimation("walkdown", walkDownAnim, 16, true);			
-		tempLSprite.addAnimation("walkright", walkRightAnim, 16, true);
+		tempPLayer = new Player(64, 64, null, layers, 64, 64);
+		tempPLayer.addAnimation("walkup", walkUpAnim, 16, true);
+		tempPLayer.addAnimation("walkleft", walkLeftAnim, 16, true);
+		tempPLayer.addAnimation("walkdown", walkDownAnim, 16, true);			
+		tempPLayer.addAnimation("walkright", walkRightAnim, 16, true);
 		
-		return tempLSprite;
+		return tempPLayer;
 
+	}
+	
+	private function setUpAnimations():Void 
+	{
+		walkUpAnim = [1, 2, 3, 4, 5, 6, 7, 8];
+		walkLeftAnim = [10, 11, 12, 13, 14, 15, 16, 17];
+		walkDownAnim = [19, 20, 21, 22, 23, 24, 25, 26];			
+		walkRightAnim = [28, 29, 30, 31, 32, 33, 34, 35];
 	}
 }
