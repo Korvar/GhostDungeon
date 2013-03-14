@@ -41,15 +41,15 @@ class PlayState extends FlxState
 		var layers:Array<String>;
 		var tempPlayer:Player;
 		
-		layers=["assets/data/Player/walkcycle/WEAPON_shield_cutout_body.png",
-		"assets/data/Player/walkcycle/HANDS_plate_armor_gloves.png",
-		"assets/data/Player/walkcycle/HEAD_chain_armor_hood.png",
-		"assets/data/Player/walkcycle/BELT_leather.png",
-		"assets/data/Player/walkcycle/TORSO_chain_armor_torso.png",
-		"assets/data/Player/walkcycle/LEGS_pants_greenish.png",
-		"assets/data/Player/walkcycle/FEET_shoes_brown.png",
-		"assets/data/Player/walkcycle/BODY_male.png",
-		"assets/data/Player/walkcycle/BEHIND_quiver.png"];
+		layers=["assets/data/Player/weapons/shield_male_cutoutforbody.png",
+		"assets/data/Player/hands/metal_gloves_male.png",
+		"assets/data/Player/head/chain_hood_male.png",
+		"assets/data/Player/belt/leather_male.png",
+		"assets/data/Player/torso/chain/mail_male.png",
+		"assets/data/Player/legs/green_pants_male.png",
+		"assets/data/Player/feet/brown_shoes_male.png",
+		"assets/data/Player/body/male/skeleton.png",
+		"assets/data/Player/behind_body/quiver.png"];
 		
 		tempPlayer = new Player(64, 64, null, layers, 64, 64);
 		tempPlayer.addAnimation("walkup", walkUpAnim, 16, true);
@@ -63,9 +63,9 @@ class PlayState extends FlxState
 	
 	private function setUpAnimations():Void 
 	{
-		walkUpAnim = [1, 2, 3, 4, 5, 6, 7, 8];
-		walkLeftAnim = [10, 11, 12, 13, 14, 15, 16, 17];
-		walkDownAnim = [19, 20, 21, 22, 23, 24, 25, 26];			
-		walkRightAnim = [28, 29, 30, 31, 32, 33, 34, 35];
+		walkUpAnim = [104, 105, 106, 107, 108, 109, 110, 111];
+		walkLeftAnim = [117, 118, 119, 120, 121, 122, 123, 124];
+		walkDownAnim = [130, 131, 132, 133, 134, 135, 136, 137];			
+		walkRightAnim = [143, 144, 145, 146, 147, 148, 149, 150];
 	}
 }
