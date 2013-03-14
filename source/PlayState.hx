@@ -41,6 +41,8 @@ class PlayState extends FlxState
 		var layers:Array<String>;
 		var tempPlayer:Player;
 		
+		
+		// layers go in descending order, that is, the top layer first.
 		layers=["assets/data/Player/weapons/shield_male_cutoutforbody.png",
 		"assets/data/Player/hands/metal_gloves_male.png",
 		"assets/data/Player/head/chain_hood_male.png",
@@ -48,7 +50,7 @@ class PlayState extends FlxState
 		"assets/data/Player/torso/chain/mail_male.png",
 		"assets/data/Player/legs/green_pants_male.png",
 		"assets/data/Player/feet/brown_shoes_male.png",
-		"assets/data/Player/body/male/skeleton.png",
+		"assets/data/Player/body/male/tanned2.png",
 		"assets/data/Player/behind_body/quiver.png"];
 		
 		tempPlayer = new Player(64, 64, null, layers, 64, 64);
