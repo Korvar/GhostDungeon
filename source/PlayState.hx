@@ -27,7 +27,7 @@ class PlayState extends FlxState
 				
 		FlxG.width = 640;
 		FlxG.height = 480;
-		FlxG.worldBounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);		
+		FlxG.worldBounds = new FlxRect(-DungeonWalls.width, -DungeonWalls.height, DungeonWalls.width, DungeonWalls.height);		
 		
 		add(DungeonWalls);
 		
@@ -35,13 +35,17 @@ class PlayState extends FlxState
 		add(player);
 		add(player.layers);
 
-		// FlxG.camera.setBounds(0, 0, DungeonWalls.width, DungeonWalls.height, true);
-		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-
 		trace(DungeonWalls.width);
 		trace(DungeonWalls.height);
 
 	}
+	
+	override public function create():Void
+	{
+		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
+		FlxG.camera.bounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);
+	}
+	
 	
 	function setUpPlayer():Player
 	{
