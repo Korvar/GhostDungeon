@@ -13,8 +13,7 @@ class PlayState extends FlxState
 {
 
 	var player:Player;
-	var player2:LayeredSprite;
-	
+
 	var walkUpAnim:Array<Int>;
 	var walkLeftAnim:Array<Int>; 
 	var walkDownAnim:Array<Int>;		
@@ -36,16 +35,14 @@ class PlayState extends FlxState
 	
 	var animNameList:Array<String>;
 	
-	// Some variables for testing
-	var countdown:FlxTimer;
-	var animIndex:Int;
-	// end test variables
+	public var DungeonWalls:FlxTilemap;
+
 	
 	public function new() 
 	{
 		super();
 		// Load the tilemap
-		var DungeonWalls = new FlxTilemap();
+		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
 		add(DungeonWalls);
 		

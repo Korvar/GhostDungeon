@@ -60,8 +60,7 @@ class Player extends LayeredSprite
 		}
 		if (velocity.y < 0)
 		{
-			play("walkup");
-			
+			play("walkup");			
 		}
 		if (velocity.y > 0)
 		{
