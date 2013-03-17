@@ -2,6 +2,7 @@ package ;
 
 import org.flixel.FlxGroup;
 import org.flixel.FlxSprite;
+import org.flixel.FlxTypedGroup;
 
 /**
  * ...
@@ -9,7 +10,7 @@ import org.flixel.FlxSprite;
  */
 class LayeredSprite extends FlxSprite
 {
-	
+
 	var walkUpAnim:Array<Int>;
 	var walkLeftAnim:Array<Int>; 
 	var walkDownAnim:Array<Int>;		
@@ -28,7 +29,6 @@ class LayeredSprite extends FlxSprite
 	var faceLeftAnim:Array<Int>;
 	var faceDownAnim:Array<Int>;
 	var faceRightAnim:Array<Int>;
-	
 	
 	public var layers:FlxGroup;
 
@@ -49,7 +49,7 @@ class LayeredSprite extends FlxSprite
 			layers.add(tempSprite);
 		}
 		
-		layers.sort("ID", FlxGroup.DESCENDING);
+		layers.sort("ID", FlxTypedGroup.DESCENDING);
 		
 		setUpAnimations();
 		
@@ -57,6 +57,7 @@ class LayeredSprite extends FlxSprite
 	
 	override public function addAnimation(Name:String, Frames:Array<Int>, FrameRate:Int = 0, Looped:Bool = true):Void
 	{
+		trace("Animation added: " + Name);
 		super.addAnimation(Name, Frames, FrameRate, Looped);
 		for (layer in layers.members)
 		{
@@ -64,9 +65,11 @@ class LayeredSprite extends FlxSprite
 		}
 	}
 	
-	override public function play(AnimName:String, Force:Bool=false):Void
+	override public function play(AnimName:String, Force:Bool = false):Void
 	{
+		trace(AnimName);
 		super.play(AnimName, Force);
+		trace("Did I at least get this far?");
 		for (layer in layers.members)
 		{
 			cast(layer, FlxSprite).play(AnimName, Force);
@@ -90,6 +93,9 @@ class LayeredSprite extends FlxSprite
 	
 	private function setUpAnimations():Void 
 	{
+			
+
+	
 		walkUpAnim = [105, 106, 107, 108, 109, 110, 111, 112];
 		walkLeftAnim = [118, 119, 120, 121, 122, 123, 124, 125];
 		walkDownAnim = [131, 132, 133, 134, 135, 136, 137, 138];			

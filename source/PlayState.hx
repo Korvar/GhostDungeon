@@ -1,9 +1,11 @@
 package ;
 import org.flixel.FlxPoint;
+import org.flixel.FlxRect;
 import org.flixel.FlxState;
 import org.flixel.FlxTilemap;
 import nme.Assets;
-import org.flixel.FlxTimer;
+import org.flixel.FlxG;
+import org.flixel.FlxCamera;
 
 /**
  * ...
@@ -14,10 +16,7 @@ class PlayState extends FlxState
 
 	var player:Player;
 	
-	var animNameList:Array<String>;
-	
 	public var DungeonWalls:FlxTilemap;
-
 	
 	public function new() 
 	{
@@ -25,11 +24,23 @@ class PlayState extends FlxState
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
+				
+		FlxG.width = 640;
+		FlxG.height = 480;
+		FlxG.worldBounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);		
+		
 		add(DungeonWalls);
 		
 		player = setUpPlayer();
 		add(player);
 		add(player.layers);
+
+		// FlxG.camera.setBounds(0, 0, DungeonWalls.width, DungeonWalls.height, true);
+		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
+
+		trace(DungeonWalls.width);
+		trace(DungeonWalls.height);
+
 	}
 	
 	function setUpPlayer():Player
@@ -39,8 +50,7 @@ class PlayState extends FlxState
 		
 		
 		// layers go in descending order, that is, the top layer first.
-		layers=["assets/data/Player/weapons/shield_male_cutoutforbody.png",
-		"assets/data/Player/hands/metal_gloves_male.png",
+		layers=["assets/data/Player/hands/metal_gloves_male.png",
 		"assets/data/Player/head/chain_hood_male.png",
 		"assets/data/Player/belt/leather_male.png",
 		"assets/data/Player/torso/chain/mail_male.png",
