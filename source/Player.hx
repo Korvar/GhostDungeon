@@ -49,6 +49,33 @@ class Player extends LayeredSprite
 			velocity.y = runSpeed;
 		}
 		
+		// Find the right animation to play
+		if (velocity.x < 0)
+		{
+			play("walkleft");
+		}
+		if (velocity.x > 0)
+		{
+			play("walkright");
+		}
+		if (velocity.y < 0)
+		{
+			play("walkup");
+			
+		}
+		if (velocity.y > 0)
+		{
+			play("walkdown");
+		}
+		
+		if (velocity.x == 0 && velocity.y == 0)
+		{
+			if (facing == FlxObject.LEFT) play("faceleft");
+			if (facing == FlxObject.RIGHT) play("faceright");
+			if (facing == FlxObject.UP) play("faceup");
+			if (facing == FlxObject.DOWN) play("facedown");
+		}
+		
 		super.update();
 		
 	}
