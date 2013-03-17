@@ -54,23 +54,6 @@ class PlayState extends FlxState
 		player = setUpPlayer();
 		add(player);
 		add(player.layers);
-		player.play("walkup");
-		// player.acceleration = new FlxPoint(5, 5);
-		
-		// temp test stuff
-		
-		animNameList = ["walkup", "walkleft", "walkdown", "walkright", "castup", "castleft",
-		"castdown",	"castright", "slashup", "slashleft", "slashdown",  "slashright", "hurt",
-		"dead", "faceup", "faceleft", "facedown", "faceright"];
-		
-		countdown = new FlxTimer();
-		countdown.start(3.0);
-		animIndex = 0;
-		
-		
-		
-		// end test temp stuff
-		
 	}
 	
 	function setUpPlayer():Player
@@ -140,12 +123,7 @@ class PlayState extends FlxState
 	{
 		super.update();
 		
-		if (countdown.finished)
-		{
-			animIndex = (animIndex + 1) % animNameList.length;
-			player.play(animNameList[animIndex]);
-			countdown.start(3);
-		}
+
 
 	}
 }
