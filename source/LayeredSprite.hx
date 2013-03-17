@@ -9,6 +9,27 @@ import org.flixel.FlxSprite;
  */
 class LayeredSprite extends FlxSprite
 {
+	
+	var walkUpAnim:Array<Int>;
+	var walkLeftAnim:Array<Int>; 
+	var walkDownAnim:Array<Int>;		
+	var walkRightAnim:Array<Int>;
+	var castUpAnim:Array<Int>;
+	var castLeftAnim:Array<Int>;
+	var castDownAnim:Array<Int>;
+	var castRightAnim:Array<Int>;
+	var slashUpAnim:Array<Int>;
+	var slashLeftAnim:Array<Int>;
+	var slashDownAnim:Array<Int>;
+	var slashRightAnim:Array<Int>;
+	var hurtAnim:Array<Int>;
+	var deadAnim:Array<Int>;
+	var faceUpAnim:Array<Int>;
+	var faceLeftAnim:Array<Int>;
+	var faceDownAnim:Array<Int>;
+	var faceRightAnim:Array<Int>;
+	
+	
 	public var layers:FlxGroup;
 
 	// "Layers" is a list of graphic names that will be loaded into the sprite.  Layers[0] will be the "base"
@@ -29,6 +50,8 @@ class LayeredSprite extends FlxSprite
 		}
 		
 		layers.sort("ID", FlxGroup.DESCENDING);
+		
+		setUpAnimations();
 		
 	}
 	
@@ -63,6 +86,47 @@ class LayeredSprite extends FlxSprite
 			cast(layer, FlxSprite).facing = facing;
 			
 		}
+	}
+	
+	private function setUpAnimations():Void 
+	{
+		walkUpAnim = [105, 106, 107, 108, 109, 110, 111, 112];
+		walkLeftAnim = [118, 119, 120, 121, 122, 123, 124, 125];
+		walkDownAnim = [131, 132, 133, 134, 135, 136, 137, 138];			
+		walkRightAnim = [144, 145, 146, 147, 148, 149, 150, 151];
+		castUpAnim = [0, 1, 2, 3, 4, 5, 6];
+		castLeftAnim = [13, 14, 15, 16, 17, 18, 19];
+		castDownAnim = [26, 27, 28, 29, 30, 31, 32];
+		castRightAnim = [39, 40, 41, 42, 43, 44, 45];
+		slashUpAnim = [156, 157, 158, 158, 160, 161];
+		slashLeftAnim = [169, 170, 171, 172, 173, 174];
+		slashDownAnim = [182, 183, 184, 185, 186, 187];
+		slashRightAnim = [195, 196, 197, 198, 199, 200];
+		hurtAnim = [260, 261, 262, 263, 264, 265];
+		deadAnim = [265];
+		faceUpAnim = [0];
+		faceLeftAnim = [13];
+		faceDownAnim = [26];
+		faceRightAnim = [39];
+		
+		addAnimation("walkup", walkUpAnim, 16, true);
+		addAnimation("walkleft", walkLeftAnim, 16, true);
+		addAnimation("walkdown", walkDownAnim, 16, true);			
+		addAnimation("walkright", walkRightAnim, 16, true);
+		addAnimation("castup", castUpAnim, 16, true);
+		addAnimation("castleft", castLeftAnim, 16, true);
+		addAnimation("castdown", castDownAnim, 16, true);
+		addAnimation("castright", castRightAnim, 16, true);
+		addAnimation("slashup", slashUpAnim, 16, true);
+		addAnimation("slashleft", slashLeftAnim, 16, true);
+		addAnimation("slashdown", slashDownAnim, 16, true);
+		addAnimation("slashright", slashRightAnim, 16, true);
+		addAnimation("hurt", hurtAnim, 16, false);
+		addAnimation("dead", deadAnim, 16, true);
+		addAnimation("faceup", faceUpAnim, 16, false);
+		addAnimation("faceleft", faceLeftAnim, 16, false);
+		addAnimation("facedown", faceDownAnim, 16, false);
+		addAnimation("faceright", faceRightAnim, 16, false);
 	}
 	
 }
