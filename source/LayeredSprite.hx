@@ -3,6 +3,7 @@ package ;
 import org.flixel.FlxGroup;
 import org.flixel.FlxSprite;
 import org.flixel.FlxTypedGroup;
+import nme.Assets;
 
 /**
  * ...
@@ -43,7 +44,7 @@ class LayeredSprite extends FlxSprite
 		for (i in 1...Layers.length)
 		{
 			var tempSprite = new FlxSprite();
-			tempSprite.loadGraphic(Layers[i], true, false, Width, Height);
+			tempSprite.loadGraphic(Assets.getBitmapData(Layers[i]), true, false, Width, Height);
 			tempSprite.moves = false; // remove automatic movement; layers are controlled by the base sprite
 			tempSprite.ID = i;
 			layers.add(tempSprite);
@@ -55,9 +56,11 @@ class LayeredSprite extends FlxSprite
 		
 	}
 	
+
 	override public function addAnimation(Name:String, Frames:Array<Int>, FrameRate:Int = 0, Looped:Bool = true):Void
 	{
 		trace("Animation added: " + Name);
+		trace(Frames);
 		super.addAnimation(Name, Frames, FrameRate, Looped);
 		for (layer in layers.members)
 		{
@@ -94,7 +97,24 @@ class LayeredSprite extends FlxSprite
 	private function setUpAnimations():Void 
 	{
 			
-
+		walkUpAnim = new Array<Int>();
+		walkLeftAnim = new Array<Int>();
+		walkDownAnim = new Array<Int>();
+		walkRightAnim = new Array<Int>();
+		castUpAnim = new Array<Int>();
+		castLeftAnim = new Array<Int>();
+		castDownAnim = new Array<Int>();
+		castRightAnim = new Array<Int>();
+		slashUpAnim = new Array<Int>();
+		slashLeftAnim = new Array<Int>();
+		slashDownAnim = new Array<Int>();
+		slashRightAnim = new Array<Int>();
+		hurtAnim = new Array<Int>();
+		deadAnim = new Array<Int>();
+		faceUpAnim = new Array<Int>();
+		faceLeftAnim = new Array<Int>();
+		faceDownAnim = new Array<Int>();
+		faceRightAnim = new Array<Int>();
 	
 		walkUpAnim = [105, 106, 107, 108, 109, 110, 111, 112];
 		walkLeftAnim = [118, 119, 120, 121, 122, 123, 124, 125];
@@ -110,10 +130,10 @@ class LayeredSprite extends FlxSprite
 		slashRightAnim = [195, 196, 197, 198, 199, 200];
 		hurtAnim = [260, 261, 262, 263, 264, 265];
 		deadAnim = [265];
-		faceUpAnim = [0];
-		faceLeftAnim = [13];
-		faceDownAnim = [26];
-		faceRightAnim = [39];
+		faceUpAnim = [0,0];
+		faceLeftAnim = [13,13];
+		faceDownAnim = [26,26];
+		faceRightAnim = [39,39];
 		
 		addAnimation("walkup", walkUpAnim, 16, true);
 		addAnimation("walkleft", walkLeftAnim, 16, true);

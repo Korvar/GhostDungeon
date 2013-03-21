@@ -21,6 +21,13 @@ class PlayState extends FlxState
 	public function new() 
 	{
 		super();
+
+
+	}
+	
+	override public function create():Void
+	{
+		
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
@@ -37,11 +44,8 @@ class PlayState extends FlxState
 
 		trace(DungeonWalls.width);
 		trace(DungeonWalls.height);
-
-	}
-	
-	override public function create():Void
-	{
+		
+		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
 		FlxG.camera.bounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);
 	}

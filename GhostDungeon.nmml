@@ -13,6 +13,7 @@
 	
 	<assets path="assets" if="android" >
 		<sound path="data/beep.wav" id="Beep" />
+		<image path="data/GhostDungeonTiles.png" />
 		
 		<!-- Your sound embedding code here... -->
 		
