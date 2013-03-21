@@ -14,7 +14,7 @@ class Player extends LayeredSprite
 	var DungeonWalls:FlxTilemap;
 		
 
-	static private var runSpeed = 80;
+	static private var runSpeed = 96;
 	static private var margin = 1; 
 	static private var size = 32;
 	
@@ -56,14 +56,14 @@ class Player extends LayeredSprite
 		x = Std.int(x);
 		y = Std.int(y);
 		
+		
 		if (FlxG.keys.justPressed("SPACE"))
 		{
-			x = 432;
+			x = 448;
 			y = 544;
 		}
 		
-		// Check to see if we've gotten stuck
-		deStick();
+
 			
 		// By changing the order of key checking depending on facing,
 		// I should get the desired behaviour of taking a turn if a turn
@@ -87,6 +87,59 @@ class Player extends LayeredSprite
 			}
 		}
 		
+		// Ensure we only stop when we're aligned to the tiles
+		
+		// Only do this if none of the movement keys are pressed
+		// May have to change how I do this if I allow more than one set of movement keys...
+		if (!FlxG.keys.pressed("A") &&
+			!FlxG.keys.pressed("D") &&
+			!FlxG.keys.pressed("W") &&
+			!FlxG.keys.pressed("S"))
+			
+			
+		// I actually need to do this if the player isn't holding "down" but the facing is "down" -
+		// at the moment, this will be interrupted if the player is holding left or right, which
+		// interrupts this, and will make the player "stick"
+			
+		{
+			var pBorderX = Std.int(x / 32) * 32;  // This is the 32-aligned "block" player is in.
+			var pBorderY = Std.int(y / 32) * 32;
+			
+			var pDiffX = Math.abs(x - pBorderX);
+			var pDiffY = Math.abs(y - pBorderY);
+			
+			if (pDiffX <= 3)
+			{
+				x = Std.int(pBorderX);
+				velocity.x = 0;
+			}
+			if (pDiffY <= 3)
+			{
+				y = Std.int(pBorderY);
+				velocity.y = 0;
+			}
+			
+			if (velocity.x == 0 && facing == FlxObject.LEFT && (Std.int(x) % 32 != 0))
+			{
+				velocity.x = -runSpeed;
+			}
+			if (velocity.x == 0 && facing == FlxObject.RIGHT && (Std.int(x) % 32 != 0))
+			{
+				velocity.x = runSpeed;
+			}
+			if (velocity.y == 0 && facing == FlxObject.UP && (Std.int(y) % 32 != 0))
+			{
+				velocity.y = -runSpeed;
+			}
+			if (velocity.x == 0 && facing == FlxObject.DOWN && (Std.int(y) % 32 != 0))
+			{
+				velocity.y = runSpeed;
+			}
+		}
+		
+		// Check to see if we've gotten stuck
+		deStick();
+		
 		// Find the right animation to play
 		if (velocity.x < 0)
 		{
@@ -104,6 +157,8 @@ class Player extends LayeredSprite
 		{
 			play("walkdown");
 		}
+		
+
 		
 		if (velocity.x == 0 && velocity.y == 0)
 		{

@@ -16,9 +16,13 @@ import org.flixel.FlxCamera;
 class PlayState extends FlxState
 {
 
+	
+	#if debug
 	var tempTestText1:FlxText;
-	var tempTestText2:FlxText;
-		
+	var tempTestText2:FlxText;	
+	var oldPX:Float;
+	var oldPY:Float;
+	#end	
 	
 	var player:Player;
 	
@@ -66,14 +70,11 @@ class PlayState extends FlxState
 		add(player.layers);
 		add(player);
 
-		// trace(DungeonWalls.width);
-		// trace(DungeonWalls.height);
-		
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
 		FlxG.camera.bounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);
 		
-		// Temporary Test Stuff
+		#if debug
 		tempTestText1 = new FlxText(0, 0, FlxG.width, "", 20);
 		tempTestText2 = new FlxText(0, 30, FlxG.width, "", 20);
 		
@@ -81,7 +82,10 @@ class PlayState extends FlxState
 		tempTestText1.scrollFactor = tempTestText2.scrollFactor = new FlxPoint(0,0);
 		add(tempTestText1);
 		add(tempTestText2);
-		// Temporary Test Stuff
+		
+		oldPX = player.x;
+		oldPY = player.y;
+		#end 
 	}
 	
 	
@@ -101,7 +105,7 @@ class PlayState extends FlxState
 		"assets/data/Player/body/male/tanned2.png",
 		"assets/data/Player/behind_body/quiver.png"];
 		
-		tempPlayer = new Player(416, 527.5, null, layers, 64, 64);
+		tempPlayer = new Player(416, 526, null, layers, 64, 64);
 
 		
 		return tempPlayer;
@@ -115,6 +119,11 @@ class PlayState extends FlxState
 		super.update();
 
 		#if debug
+
+		var dPX = player.x - oldPX;
+		var dPY = player.y - oldPY;
+		
+		
 		if (player.overlaps(DungeonWalls))
 		{
 			tempTestText1.text = "Overlaps!";
@@ -124,7 +133,27 @@ class PlayState extends FlxState
 			tempTestText1.text = "Doesn't Overlap!";
 		}
 		
-		tempTestText2.text = "X: " + player.x + " Y: " + player.y;
+		
+		var pBorderX = Std.int(player.x / 32) * 32;  // This is the 32-aligned "block" player is in.
+		var pBorderY = Std.int(player.y / 32) * 32;
+			
+		var pDiffX = Math.abs(player.x - pBorderX);
+		var pDiffY = Math.abs(player.y - pBorderY);
+		
+		//if (pDiffX <= 3)
+		//{
+			//x = Std.int(pBorderX);
+		//}
+		//if (pDiffY <= 3)
+		//{
+			//y = Std.int(pBorderY);
+		//}
+	
+		tempTestText2.text = "X: " + player.x + " Y: " + player.y + 
+			" pDX: " + pDiffX + " pDY: " + pDiffY;
+			
+		oldPX = player.x;
+		oldPY = player.y;
 		#end 
 	}
 }
