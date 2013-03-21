@@ -59,8 +59,8 @@ class LayeredSprite extends FlxSprite
 
 	override public function addAnimation(Name:String, Frames:Array<Int>, FrameRate:Int = 0, Looped:Bool = true):Void
 	{
-		trace("Animation added: " + Name);
-		trace(Frames);
+		// trace("Animation added: " + Name);
+		// trace(Frames);
 		super.addAnimation(Name, Frames, FrameRate, Looped);
 		for (layer in layers.members)
 		{
@@ -70,9 +70,9 @@ class LayeredSprite extends FlxSprite
 	
 	override public function play(AnimName:String, Force:Bool = false):Void
 	{
-		trace(AnimName);
+		// trace(AnimName);
 		super.play(AnimName, Force);
-		trace("Did I at least get this far?");
+		// trace("Did I at least get this far?");
 		for (layer in layers.members)
 		{
 			cast(layer, FlxSprite).play(AnimName, Force);

@@ -42,8 +42,8 @@ class PlayState extends FlxState
 		add(player);
 		add(player.layers);
 
-		trace(DungeonWalls.width);
-		trace(DungeonWalls.height);
+		// trace(DungeonWalls.width);
+		// trace(DungeonWalls.height);
 		
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
