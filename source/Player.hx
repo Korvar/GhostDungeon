@@ -18,6 +18,7 @@ class Player extends LayeredSprite
 		// trace(SimpleGraphic);
 		super(X, Y, SimpleGraphic, Layers, Width, Height);
 		facing = FlxObject.UP;
+		
 	}
 	
 	override public function update()

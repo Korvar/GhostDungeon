@@ -2,6 +2,7 @@ package ;
 import org.flixel.FlxPoint;
 import org.flixel.FlxRect;
 import org.flixel.FlxState;
+import org.flixel.FlxText;
 import org.flixel.FlxTilemap;
 import nme.Assets;
 import org.flixel.FlxG;
@@ -14,6 +15,10 @@ import org.flixel.FlxCamera;
 class PlayState extends FlxState
 {
 
+	var tempTestText1:FlxText;
+	var tempTestText2:FlxText;
+		
+	
 	var player:Player;
 	
 	public var DungeonWalls:FlxTilemap;
@@ -48,6 +53,16 @@ class PlayState extends FlxState
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
 		FlxG.camera.bounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);
+		
+		
+		tempTestText1 = new FlxText(0, 0, FlxG.width, "", 20);
+		tempTestText2 = new FlxText(0, 30, FlxG.width, "", 20);
+		
+		tempTestText1.color = tempTestText2.color = 0xffffff;
+		tempTestText1.scrollFactor = tempTestText2.scrollFactor = new FlxPoint(0,0);
+		add(tempTestText1);
+		add(tempTestText2);
+		
 	}
 	
 	
@@ -67,7 +82,7 @@ class PlayState extends FlxState
 		"assets/data/Player/body/male/tanned2.png",
 		"assets/data/Player/behind_body/quiver.png"];
 		
-		tempPlayer = new Player(64, 64, null, layers, 64, 64);
+		tempPlayer = new Player(416, 520, null, layers, 64, 64);
 
 		
 		return tempPlayer;
@@ -80,6 +95,8 @@ class PlayState extends FlxState
 	{
 		super.update();
 		
+		tempTestText1.text = "" + player.x;
+		tempTestText2.text = "" + player.y;
 
 
 	}

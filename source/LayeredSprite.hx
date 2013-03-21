@@ -40,6 +40,7 @@ class LayeredSprite extends FlxSprite
 		super(X, Y, SimpleGraphic);
 		loadGraphic(Layers[0], true, false, Width, Height); 
 		
+		
 		layers = new FlxGroup();
 		for (i in 1...Layers.length)
 		{
