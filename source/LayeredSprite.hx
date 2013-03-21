@@ -38,14 +38,14 @@ class LayeredSprite extends FlxSprite
 	public function new(X:Float = 0, Y:Float = 0, SimpleGraphic:Dynamic = null, Layers:Array<String>, Width:Int = 0, Height:Int = 0) 
 	{
 		super(X, Y, SimpleGraphic);
-		loadGraphic(Layers[0], true, false, Width, Height); 
+		makeGraphic(Width, Height, 0xffffff); 
 		
 		
 		layers = new FlxGroup();
-		for (i in 1...Layers.length)
+		for (i in 0...Layers.length)
 		{
 			var tempSprite = new FlxSprite();
-			tempSprite.loadGraphic(Assets.getBitmapData(Layers[i]), true, false, Width, Height);
+			tempSprite.loadGraphic(Layers[i], true, false, Width, Height);
 			tempSprite.moves = false; // remove automatic movement; layers are controlled by the base sprite
 			tempSprite.ID = i;
 			layers.add(tempSprite);
@@ -62,7 +62,7 @@ class LayeredSprite extends FlxSprite
 	{
 		// trace("Animation added: " + Name);
 		// trace(Frames);
-		super.addAnimation(Name, Frames, FrameRate, Looped);
+		// super.addAnimation(Name, Frames, FrameRate, Looped);
 		for (layer in layers.members)
 		{
 			cast(layer, FlxSprite).addAnimation(Name, Frames, FrameRate, Looped);
@@ -72,7 +72,7 @@ class LayeredSprite extends FlxSprite
 	override public function play(AnimName:String, Force:Bool = false):Void
 	{
 		// trace(AnimName);
-		super.play(AnimName, Force);
+		// super.play(AnimName, Force);
 		// trace("Did I at least get this far?");
 		for (layer in layers.members)
 		{

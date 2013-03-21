@@ -1,4 +1,5 @@
 package ;
+import org.flixel.FlxObject;
 import org.flixel.FlxPoint;
 import org.flixel.FlxRect;
 import org.flixel.FlxState;
@@ -32,11 +33,28 @@ class PlayState extends FlxState
 	
 	override public function create():Void
 	{
+		var tileInstances:Array<Int>;
+		
+		FlxG.mouse.hide();
 		
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
-				
+		tileInstances = DungeonWalls.getTileInstances(2);
+		trace(tileInstances);
+		if (tileInstances != null)
+		{
+			for(tileIndex in tileInstances)
+			{
+				trace(tileIndex);
+				var tile = DungeonWalls.getTileByIndex(tileIndex);
+				trace(tile);
+				DungeonWalls.setTileProperties(tile, FlxObject.FLOOR);
+			}
+		}	
+		DungeonWalls.setTileProperties(20, FlxObject.CEILING);
+		DungeonWalls.setTileProperties(26, FlxObject.CEILING);
+		
 		FlxG.width = 640;
 		FlxG.height = 480;
 		FlxG.worldBounds = new FlxRect(-DungeonWalls.width, -DungeonWalls.height, DungeonWalls.width, DungeonWalls.height);		
@@ -44,8 +62,9 @@ class PlayState extends FlxState
 		add(DungeonWalls);
 		
 		player = setUpPlayer();
-		add(player);
+
 		add(player.layers);
+		add(player);
 
 		// trace(DungeonWalls.width);
 		// trace(DungeonWalls.height);
@@ -54,7 +73,7 @@ class PlayState extends FlxState
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
 		FlxG.camera.bounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);
 		
-		
+		// Temporary Test Stuff
 		tempTestText1 = new FlxText(0, 0, FlxG.width, "", 20);
 		tempTestText2 = new FlxText(0, 30, FlxG.width, "", 20);
 		
@@ -62,7 +81,7 @@ class PlayState extends FlxState
 		tempTestText1.scrollFactor = tempTestText2.scrollFactor = new FlxPoint(0,0);
 		add(tempTestText1);
 		add(tempTestText2);
-		
+		// Temporary Test Stuff
 	}
 	
 	
@@ -82,7 +101,7 @@ class PlayState extends FlxState
 		"assets/data/Player/body/male/tanned2.png",
 		"assets/data/Player/behind_body/quiver.png"];
 		
-		tempPlayer = new Player(416, 520, null, layers, 64, 64);
+		tempPlayer = new Player(416, 527.5, null, layers, 64, 64);
 
 		
 		return tempPlayer;
@@ -95,9 +114,21 @@ class PlayState extends FlxState
 	{
 		super.update();
 		
-		tempTestText1.text = "" + player.x;
-		tempTestText2.text = "" + player.y;
-
+/*		tempTestText1.text = "" + player.x;
+		tempTestText2.text = "" + player.y;*/
+		
+		//FlxG.collide(player, DungeonWalls);
+		
+		if (player.overlaps(DungeonWalls))
+		{
+			tempTestText1.text = "Overlaps!";
+		}
+		else
+		{
+			tempTestText1.text = "Doesn't Overlap!";
+		}
+		
+		tempTestText2.text = "X: " + player.x + " Y: " + player.y;
 
 	}
 }
