@@ -113,12 +113,8 @@ class PlayState extends FlxState
 	override public function update()
 	{
 		super.update();
-		
-/*		tempTestText1.text = "" + player.x;
-		tempTestText2.text = "" + player.y;*/
-		
-		//FlxG.collide(player, DungeonWalls);
-		
+
+		# if debug
 		if (player.overlaps(DungeonWalls))
 		{
 			tempTestText1.text = "Overlaps!";
@@ -129,6 +125,6 @@ class PlayState extends FlxState
 		}
 		
 		tempTestText2.text = "X: " + player.x + " Y: " + player.y;
-
+		#end 
 	}
 }
