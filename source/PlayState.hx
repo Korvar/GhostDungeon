@@ -114,7 +114,7 @@ class PlayState extends FlxState
 	{
 		super.update();
 
-		# if debug
+		#if debug
 		if (player.overlaps(DungeonWalls))
 		{
 			tempTestText1.text = "Overlaps!";
