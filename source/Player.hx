@@ -14,7 +14,7 @@ class Player extends LayeredSprite
 	var DungeonWalls:FlxTilemap;
 		
 
-	static private var runSpeed = 96;
+	static private var runSpeed = 4;  // Needs to be a multiple of 2
 	static private var margin = 1; 
 	static private var size = 32;
 	
@@ -47,6 +47,7 @@ class Player extends LayeredSprite
 
 		}
 		
+		moves = false; // Don't use the standard moving code
 	}
 	
 	override public function update()
@@ -63,8 +64,6 @@ class Player extends LayeredSprite
 			y = 544;
 		}
 		
-
-			
 		// By changing the order of key checking depending on facing,
 		// I should get the desired behaviour of taking a turn if a turn
 		// is available
@@ -91,34 +90,15 @@ class Player extends LayeredSprite
 		
 		// Only do this if none of the movement keys are pressed
 		// May have to change how I do this if I allow more than one set of movement keys...
+		//var pBorderX = Std.int(x / 32) * 32;  // This is the 32-aligned "block" player is in.
+		//var pBorderY = Std.int(y / 32) * 32;
+			//
+		//var pDiffX = Math.abs(x - pBorderX);
+		//var pDiffY = Math.abs(y - pBorderY);
+		
 		if (!FlxG.keys.pressed("A") &&
-			!FlxG.keys.pressed("D") &&
-			!FlxG.keys.pressed("W") &&
-			!FlxG.keys.pressed("S"))
-			
-			
-		// I actually need to do this if the player isn't holding "down" but the facing is "down" -
-		// at the moment, this will be interrupted if the player is holding left or right, which
-		// interrupts this, and will make the player "stick"
-			
+			!FlxG.keys.pressed("D"))
 		{
-			var pBorderX = Std.int(x / 32) * 32;  // This is the 32-aligned "block" player is in.
-			var pBorderY = Std.int(y / 32) * 32;
-			
-			var pDiffX = Math.abs(x - pBorderX);
-			var pDiffY = Math.abs(y - pBorderY);
-			
-			if (pDiffX <= 3)
-			{
-				x = Std.int(pBorderX);
-				velocity.x = 0;
-			}
-			if (pDiffY <= 3)
-			{
-				y = Std.int(pBorderY);
-				velocity.y = 0;
-			}
-			
 			if (velocity.x == 0 && facing == FlxObject.LEFT && (Std.int(x) % 32 != 0))
 			{
 				velocity.x = -runSpeed;
@@ -127,7 +107,12 @@ class Player extends LayeredSprite
 			{
 				velocity.x = runSpeed;
 			}
-			if (velocity.y == 0 && facing == FlxObject.UP && (Std.int(y) % 32 != 0))
+		}
+			
+		if (!FlxG.keys.pressed("W") &&
+			!FlxG.keys.pressed("S"))
+		{
+						if (velocity.y == 0 && facing == FlxObject.UP && (Std.int(y) % 32 != 0))
 			{
 				velocity.y = -runSpeed;
 			}
@@ -136,9 +121,26 @@ class Player extends LayeredSprite
 				velocity.y = runSpeed;
 			}
 		}
-		
+			
+		// I actually need to do this if the player isn't holding "down" but the facing is "down" -
+		// at the moment, this will be interrupted if the player is holding left or right, which
+		// interrupts this, and will make the player "stick"
+			
+		//{
+			//if (pDiffX <= 3)
+			//{
+				//x = Std.int(pBorderX);
+				//velocity.x = 0;
+			//}
+			//if (pDiffY <= 3)
+			//{
+				//y = Std.int(pBorderY);
+				//velocity.y = 0;
+			//}
+		//}
+		//
 		// Check to see if we've gotten stuck
-		deStick();
+		//deStick();
 		
 		// Find the right animation to play
 		if (velocity.x < 0)
@@ -168,6 +170,19 @@ class Player extends LayeredSprite
 			if (facing == FlxObject.DOWN) play("facedown");
 		}
 		
+		// Don't use the standard moving methods
+		x = x + velocity.x;
+		y = y + velocity.y;
+		
+		// Teleporter!
+		if (x == 896)
+		{
+			x = -32;
+		}
+		else if (x == -32)
+		{	
+			x = 896;
+		}
 		
 		super.update();
 	}
