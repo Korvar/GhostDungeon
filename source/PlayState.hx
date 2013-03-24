@@ -26,6 +26,11 @@ class PlayState extends FlxState
 	
 	var player:Player;
 	
+	var Blinky:Enemy;
+	var Pinky:Enemy;
+	var Inky:Enemy;
+	var Clyde:Enemy;
+	
 	public var DungeonWalls:FlxTilemap;
 	
 	public function new() 
@@ -86,6 +91,10 @@ class PlayState extends FlxState
 		oldPX = player.x;
 		oldPY = player.y;
 		#end 
+		
+		Blinky = setupBlinky();
+		add(Blinky);
+		add(Blinky.layers);
 	}
 	
 	
@@ -105,11 +114,27 @@ class PlayState extends FlxState
 		"assets/data/Player/body/male/tanned2.png",
 		"assets/data/Player/behind_body/quiver.png"];
 		
-		tempPlayer = new Player(416, 526, null, layers, 64, 64);
+		tempPlayer = new Player(432, 544, null, layers, 64, 64);
 
 		
 		return tempPlayer;
 
+	}
+	
+	function setupBlinky():Enemy
+	{
+		var Blinky:Enemy;
+		var layers:Array<String>;
+
+		layers = ["assets/data/Player/head/cloth_hood_male.png",
+			"assets/data/Player/belt/rope_male.png",
+			"assets/data/Player/torso/brown_shirt_male.png",
+			"assets/data/Player/legs/robe_skirt_male.png",
+			"assets/data/Player/body/male/skeleton.png"];
+		
+		Blinky = new Enemy(448, 352, null, layers, 64, 64);
+		
+		return Blinky;
 	}
 	
 

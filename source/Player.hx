@@ -24,11 +24,11 @@ class Player extends LayeredSprite
 		
 		// trace(SimpleGraphic);
 		super(X, Y, SimpleGraphic, Layers, Width, Height);
-		facing = FlxObject.LEFT;
+		facing = FlxObject.RIGHT;
 		width = size;
 		height = size;
-		centerOffsets(true);
-		x = 432;
+		centerOffsets(false);
+		x = 448;
 		y = 544;
 		
 		#if debug
@@ -43,7 +43,7 @@ class Player extends LayeredSprite
 			var tmpSprite = cast(layer, FlxSprite);
 			tmpSprite.width = size;
 			tmpSprite.height = size;
-			tmpSprite.centerOffsets(true);
+			tmpSprite.centerOffsets(false);
 
 		}
 		
