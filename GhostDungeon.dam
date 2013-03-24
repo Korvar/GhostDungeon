@@ -2,9 +2,15 @@
 <project>
   <version>3.1.3</version>
   <bgColor>0x777777</bgColor>
-  <viewPos x="73" y="45"/>
+  <viewPos x="66" y="26"/>
   <firstLayersTop>false</firstLayersTop>
-  <spriteEntries currentId="1"/>
+  <spriteEntries currentId="2">
+    <sprite name="Coin" idx="1" className="coin" image="assets/data/coin_gold.png" width="32" height="32" preview="3" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="32" boundsHeight="32" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false" selected="true">
+      <anims>
+        <anim name="spin" fps="16" loops="true">0,1,2,3,4,5,6,7</anim>
+      </anims>
+    </sprite>
+  </spriteEntries>
   <layers>
     <group name="Group1" id="0" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
       <maplayer name="Dungeon_Walls" id="0" xScroll="1" yScroll="1" x="0" y="0" width="28" height="31" tileset="GhostDungeonTiles.png" tileWidth="32" tileHeight="32" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="1" locked="false" exports="true" tileSpacingX="32" tileSpacingY="32" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
@@ -45,8 +51,252 @@
           <properties/>
         </tileProperties>
       </maplayer>
-      <spritelayer name="Pills" id="1" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false" selected="true"/>
-      <spritelayer name="Power_Pills" id="2" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false"/>
+      <spritelayer name="Pills" id="1" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="A452F10E-6762-3EF8-DCD4-93D455B29F59" x="-180" y="-120" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C088510F-8759-76C1-7B36-4E348FF9D756" x="32" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="46732CA1-8E0F-C405-6833-98D063DF7A07" x="32" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="FCAC6544-70AB-8A0C-E96B-E89897BF88DC" x="32" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B2639F4A-EA34-781D-B556-573F9B21EDB5" x="32" y="192" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F7A8C951-C7A2-8024-26A6-89E839AB58A6" x="32" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7DC7DC7D-C640-1A7A-B377-8F868179EC06" x="32" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E73C56C5-B21A-CB23-CDBA-FF6620640048" x="64" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CEB61745-7A02-7ECE-9C31-6ED6CC48A54C" x="96" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="78A1AECC-5E50-3D6D-7D64-49FC7438E000" x="128" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="42A4C10E-0F86-4C19-B3B4-CB2D41579103" x="160" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="03A1F07A-028E-A5EE-381E-621774CDF98A" x="160" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="1D8F2C57-98D2-E5B2-F517-09BAE04A10BA" x="192" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="40784E51-F78A-A82B-4654-17DBD81DF5A2" x="96" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5F37D495-01E0-585D-AB75-3FB7DFA764F8" x="128" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="317B2065-3D3C-DC95-404E-82E3D8A041F1" x="64" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="8BF82473-87D0-3EF8-506B-6E0491FB3BDD" x="224" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EDD30B53-808D-FB7C-AB1A-86DF49181E91" x="256" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="08241A90-2A1E-CA57-1981-188F8D51D355" x="288" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D9648ADF-CBAE-0131-2AEC-4BA56FACE2DF" x="320" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6C20B3C1-098D-DDC2-8CBA-C01DE33E8D74" x="352" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="36776A34-AB7D-AD29-6C00-E1D706FAECC7" x="384" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="06C21CAB-53C5-8FF6-3EE5-3D96475E116B" x="416" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D4171F70-CB71-3C9D-9D6E-89F6DD64BAE5" x="448" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="74C561F4-4399-CD42-634B-7E0A23A92201" x="480" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="2CB61610-C737-F570-C32B-6D14C05CFE30" x="512" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="90D1AD32-B17F-9F02-C198-C289EAFEC492" x="544" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A952B4E1-44B6-6178-E5C3-DE7D886C5A9C" x="576" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="945DE625-D2D1-2D32-675D-F449DD06FAE9" x="608" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="2E1AE7E8-4CB9-7A46-5845-8F214AB6CE8B" x="672" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="700E8C61-DA99-F70C-0095-9BB879C953E4" x="704" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A9B977FB-E73E-6C7E-EAFB-701AD4798676" x="736" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="FAF88DB2-5F52-7973-FEE9-F0ECC84D3A69" x="768" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B60264F8-8BE0-554E-3AD3-5428CDE098DD" x="800" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="65456C44-1A12-85A7-3138-5672A4DD7203" x="832" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="2F56C4D4-90DD-D07A-E0A3-7E263F51F9F6" x="832" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F37D4FD1-A1E2-E92C-05B9-5260667F73DB" x="672" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4242486B-25F5-E2F6-EB75-B157FE5BC582" x="672" y="96" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E2962DB2-64DC-7EC8-6B91-6DCC14C2B44F" x="672" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="31624173-285E-3531-4CF8-5D69A18AB46F" x="672" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D9515CD8-65AE-D051-7FA4-0EC2128A6E19" x="704" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D701BB0D-68BF-63C4-DE80-F6F9FD6B202A" x="736" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5EAA053C-DB43-0077-7E34-07941ABA778E" x="768" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EC33CAE7-0107-6D6C-2347-79993B07541E" x="800" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="514FBF02-FCDA-BBCE-C2D6-ADCDA628B4E5" x="832" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E0CD422A-A55C-1265-3F89-979426150C45" x="832" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="615DEDCD-0884-6CB7-5FB5-4615CDB0634D" x="640" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E715F73F-F91C-3676-6868-2A40271ECAE0" x="608" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="060EEF22-836F-F208-E49A-10D5A4D54A37" x="576" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="443945AB-CCC0-2CF5-74B0-B1E30D74665D" x="544" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="8B2886AB-02D5-0D32-4A2D-AFFAFA4AF1C9" x="512" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="DB837362-7EE1-6B85-37FD-41C556BD36D3" x="480" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="947EA80C-1839-E088-8B41-8AA3E578EBA0" x="480" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="334702CC-D73D-AE20-910D-B5F02545851B" x="480" y="96" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C14131FE-1F6B-BB0F-9867-FC600C4BF958" x="480" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="ECBB7029-6238-EABD-9AA0-68A67F8F01EF" x="384" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0F937965-A14E-D0E0-6468-55F24F1A7A2E" x="384" y="96" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="AE641DE0-D16E-FD3D-E947-0CC1C9838225" x="384" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0CCC49C3-20D4-A6F1-DD46-A6F561B7743B" x="384" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="21C2C174-3054-1AE0-958B-E7FD511780D7" x="352" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B07387A1-EE41-F0B5-F5E3-BEB17BB8E202" x="320" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="13B3EDCC-75DC-C7E6-818C-E72A3F54142E" x="288" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A65F1DE4-2ADB-9810-F9C5-B2487021CBDB" x="256" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="25160873-BFC3-390B-E2BB-DB7364672384" x="224" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="1944C696-A4E3-BE8C-4445-6FE84E549F4C" x="192" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E04CD847-2485-C1C0-75C5-B967DF6AEEE8" x="160" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7F0C3F72-9758-E8CD-0399-9F40B0051793" x="128" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B36E2251-154D-C948-1185-F9A58D6AAF50" x="96" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="BDB03DD5-6547-5BFA-53D1-B44A2E65C567" x="64" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="81C8D205-716A-38C9-2668-5FE3D6EE1F1A" x="32" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E025D454-0016-15E1-6BB9-FF4FC770A5F7" x="192" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="DFBDF84C-1879-289E-FDE9-81F30C69BBE6" x="192" y="96" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="46FDD796-7847-D964-1DC0-2050243B7F0B" x="192" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6ADA3450-3EA2-8CE6-A342-6736524B5AA2" x="192" y="192" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="DE8CC5F4-DD1B-067E-AEAF-4A3D8E1F9165" x="192" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="474C1DDE-02B2-8D01-D03B-4318134C92ED" x="192" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EB74048B-444E-FBE1-9493-9684D4E30466" x="192" y="288" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EB28010F-72FC-B45B-CA90-3CBBCE6E0B29" x="192" y="320" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7AF266E7-7ED8-67B1-76C2-EF1C1D74AA22" x="192" y="352" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="FB4D847F-AD08-61A7-A2E5-969FCE912158" x="192" y="384" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A2E9010F-DE70-8C50-152B-3510D6BFCB4D" x="192" y="416" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="58F6659B-703E-9C24-58A0-D5DFFFE221CE" x="192" y="448" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7546EC7F-EA77-E64B-0EE5-0BD2BCA62291" x="192" y="480" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="62192105-0641-831B-3050-48715DD6D454" x="192" y="512" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="878EAD0A-CE3E-0623-3DFD-C199FDB28451" x="192" y="544" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="921300AB-97AC-A7AE-E226-73E5DC51344F" x="192" y="768" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C6130314-4496-4BCA-3EEE-DE7ED935B314" x="192" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="2F3A7DB6-DAE7-7615-DF2A-FA4C96E5261F" x="192" y="704" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D442EA0E-88E6-4204-5B29-0B4B025D1B16" x="160" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D323969C-874D-F931-19CF-E28C0A487C96" x="192" y="672" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="389AB724-998A-68F7-7155-9B377AEA668B" x="192" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0413C722-4DF2-F69B-A97A-1CA601C2D04B" x="192" y="608" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A998D527-4438-FC64-E4BB-C6F3C9F0C37C" x="192" y="576" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A41F8164-BE3C-A014-B931-85F0EE162987" x="384" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C28A76F9-8F4C-A4D7-CA06-AC1ABE5E8E24" x="352" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C91E5EF5-EE85-9735-3DBA-CD5BC51527B9" x="320" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B8575B2F-29E1-11E6-85D9-6C70871DCC77" x="288" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C09F9B7E-4564-E2E0-D3D6-9AD66713A3B3" x="288" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="46C91FEF-D322-202E-ADA5-64E9E17AC8C7" x="288" y="192" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EFEF40A0-0A21-E60A-829D-B823D8ED595C" x="480" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CEEB960E-D0A0-CE15-4148-E8C5B7E2ECBB" x="512" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="50E1A357-EFBD-2818-70E7-AC09324C874E" x="544" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E24DD298-1C09-E21B-89CB-6AE64AD12D96" x="576" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4B33235E-63CC-0BC3-D0CB-5BDD68F601D2" x="576" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="66A26CB4-5F8C-CA20-27A4-73F181D3AAA6" x="576" y="192" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="03BB742B-CD2B-7C17-271F-E0EF45CEE0A7" x="672" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D6EB25FC-9CDD-2DD6-57AF-96F6A5A9B70E" x="672" y="608" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="31E5A691-A302-D346-6527-AE1E409D0843" x="672" y="576" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="81D17402-BCEF-5D28-70F0-BDF5FA3C8192" x="672" y="544" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6CD31665-C54D-44B0-6287-CAEAB8E3495E" x="672" y="512" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5E3F519C-FE7D-666D-C2A0-392AB530AC61" x="672" y="480" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C2EE7028-3019-2E18-2FBA-60B6EE216E38" x="672" y="448" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="AE9F43B8-D03C-E91D-4794-E2B3AEE30AA0" x="672" y="416" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F9F28701-F3E5-0E29-22C9-E89A23751D15" x="672" y="384" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="22BFFEDB-9ACD-7155-C999-B160C2E98465" x="672" y="352" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B48221EE-6039-028A-3A3C-EBDE3675BD43" x="672" y="320" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="116BCE2B-0F46-7707-B519-3DA746004EA1" x="672" y="288" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="24C5D098-7791-657A-EA51-27074D6E6D9A" x="672" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="30095A03-E029-2969-FE80-C327AE13BABD" x="672" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="92AF5650-DB50-4560-BDF7-89612EB6DD20" x="672" y="192" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C73613D3-BBC3-0C00-C93C-AA51926D0B66" x="704" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="BCA2925A-8165-BFFB-E90E-C4FA42EAA972" x="736" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="673897CC-CF8C-9234-D4F4-19EA3969D7B0" x="768" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0157D050-D4DE-D19A-6C88-DFF2CB130AD5" x="800" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CB8D1494-65E9-0763-F213-09B1129432CB" x="832" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A81F4D4F-D179-86DE-06B4-0A4D116686A0" x="832" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A43BF5B3-63A9-D91D-4525-D2A64D01683B" x="832" y="192" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7E4ADA38-40CB-AE61-D4C6-454DB82D51DD" x="224" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="58B3657E-8F3E-6F04-6BB0-0844F10E0088" x="256" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CD5536E8-8802-9107-53EF-A0772ED07BA4" x="288" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="1A579074-B5B9-6DE2-0D7E-E800C8CEF0F8" x="320" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="834838D5-D831-D240-F356-3D6539F9A5DD" x="352" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="AC19A5A7-8164-1D0C-16D0-A6316E12B253" x="384" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="FAC9606A-3325-4277-6382-9E4034E28775" x="384" y="672" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C887FBBD-10BB-217C-10CC-302DE17D1804" x="384" y="704" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F58C2E63-90A3-1D99-3397-591F00CFDB27" x="384" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0D50B0B7-6526-9D44-9760-AFCE86E53292" x="352" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="9A53ABC2-F6D1-698E-8172-31C508BCD705" x="320" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="568094DF-15DC-7406-5A4E-8BB1A3DFB340" x="288" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="92545F0E-03B0-2440-C11E-7C34F67F0248" x="256" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="9BAA545F-68AD-1A2E-3B75-AE9C16F101EE" x="224" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CFDCEF07-5263-4142-EF0C-CA6F77A60130" x="96" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="43BEDE07-4B52-122B-33D8-BD6127C7C784" x="64" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A754E1CD-9E39-EF10-085D-976E018EDCEE" x="128" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="BCB0F15A-6A98-152D-B8EB-A6C3D4E4C74F" x="32" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="FD67B0AC-94A6-943C-7CCC-3B8BC9DC315B" x="32" y="672" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E3361E00-EAC9-350F-2D98-E31194AFAC73" x="32" y="704" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="21C1EE77-F8D2-6725-8419-2EDD3B14DD55" x="64" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A6D7B2A6-28FF-1ACF-69AD-EA37A0D9D445" x="96" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5722B589-76F6-60AE-88E1-23148AE0744A" x="96" y="768" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7BE1B216-75ED-1761-97DC-AF0964501BA0" x="96" y="800" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="3ED2C623-30D9-64F3-49D8-4B99755559BB" x="96" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="7146D597-B90D-F7BA-3E58-32D2CDD0E11B" x="128" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4A679F07-9B57-6A98-C111-E568982B89DA" x="160" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="A590156D-BD49-5D17-D242-2AEF100C905E" x="192" y="800" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="70CEA31D-6943-2C00-8A88-920BE8B8EBCA" x="192" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="49FAECB3-4F6C-9D4A-0131-C1C8AA0003B1" x="64" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="14716721-677D-298C-272C-BB19A7CD1689" x="32" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="481E2C81-0FA3-36A1-6C66-870F2136FC5B" x="32" y="864" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4C7548DD-574F-4FA4-1489-D58A6C28CCFF" x="32" y="896" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="45184E0E-ECD4-ECED-E2F1-5FA1865750B7" x="32" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0CAF188D-F440-FA49-0BCC-5EE4204EF523" x="64" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5FEF62AD-051B-557D-E866-795C20287E2B" x="96" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="76490A25-AF51-9A9A-C523-DA6AD6A16859" x="128" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F4310CC1-05EC-A937-2D33-4BF57E65B671" x="160" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="45ED8FEA-76B6-EAFB-733A-8CD924409874" x="192" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F2786A0E-0B2A-36F8-B8B4-557CA747352D" x="224" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="91106188-E453-7D97-41BF-77B6FFAAE835" x="256" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5F45B181-6103-D1A7-DE08-4D71B5AA4891" x="288" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="2A259F2B-04CE-C45F-A2E0-7EC4519F9278" x="320" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="688D019F-2475-C5F2-BE78-5822067E9984" x="352" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="BDAE38CE-3F6C-30A6-6E36-5F5901FDFBB8" x="384" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="541EC6FB-0593-C7C9-9D64-B4363187FDE0" x="416" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="70F2FE54-5B23-5D58-7E6C-822B572C862D" x="448" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F2BFDC34-9502-E23E-F457-05F52985927F" x="480" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CF6D82EE-79C9-4FC3-9125-AF74F4EF14E9" x="512" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="40226F08-67A7-3252-6055-3A506E51975D" x="544" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CDA0DFB9-4FE8-8F3D-81FC-F4118D61B898" x="576" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D4F7EF39-CCBC-6FB0-6E02-581E56248DAB" x="608" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B18584C1-1079-449C-9932-997398D971B8" x="640" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5BEC0833-F812-C276-0903-027D66F2DA37" x="672" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4F796823-D612-CA31-2442-564646F70F20" x="704" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="127FE0E9-FD8C-58F5-6FFB-55511E8AD430" x="736" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="3CA74F56-8FEF-3884-C865-0FDF17C0D341" x="768" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="8C6D1767-89D5-E7B2-5E56-BAE4FD3F7840" x="800" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F1D8F3AE-6D54-A688-1175-4812CD83E9F7" x="832" y="928" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="60254E39-2EAE-3D98-9FBB-D6C018486A55" x="832" y="896" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F7074ED8-B9C3-EA57-55BB-26D6702574EC" x="832" y="864" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="CFD74BFA-1347-2040-58A4-30DB287DD043" x="832" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0F4D5032-7ACF-E0D1-06BD-4933B477F84C" x="800" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E016CA52-F743-351E-B409-F515CFFE5F69" x="768" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="DC2CB7BF-8E00-90AB-3947-BD39036FB8AE" x="736" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="BCBEBB76-0C86-3500-34A1-C8E189C31E8A" x="704" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="785D7127-5016-CAB0-F128-8ACEE63F56AA" x="672" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6CCF1B22-AC2E-1541-DA2D-D39EDCC4D05C" x="672" y="672" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="1C04F221-A065-31B8-6B87-CBAADEC7B6D2" x="672" y="704" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C04687BD-66DC-7986-55EC-D80508017BCA" x="672" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="12695E15-D25D-2E85-2022-F8BD9CD9456F" x="672" y="768" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="9CA009DC-8027-3B64-E667-07FFAF28785C" x="672" y="800" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="22A3C50E-A8AB-6135-84C3-EDEEF7EAFEA2" x="704" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0EC8E75E-FC47-5727-6F90-0327799C615C" x="736" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4EDF4EFC-2D22-93DE-793D-BA6439BA107C" x="768" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C211011D-7390-149E-2667-6716C7AC4A1D" x="800" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="95B313E4-96A6-211E-BB9B-A8A599625997" x="832" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="1FB801AE-C5CE-BA8F-77AA-9C49FE090961" x="832" y="672" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F06EE245-0718-B933-3950-96E961063CC5" x="832" y="704" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6595D0EB-03D8-DAAF-3611-18F3867CC1A8" x="800" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5A541C62-4478-B3D9-58CF-2F2AB9661555" x="768" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="56C04E7C-8A83-5AB4-AE0B-60DBB34BB9B5" x="768" y="768" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E623398F-7027-236D-BAE0-FA81671C2F5B" x="768" y="800" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5320F3DD-5875-DCFC-1C5F-257D08210B33" x="480" y="896" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="C7D38EC2-60FB-8430-E6A4-DB62658C9D91" x="480" y="864" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="647DB920-F0DE-0AC6-79E0-622D00C656B5" x="480" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="4F21D2B0-0807-33B2-315B-9ABFEB108934" x="512" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="62380DE9-F412-76D9-EC7D-4768BA8163D4" x="544" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="D73054FB-DA64-DC8F-A0A1-EF06125C10F2" x="576" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="565780EB-DAA1-BDB3-9808-4E889A12D427" x="576" y="800" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0C529807-ADAA-A594-82FC-1115F3119284" x="576" y="768" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EC5885F5-E76D-64E1-DE34-449CC77065E9" x="576" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="16A5F211-B81F-6C0D-9F52-51ED891AC69A" x="608" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="B568BF8E-A0F4-9986-8510-86B87EB4B4EB" x="640" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="F4061F20-8189-907C-FEB3-CB3F1C553F21" x="544" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5BA405F1-1574-9065-AD84-D84855C28920" x="512" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="325F794A-F106-EA33-0B63-D4198AFC4EE1" x="480" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E3ABEF53-5361-0ADE-F6B2-3E93A713581E" x="448" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="0A77A2AD-FEE9-CCB7-736B-CABFAFEAA028" x="416" y="736" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="5F9CAC2C-A9C4-79EE-4D65-3958B599D7D0" x="288" y="768" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="EDB5851E-9A2E-8970-9F1B-7238EA62BEE8" x="288" y="800" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="AF4FBBE2-AD93-817A-CEFE-8A7BD32798FB" x="288" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="E058364E-7998-F2B8-217D-8429E8AD87C7" x="320" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6C9EC289-10BD-7C21-5655-8354AC6641F8" x="352" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="31B20AA8-FCF3-B03D-F303-9E84E82D55D8" x="384" y="832" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="11C7CDE3-11ED-9F30-0F8C-FD6B0BF98F12" x="384" y="864" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="9788B11A-6479-FAF2-2092-7F6C0CD71828" x="384" y="896" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="AAA8290D-DB46-E5E8-03E4-01DC42D2530E" x="480" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="3F6BCD26-6F14-9EC6-7A3A-9FE039CF45DB" x="480" y="672" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="208873D0-482D-9260-BE75-A1A93A789021" x="480" y="704" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6DA08633-E17C-80E3-9206-3E5B9D4E6816" x="512" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="27E4F792-356F-5C6C-5B37-E45D673BB043" x="576" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="AE27AEC6-86AD-4427-39A1-6B935AE43A9E" x="608" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="6D4C1384-B5B1-2DDA-949C-9976A5FAB881" x="640" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="93AC4909-26C9-0020-C2E1-B6D2CD45DA06" x="544" y="640" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+        <sprite guid="67B9E172-B613-944E-113C-B5126990FDC0" x="640" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1"/>
+      </spritelayer>
+      <spritelayer name="Power_Pills" id="2" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false" selected="true"/>
     </group>
   </layers>
   <layerTemplates/>
@@ -219,7 +469,7 @@
     <SaveGuidesSeparately>false</SaveGuidesSeparately>
     <ForceTilemapPositionChangesInUnits>false</ForceTilemapPositionChangesInUnits>
   </options>
-  <exporter name="none" spritepos="Top Left" rotatedSpritePos="false" relativePaths="false" useProjectExporterOnly="false">
+  <exporter name="C:\Program Files\DAME\lua\Exporters\flixelComplex.lua" spritepos="Top Left" rotatedSpritePos="false" relativePaths="false" useProjectExporterOnly="false">
     <setting name="ExportOnlyCSV">false</setting>
     <setting name="Imports"/>
     <setting name="TileMapClass">FlxTilemap</setting>
@@ -229,20 +479,20 @@
     <setting name="BaseClassExtends"/>
     <setting name="BaseClass">BaseLevel</setting>
     <setting name="FlixelVersion">2.5</setting>
-    <setting name="CSVDir"/>
-    <setting name="AS3Dir"/>
+    <setting name="CSVDir">C:\Users\mcugley\Documents\GitHub\GhostDungeon\assets\data\export</setting>
+    <setting name="AS3Dir">C:\Users\mcugley\Documents\GitHub\GhostDungeon\assets\data\export</setting>
   </exporter>
   <customPropertyTypes/>
   <guides>
-    <snap>false</snap>
+    <snap>true</snap>
     <visible>true</visible>
     <x>0</x>
     <y>0</y>
-    <xspace>30</xspace>
-    <yspace>30</yspace>
+    <xspace>32</xspace>
+    <yspace>32</yspace>
     <gridcolour>0x77ff0000</gridcolour>
     <snaptype>Anchor</snaptype>
-    <paintcontinuous>false</paintcontinuous>
+    <paintcontinuous>true</paintcontinuous>
     <showgameregion>false</showgameregion>
     <gameregionwidth>400</gameregionwidth>
     <gameregionheight>400</gameregionheight>
