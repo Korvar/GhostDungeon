@@ -36,8 +36,6 @@ class PlayState extends FlxState
 	public function new() 
 	{
 		super();
-
-
 	}
 	
 	override public function create():Void
@@ -49,20 +47,8 @@ class PlayState extends FlxState
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
-		tileInstances = DungeonWalls.getTileInstances(2);
-		trace(tileInstances);
-		if (tileInstances != null)
-		{
-			for(tileIndex in tileInstances)
-			{
-				trace(tileIndex);
-				var tile = DungeonWalls.getTileByIndex(tileIndex);
-				trace(tile);
-				DungeonWalls.setTileProperties(tile, FlxObject.FLOOR);
-			}
-		}	
-		DungeonWalls.setTileProperties(20, FlxObject.CEILING);
-		DungeonWalls.setTileProperties(26, FlxObject.CEILING);
+		DungeonWalls.setTileProperties(28, FlxObject.NONE);
+		DungeonWalls.setTileProperties(29, FlxObject.NONE);
 		
 		FlxG.width = 640;
 		FlxG.height = 480;

@@ -24,6 +24,7 @@ class Player extends LayeredSprite
 		
 		// trace(SimpleGraphic);
 		super(X, Y, SimpleGraphic, Layers, Width, Height);
+		
 		facing = FlxObject.RIGHT;
 		width = size;
 		height = size;
@@ -52,17 +53,30 @@ class Player extends LayeredSprite
 	
 	override public function update()
 	{
-		velocity.x = 0;
-		velocity.y = 0;
+		// velocity.x = 0;
+		// velocity.y = 0;
+		
+		if (overlapsAt(x + velocity.x, y, DungeonWalls))
+		{	
+			velocity.x = 0;
+		}
+		
+		if (overlapsAt(x, y + velocity.y, DungeonWalls))
+		{
+			velocity.y = 0;
+		}
+		
+		
 		x = Std.int(x);
 		y = Std.int(y);
 		
-		
+		#if debug
 		if (FlxG.keys.justPressed("SPACE"))
 		{
 			x = 448;
 			y = 544;
 		}
+		#end
 		
 		// By changing the order of key checking depending on facing,
 		// I should get the desired behaviour of taking a turn if a turn
@@ -87,14 +101,12 @@ class Player extends LayeredSprite
 		}
 		
 		// Ensure we only stop when we're aligned to the tiles
-		
-		// Only do this if none of the movement keys are pressed
-		// May have to change how I do this if I allow more than one set of movement keys...
+
 		//var pBorderX = Std.int(x / 32) * 32;  // This is the 32-aligned "block" player is in.
 		//var pBorderY = Std.int(y / 32) * 32;
-			//
 		//var pDiffX = Math.abs(x - pBorderX);
 		//var pDiffY = Math.abs(y - pBorderY);
+
 		
 		if (!FlxG.keys.pressed("A") &&
 			!FlxG.keys.pressed("D"))
@@ -175,11 +187,11 @@ class Player extends LayeredSprite
 		y = y + velocity.y;
 		
 		// Teleporter!
-		if (x == 896)
+		if (x > 896)
 		{
 			x = -32;
 		}
-		else if (x == -32)
+		else if (x < -32)
 		{	
 			x = 896;
 		}
@@ -216,7 +228,7 @@ class Player extends LayeredSprite
 	
 	private function checkA():Void 
 	{
-		if (FlxG.keys.pressed("A") && !(overlapsAt(x - margin, y, DungeonWalls)))
+		if (FlxG.keys.pressed("A") && (!(overlapsAt(x - margin, y, DungeonWalls))))
 		{
 			facing = FlxObject.LEFT;
 			velocity.x = -runSpeed;
@@ -231,7 +243,6 @@ class Player extends LayeredSprite
 			facing = FlxObject.RIGHT;
 			velocity.x = runSpeed;
 			velocity.y = 0;
-
 		}
 	}
 	
