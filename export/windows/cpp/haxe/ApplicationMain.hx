@@ -258,27 +258,6 @@ class ApplicationMain
 			
 		}
 		
-		if (inName == "assets/data/export/BaseLevel.as")
-		{
-			
-			return nme.Assets.getText ("assets/data/export/BaseLevel.as");
-			
-		}
-		
-		if (inName == "assets/data/export/Level_Group1.as")
-		{
-			
-			return nme.Assets.getText ("assets/data/export/Level_Group1.as");
-			
-		}
-		
-		if (inName == "assets/data/export/mapCSV_Group1_Dungeon_Walls.csv")
-		{
-			
-			return nme.Assets.getText ("assets/data/export/mapCSV_Group1_Dungeon_Walls.csv");
-			
-		}
-		
 		if (inName == "assets/data/fontData10pt.png")
 		{
 			
@@ -332,13 +311,6 @@ class ApplicationMain
 		{
 			
 			return nme.Assets.getBitmapData ("assets/data/logo_light.png");
-			
-		}
-		
-		if (inName == "assets/data/mapCSV_Group1_Dungeon_Walls.csv")
-		{
-			
-			return nme.Assets.getText ("assets/data/mapCSV_Group1_Dungeon_Walls.csv");
 			
 		}
 		

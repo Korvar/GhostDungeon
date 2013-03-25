@@ -52,8 +52,9 @@ class PlayState extends FlxState
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
-		DungeonWalls.setTileProperties(28, FlxObject.NONE);
-		DungeonWalls.setTileProperties(29, FlxObject.NONE);
+		// Because I didn't set up my tilemap 100% properly, set some tile properties.
+		DungeonWalls.setTileProperties(28, FlxObject.NONE); // Intersection
+		DungeonWalls.setTileProperties(29, FlxObject.NONE); // Intersection where the enemies won't go up.
 		
 		FlxG.width = 640;
 		FlxG.height = 480;

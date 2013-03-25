@@ -84,12 +84,6 @@ class Assets {
 			resourceTypes.set ("assets/data/default.png", "image");
 			resourceNames.set ("assets/data/Dungeon_Walls.csv", "assets/data/Dungeon_Walls.csv");
 			resourceTypes.set ("assets/data/Dungeon_Walls.csv", "text");
-			resourceNames.set ("assets/data/export/BaseLevel.as", "assets/data/export/BaseLevel.as");
-			resourceTypes.set ("assets/data/export/BaseLevel.as", "text");
-			resourceNames.set ("assets/data/export/Level_Group1.as", "assets/data/export/Level_Group1.as");
-			resourceTypes.set ("assets/data/export/Level_Group1.as", "text");
-			resourceNames.set ("assets/data/export/mapCSV_Group1_Dungeon_Walls.csv", "assets/data/export/mapCSV_Group1_Dungeon_Walls.csv");
-			resourceTypes.set ("assets/data/export/mapCSV_Group1_Dungeon_Walls.csv", "text");
 			resourceNames.set ("assets/data/fontData10pt.png", "assets/data/fontData10pt.png");
 			resourceTypes.set ("assets/data/fontData10pt.png", "image");
 			resourceNames.set ("assets/data/fontData11pt.png", "assets/data/fontData11pt.png");
@@ -106,8 +100,6 @@ class Assets {
 			resourceTypes.set ("assets/data/logo_corners.png", "image");
 			resourceNames.set ("assets/data/logo_light.png", "assets/data/logo_light.png");
 			resourceTypes.set ("assets/data/logo_light.png", "image");
-			resourceNames.set ("assets/data/mapCSV_Group1_Dungeon_Walls.csv", "assets/data/mapCSV_Group1_Dungeon_Walls.csv");
-			resourceTypes.set ("assets/data/mapCSV_Group1_Dungeon_Walls.csv", "text");
 			resourceNames.set ("assets/data/nokiafc22.ttf", "assets/data/nokiafc22.ttf");
 			resourceTypes.set ("assets/data/nokiafc22.ttf", "font");
 			resourceNames.set ("assets/data/Player/accessories/necklaces_female_ no_th-sh/bronze.png", "assets/data/Player/accessories/necklaces_female_ no_th-sh/bronze.png");
