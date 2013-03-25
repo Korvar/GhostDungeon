@@ -26,7 +26,7 @@ class PlayState extends FlxState
 	var oldPY:Float;
 	#end	
 	
-	var player:Player;
+	public var player:Player;
 	
 	var Blinky:Enemy;
 	var Pinky:Enemy;
@@ -61,6 +61,9 @@ class PlayState extends FlxState
 		FlxG.worldBounds = new FlxRect(-DungeonWalls.width, -DungeonWalls.height, DungeonWalls.width, DungeonWalls.height);		
 		
 		add(DungeonWalls);
+				
+		coins = setupCoins();
+		add(coins);
 		
 		player = setUpPlayer();
 
@@ -87,9 +90,7 @@ class PlayState extends FlxState
 		Blinky = setupBlinky();
 		add(Blinky);
 		add(Blinky.layers);
-		
-		coins = setupCoins();
-		add(coins);
+
 		
 	}
 	

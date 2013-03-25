@@ -73,10 +73,21 @@ class Enemy extends LayeredSprite
 	}
 	
 	
-	public function checkAI()
+	public function checkAI():FlxPoint
 	{
 		// Used to check which direction to go on coming to an intersection.
 		// specifically find a tile target
+		var target:FlxPoint = new FlxPoint();
+		
+		var player = cast(FlxG.state, PlayState).player;
+		
+		target.x = player.x;
+		target.y = player.y;
+		
+		target.x = FlxU.floor(target.x / 32);
+		target.y = FlxU.floor(target.y / 32);
+				
+		return(target);
 	}
 	
 	override public function update()
@@ -84,6 +95,7 @@ class Enemy extends LayeredSprite
 		// Let's have a look at what tile we're in
 		var tileX = FlxU.floor(x / 32);
 		var tileY = FlxU.floor(y / 32);
+		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
 		
 		// Nearest tile border
 		var borderX = FlxU.round(x / 32) * 32;
@@ -105,7 +117,86 @@ class Enemy extends LayeredSprite
 	
 			if (tileType == 28 || tileType == 29)
 			{
-				//Do stuff
+				target = checkAI();
+				var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
+				var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
+				var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
+				var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
+				
+				var distUp:Float = FlxU.getDistance(target, tileUp);
+				var distDown:Float = FlxU.getDistance(target, tileDown);
+				var distLeft:Float = FlxU.getDistance(target, tileLeft);
+				var distRight:Float = FlxU.getDistance(target, tileRight);
+		
+				#if debug
+				trace("distUp: " + distUp +
+					" distDown: " + distDown +
+					" distLeft: " + distLeft +
+					" distRight: " + distRight);
+				#end
+				
+				// Disallow squares that are occupied
+				if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0)
+				{
+					distUp = 9999;
+				}
+				if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0)
+				{
+					distDown = 9999;
+				}
+				if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0)
+				{
+					distLeft = 9999;
+				}
+				if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0)
+				{
+					distRight = 9999;
+				}
+				
+				// Disallow reversing
+				switch(facing)
+				{
+					case FlxObject.LEFT:
+						{
+							distRight = 9999;
+						}
+					case FlxObject.RIGHT:
+						{
+							distLeft = 9999;
+						}
+					case FlxObject.UP:
+						{
+							distDown = 9999;
+						}
+					case FlxObject.DOWN:
+						{
+							distUp = 9999;
+						}
+				}
+				
+				// In specific intersections, cannot go up
+				if (tileType == 29)
+				{
+					distUp = 9999;
+				}
+				
+				if (distRight <= distUp && distRight <= distLeft && distRight <= distDown)
+				{
+					facing = FlxObject.RIGHT;
+				}
+				if (distDown <= distUp && distDown <= distRight && distDown <= distLeft)
+				{
+					facing = FlxObject.DOWN;
+				}
+				if (distLeft <= distUp && distLeft <= distDown && distLeft <= distRight)
+				{
+					facing = FlxObject.LEFT;
+				}
+				if (distUp <= distLeft && distUp <= distRight && distUp <= distDown)
+				{
+					facing = FlxObject.UP;
+				}
+				
 			}
 			else 
 			{	// At this point, we're not in an intersection.
