@@ -16,7 +16,6 @@ package ;
 class Enemy extends LayeredSprite
 {
 	var DungeonWalls:FlxTilemap;
-	var ScatterTarget:FlxPoint; // In tile scale, the point where the enemy will go in "scatter" mode
 	
 	static var ATTACK:Int = 0;
 	static var SCATTER:Int = 1;
@@ -52,6 +51,7 @@ class Enemy extends LayeredSprite
 		width = size;
 		height = size;
 		centerOffsets(false);
+		mode = ATTACK;
 		
 		#if debug
 		drawLine(x, y, x, y + height, 0xff0000, 2);
@@ -117,7 +117,17 @@ class Enemy extends LayeredSprite
 	
 			if (tileType == 28 || tileType == 29)
 			{
-				target = checkAI();
+				switch(mode)
+				{
+					case ATTACK:
+						target = checkAI();
+					case SCATTER:
+						target = scatterTarget;
+					case FRIGHTENED:
+						target = scatterTarget; // target isn't used, but set the variable just in case!
+				}
+				
+				
 				var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
 				var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
 				var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
