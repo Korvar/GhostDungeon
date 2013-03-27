@@ -21,8 +21,9 @@ class Enemy extends LayeredSprite
 	static var SCATTER:Int = 1;
 	static var FRIGHTENED:Int = 2;
 	static var CAGED:Int = 3;
+	static var DEAD:Int = 4;
 	
-	static var speed = 2;
+	static var speed = 4;
 	
 	var dotcounter:Int; // Used for various AI purposes
 	
