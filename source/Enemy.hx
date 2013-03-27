@@ -111,53 +111,54 @@ class Enemy extends LayeredSprite
 		}
 		#end
 		
-		if (reverse == true) 
+
+		// Let's have a look at what tile we're in
+		var tileX = FlxU.floor(x / 32);
+		var tileY = FlxU.floor(y / 32);
+		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
+		
+		// Nearest tile border
+		var borderX = FlxU.round(x / 32) * 32;
+		var borderY = FlxU.round(y / 32) * 32;
+		
+		if (FlxU.abs(x - borderX) < 2)
 		{
-			// If there's a reverse directive... reverse!
-			switch(facing)
-			{
-				case FlxObject.LEFT:
-					{
-						facing = FlxObject.RIGHT;
-					}
-				case FlxObject.RIGHT:
-					{
-						facing = FlxObject.LEFT;
-					}
-				case FlxObject.UP:
-					{
-						facing = FlxObject.DOWN;
-					}
-				case FlxObject.DOWN:
-					{
-						facing = FlxObject.UP;
-					}
-			}
-			
-			reverse = false;
+			x = borderX;
 		}
-		else
+		
+		if (FlxU.abs(y - borderY) < 2)
 		{
-			// Let's have a look at what tile we're in
-			var tileX = FlxU.floor(x / 32);
-			var tileY = FlxU.floor(y / 32);
-			var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
-			
-			// Nearest tile border
-			var borderX = FlxU.round(x / 32) * 32;
-			var borderY = FlxU.round(y / 32) * 32;
-			
-			if (FlxU.abs(x - borderX) < 2)
+			y = borderY;
+		}
+		
+		if (x == borderX && y == borderY) // i.e. we've just entered a tile
+		{
+			if (reverse == true) 
 			{
-				x = borderX;
+				// If there's a reverse directive... reverse!
+				switch(facing)
+				{
+					case FlxObject.LEFT:
+						{
+							facing = FlxObject.RIGHT;
+						}
+					case FlxObject.RIGHT:
+						{
+							facing = FlxObject.LEFT;
+						}
+					case FlxObject.UP:
+						{
+							facing = FlxObject.DOWN;
+						}
+					case FlxObject.DOWN:
+						{
+							facing = FlxObject.UP;
+						}
+				}
+				
+				reverse = false;
 			}
-			
-			if (FlxU.abs(y - borderY) < 2)
-			{
-				y = borderY;
-			}
-			
-			if (x == borderX && y == borderY)
+			else
 			{
 				
 				var tileType:Int = DungeonWalls.getTile(tileX, tileY);
@@ -173,8 +174,8 @@ class Enemy extends LayeredSprite
 					checkCorner();
 				}
 			}
-		
 		}
+		
 		// By this point we should have a Facing for our Enemy
 		velocity.x = 0;
 		velocity.y = 0;
