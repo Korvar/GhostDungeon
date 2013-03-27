@@ -100,7 +100,7 @@ class Enemy extends LayeredSprite
 	
 	override public function update()
 	{
-		
+		#if debug
 		if (FlxG.keys.justPressed("M"))
 		{
 			if (mode != FRIGHTENED)
@@ -109,6 +109,7 @@ class Enemy extends LayeredSprite
 			}
 			mode = (mode + 1) % 3; 
 		}
+		#end
 		
 		if (reverse == true) 
 		{
