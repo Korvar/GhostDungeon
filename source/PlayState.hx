@@ -29,7 +29,7 @@ class PlayState extends FlxState
 	public var player:Player;
 	
 	var blinky:Blinky;
-	var pinky:Enemy;
+	var pinky:Pinky;
 	var inky:Enemy;
 	var clyde:Enemy;
 	
@@ -90,6 +90,10 @@ class PlayState extends FlxState
 		blinky = new Blinky(448, 352);
 		add(blinky);
 		add(blinky.layers);
+		
+		pinky = new Pinky(352, 416);
+		add(pinky);
+		add(pinky.layers);
 
 	}
 	
