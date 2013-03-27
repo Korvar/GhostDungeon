@@ -46,7 +46,17 @@ class Blinky extends Enemy
 					target.y = FlxU.floor(target.y / 32);
 				}
 			case Enemy.SCATTER:
-				target = scatterTarget;
+				if (cruiseElroy)
+				{ 
+					target.x = player.x;
+					target.y = player.y;
+					target.x = FlxU.floor(target.x / 32);
+					target.y = FlxU.floor(target.y / 32);
+				}
+				else
+				{
+					target = scatterTarget;
+				}
 			case Enemy.FRIGHTENED:
 				target = scatterTarget; // target isn't used, but set the variable just in case!
 		}
