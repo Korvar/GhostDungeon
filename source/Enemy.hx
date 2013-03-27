@@ -81,12 +81,20 @@ class Enemy extends LayeredSprite
 		
 		var player = cast(FlxG.state, PlayState).player;
 		
-		target.x = player.x;
-		target.y = player.y;
-		
-		target.x = FlxU.floor(target.x / 32);
-		target.y = FlxU.floor(target.y / 32);
-				
+		switch(mode)
+		{
+			case ATTACK:
+				{
+					target.x = player.x;
+					target.y = player.y;
+					target.x = FlxU.floor(target.x / 32);
+					target.y = FlxU.floor(target.y / 32);
+				}
+			case SCATTER:
+				target = scatterTarget;
+			case FRIGHTENED:
+				target = scatterTarget; // target isn't used, but set the variable just in case!
+		}
 		return(target);
 	}
 	
@@ -113,140 +121,21 @@ class Enemy extends LayeredSprite
 		
 		if (x == borderX && y == borderY)
 		{
+			
 			var tileType:Int = DungeonWalls.getTile(tileX, tileY);
-	
 			if (tileType == 28 || tileType == 29)
 			{
-				switch(mode)
-				{
-					case ATTACK:
-						target = checkAI();
-					case SCATTER:
-						target = scatterTarget;
-					case FRIGHTENED:
-						target = scatterTarget; // target isn't used, but set the variable just in case!
-				}
 				
-				
-				var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
-				var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
-				var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
-				var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
-				
-				var distUp:Float = FlxU.getDistance(target, tileUp);
-				var distDown:Float = FlxU.getDistance(target, tileDown);
-				var distLeft:Float = FlxU.getDistance(target, tileLeft);
-				var distRight:Float = FlxU.getDistance(target, tileRight);
-		
-				#if debug
-				trace("distUp: " + distUp +
-					" distDown: " + distDown +
-					" distLeft: " + distLeft +
-					" distRight: " + distRight);
-				#end
-				
-				// Disallow squares that are occupied
-				if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0)
-				{
-					distUp = 9999;
-				}
-				if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0)
-				{
-					distDown = 9999;
-				}
-				if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0)
-				{
-					distLeft = 9999;
-				}
-				if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0)
-				{
-					distRight = 9999;
-				}
-				
-				// Disallow reversing
-				switch(facing)
-				{
-					case FlxObject.LEFT:
-						{
-							distRight = 9999;
-						}
-					case FlxObject.RIGHT:
-						{
-							distLeft = 9999;
-						}
-					case FlxObject.UP:
-						{
-							distDown = 9999;
-						}
-					case FlxObject.DOWN:
-						{
-							distUp = 9999;
-						}
-				}
-				
-				// In specific intersections, cannot go up
-				if (tileType == 29)
-				{
-					distUp = 9999;
-				}
-				
-				if (distRight <= distUp && distRight <= distLeft && distRight <= distDown)
-				{
-					facing = FlxObject.RIGHT;
-				}
-				if (distDown <= distUp && distDown <= distRight && distDown <= distLeft)
-				{
-					facing = FlxObject.DOWN;
-				}
-				if (distLeft <= distUp && distLeft <= distDown && distLeft <= distRight)
-				{
-					facing = FlxObject.LEFT;
-				}
-				if (distUp <= distLeft && distUp <= distRight && distUp <= distDown)
-				{
-					facing = FlxObject.UP;
-				}
-				
+				chooseFacing(tileType, tilePos);
 			}
 			else 
 			{	// At this point, we're not in an intersection.
 				// Check to see if we're about to bash into a wall.  If so, we're
 				// in a corner.
-				if (overlapsAt(x + velocity.x, y + velocity.y, DungeonWalls))
-				{
-					switch(facing)
-					{
-					case FlxObject.LEFT, FlxObject.RIGHT:
-						{
-							if (!overlapsAt(x, y + 2, DungeonWalls))
-							{
-								facing = FlxObject.DOWN;
-							}
-							else
-							{
-								facing = FlxObject.UP;
-							}
-						}
-					case FlxObject.UP, FlxObject.DOWN:
-						{
-							if (!overlapsAt(x + 2, y, DungeonWalls))
-							{
-								facing = FlxObject.RIGHT;
-							}
-							else
-							{
-								facing = FlxObject.LEFT;
-							}							
-
-						}
-					}	
-				
-				}
+				checkCorner();
 			}
 		}
-		
 
-		
 		// By this point we should have a Facing for our Enemy
 		velocity.x = 0;
 		velocity.y = 0;
@@ -279,6 +168,142 @@ class Enemy extends LayeredSprite
 		y += velocity.y;
 		
 		super.update();
+	}
+	
+	private function chooseFacing(tileType:Int, tilePos:FlxPoint):Void 
+	{
+		var distUp:Float;
+		var distDown:Float;
+		var distLeft:Float;
+		var distRight:Float;
+		
+		if (mode == FRIGHTENED) 
+		{
+			// If we're FRIGHTENED, then we want to choose a direction at random
+			// To fit in with the rest of the AI, give each distance variable a 
+			// random value.  Reversing will be prevented later.
+			distUp = FlxG.random();
+			distDown = FlxG.random();
+			distLeft = FlxG.random();
+			distRight = FlxG.random();
+		}
+		else
+		{
+			target = checkAI();
+			var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
+			var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
+			var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
+			var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
+			
+			distUp = FlxU.getDistance(target, tileUp);
+			distDown = FlxU.getDistance(target, tileDown);
+			distLeft = FlxU.getDistance(target, tileLeft);
+			distRight = FlxU.getDistance(target, tileRight);
+		
+			#if debug
+			trace("distUp: " + distUp +
+				" distDown: " + distDown +
+				" distLeft: " + distLeft +
+				" distRight: " + distRight);
+			#end
+			
+			// Disallow squares that are occupied
+			if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0)
+			{
+				distUp = 9999;
+			}
+			if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0)
+			{
+				distDown = 9999;
+			}
+			if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0)
+			{
+				distLeft = 9999;
+			}
+			if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0)
+			{
+				distRight = 9999;
+			}
+
+			// In specific intersections, cannot go up
+			if (tileType == 29)
+			{
+				distUp = 9999;
+			}
+		}
+		
+		// Disallow reversing
+		switch(facing)
+		{
+			case FlxObject.LEFT:
+				{
+					distRight = 9999;
+				}
+			case FlxObject.RIGHT:
+				{
+					distLeft = 9999;
+				}
+			case FlxObject.UP:
+				{
+					distDown = 9999;
+				}
+			case FlxObject.DOWN:
+				{
+					distUp = 9999;
+				}
+		}
+		
+		if (distRight <= distUp && distRight <= distLeft && distRight <= distDown)
+		{
+			facing = FlxObject.RIGHT;
+		}
+		if (distDown <= distUp && distDown <= distRight && distDown <= distLeft)
+		{
+			facing = FlxObject.DOWN;
+		}
+		if (distLeft <= distUp && distLeft <= distDown && distLeft <= distRight)
+		{
+			facing = FlxObject.LEFT;
+		}
+		if (distUp <= distLeft && distUp <= distRight && distUp <= distDown)
+						{
+			facing = FlxObject.UP;
+		}
+	
+	}
+	
+	private function checkCorner():Void 
+	{
+		if (overlapsAt(x + velocity.x, y + velocity.y, DungeonWalls))
+		{
+			switch(facing)
+			{
+			case FlxObject.LEFT, FlxObject.RIGHT:
+				{
+					if (!overlapsAt(x, y + 2, DungeonWalls))
+					{
+						facing = FlxObject.DOWN;
+					}
+					else
+					{
+						facing = FlxObject.UP;
+					}
+				}
+			case FlxObject.UP, FlxObject.DOWN:
+				{
+					if (!overlapsAt(x + 2, y, DungeonWalls))
+					{
+						facing = FlxObject.RIGHT;
+					}
+					else
+					{
+						facing = FlxObject.LEFT;
+					}							
+	
+				}
+			}	
+		
+		}
 	}
 	
 }
