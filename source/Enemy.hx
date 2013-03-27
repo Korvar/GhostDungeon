@@ -100,6 +100,16 @@ class Enemy extends LayeredSprite
 	
 	override public function update()
 	{
+		
+		if (FlxG.keys.justPressed("M"))
+		{
+			if (mode != FRIGHTENED)
+			{
+				reverse = true;
+			}
+			mode = (mode + 1) % 3; 
+		}
+		
 		if (reverse == true) 
 		{
 			// If there's a reverse directive... reverse!
@@ -205,6 +215,11 @@ class Enemy extends LayeredSprite
 		var distLeft:Float;
 		var distRight:Float;
 		
+		var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
+		var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
+		var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
+		var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
+		
 		if (mode == FRIGHTENED) 
 		{
 			// If we're FRIGHTENED, then we want to choose a direction at random
@@ -218,10 +233,7 @@ class Enemy extends LayeredSprite
 		else
 		{
 			target = checkAI();
-			var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
-			var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
-			var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
-			var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
+
 			
 			distUp = FlxU.getDistance(target, tileUp);
 			distDown = FlxU.getDistance(target, tileDown);
@@ -235,29 +247,29 @@ class Enemy extends LayeredSprite
 				" distRight: " + distRight);
 			#end
 			
-			// Disallow squares that are occupied
-			if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0)
-			{
-				distUp = 9999;
-			}
-			if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0)
-			{
-				distDown = 9999;
-			}
-			if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0)
-			{
-				distLeft = 9999;
-			}
-			if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0)
-			{
-				distRight = 9999;
-			}
-
 			// In specific intersections, cannot go up
 			if (tileType == 29)
 			{
 				distUp = 9999;
 			}
+		}
+		
+		// Disallow squares that are occupied
+		if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0)
+		{
+			distUp = 9999;
+		}
+		if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0)
+		{
+			distDown = 9999;
+		}
+		if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0)
+		{
+			distLeft = 9999;
+		}
+		if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0)
+		{
+			distRight = 9999;
 		}
 		
 		// Disallow reversing
