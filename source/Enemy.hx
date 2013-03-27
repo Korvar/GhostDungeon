@@ -107,7 +107,7 @@ class Enemy extends LayeredSprite
 			{
 				reverse = true;
 			}
-			mode = (mode + 1) % 3; 
+			mode = (mode + 1) % 3; // cycle through ATTACK, SCATTER and FRIGHTENED
 		}
 		#end
 		
