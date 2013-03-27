@@ -9,6 +9,7 @@ import org.flixel.FlxText;
 import org.flixel.FlxTilemap;
 import nme.Assets;
 import org.flixel.FlxG;
+import org.flixel.FlxU;
 import org.flixel.FlxCamera;
 
 /**
@@ -126,17 +127,17 @@ class PlayState extends FlxState
 
 	}
 	
-	override public function update()
+	override public function update():Void
 	{
+		
 		super.update();
+		
+		
+		var overlapFlag:Bool = FlxG.overlap(player, coins, coinCollect);
 
 		#if debug
 
-		var dPX = player.x - oldPX;
-		var dPY = player.y - oldPY;
-		
-		
-		if (player.overlaps(DungeonWalls))
+		if (overlapFlag)
 		{
 			tempTestText1.text = "Overlaps!";
 		}
@@ -145,28 +146,19 @@ class PlayState extends FlxState
 			tempTestText1.text = "Doesn't Overlap!";
 		}
 		
-		
-		var pBorderX = Std.int(player.x / 32) * 32;  // This is the 32-aligned "block" player is in.
-		var pBorderY = Std.int(player.y / 32) * 32;
-			
-		var pDiffX = Math.abs(player.x - pBorderX);
-		var pDiffY = Math.abs(player.y - pBorderY);
-		
-		//if (pDiffX <= 3)
-		//{
-			//x = Std.int(pBorderX);
-		//}
-		//if (pDiffY <= 3)
-		//{
-			//y = Std.int(pBorderY);
-		//}
-	
-		tempTestText2.text = "X: " + player.x + " Y: " + player.y + 
-			" pDX: " + pDiffX + " pDY: " + pDiffY;
-			
-		oldPX = player.x;
-		oldPY = player.y;
+
+		if (player.overlaps(coins))
+		{
+			tempTestText2.text = "Overlaps!";
+		}
+		else
+		{
+			tempTestText2.text = "Doesn't Overlap!";
+		}
+
 		#end 
+		
+		
 	}
 	
 	function setupCoins():FlxGroup
@@ -230,5 +222,19 @@ class PlayState extends FlxState
 		}
 		
 		return(coins);
+	}
+	
+	function resetCoins():Void
+	{
+		for (coin in coins.members)
+		{
+			coin.revive();
+		}
+	}
+	
+	private function coinCollect(player:FlxObject, coin:FlxObject):Void
+	{
+		coin.kill();
+		FlxG.score += 10;
 	}
 }

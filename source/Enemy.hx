@@ -37,7 +37,7 @@ class Enemy extends LayeredSprite
 	
 	var scatterTarget:FlxPoint; // In tile scale, the target of the enemy in SCATTER mode.
 	
-	var origin:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
+	var startPoint:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
 		
 
 	static private var runSpeed = 4;  // Needs to be a multiple of 2

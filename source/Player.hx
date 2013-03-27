@@ -31,6 +31,7 @@ class Player extends LayeredSprite
 		centerOffsets(false);
 		x = 448;
 		y = 544;
+		solid = true;
 		
 		#if debug
 		drawLine(x, y, x, y + height, 0xff0000, 2);

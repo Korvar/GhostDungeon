@@ -1,6 +1,8 @@
 package ;
 
+import org.flixel.FlxObject;
 import org.flixel.FlxSprite;
+import org.flixel.FlxG;
 
 /**
  * ...
@@ -15,6 +17,10 @@ class Coin extends FlxSprite
 		loadGraphic("assets/data/coin_gold.png", true, false, 32, 32);
 		addAnimation("spin", [0, 1, 2, 3, 4, 5, 6, 7], 16, true);
 		play("spin");
+		
+		moves = false;
+		solid = true;
 	}
+
 	
 }
