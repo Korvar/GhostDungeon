@@ -94,6 +94,10 @@ class PlayState extends FlxState
 		pinky = new Pinky(352, 416);
 		add(pinky);
 		add(pinky.layers);
+		
+		inky = new Inky(416, 416, blinky);
+		add(inky);
+		add(inky.layers);
 
 	}
 	
