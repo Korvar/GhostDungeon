@@ -18,6 +18,7 @@ class Blinky extends Enemy
 		scatterTarget = new FlxPoint(28, -3);
 
 		layers = ["assets/data/Player/head/cloth_hood_male.png",
+			"assets/data/Player/body/male/eyes/red.png",
 			"assets/data/Player/belt/rope_male.png",
 			"assets/data/Player/torso/brown_shirt_male.png",
 			"assets/data/Player/legs/robe_skirt_male.png",
