@@ -67,8 +67,8 @@ class Inky extends Enemy
 					blinkyPos.x = FlxU.floor(blinkyPos.x / 32);
 					blinkyPos.y = FlxU.floor(blinkyPos.y / 32);
 					
-					vector.x = pivot.x - blinky.x;
-					vector.y = pivot.y - blinky.y;
+					vector.x = pivot.x - blinkyPos.x;
+					vector.y = pivot.y - blinkyPos.y;
 					
 					target.x = pivot.x + vector.x;
 					target.y = pivot.y + vector.y;
