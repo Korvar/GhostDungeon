@@ -59,7 +59,7 @@ class PlayState extends FlxState
 		
 		FlxG.width = 640;
 		FlxG.height = 480;
-		FlxG.worldBounds = new FlxRect(-DungeonWalls.width, -DungeonWalls.height, DungeonWalls.width, DungeonWalls.height);		
+		// FlxG.worldBounds = new FlxRect(-DungeonWalls.width, -DungeonWalls.height, DungeonWalls.width, DungeonWalls.height);		
 		
 		add(DungeonWalls);
 				
@@ -73,7 +73,7 @@ class PlayState extends FlxState
 
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		FlxG.camera.bounds = new FlxRect(0, 0, DungeonWalls.width, DungeonWalls.height);
+		FlxG.camera.setBounds(0, 0, DungeonWalls.width, DungeonWalls.height, true);
 		
 		#if debug
 		tempTestText1 = new FlxText(0, 0, FlxG.width, "", 20);
@@ -236,5 +236,6 @@ class PlayState extends FlxState
 	{
 		coin.kill();
 		FlxG.score += 10;
+		FlxG.play("assets/data/completetask_0.mp3");
 	}
 }
