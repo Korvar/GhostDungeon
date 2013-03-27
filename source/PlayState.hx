@@ -28,10 +28,10 @@ class PlayState extends FlxState
 	
 	public var player:Player;
 	
-	var Blinky:Enemy;
-	var Pinky:Enemy;
-	var Inky:Enemy;
-	var Clyde:Enemy;
+	var blinky:Blinky;
+	var pinky:Enemy;
+	var inky:Enemy;
+	var clyde:Enemy;
 	
 	public var DungeonWalls:FlxTilemap;
 	
@@ -87,11 +87,10 @@ class PlayState extends FlxState
 		oldPY = player.y;
 		#end 
 		
-		Blinky = setupBlinky();
-		add(Blinky);
-		add(Blinky.layers);
+		blinky = new Blinky(448, 352);
+		add(blinky);
+		add(blinky.layers);
 
-		
 	}
 	
 	
@@ -118,24 +117,6 @@ class PlayState extends FlxState
 
 	}
 	
-	function setupBlinky():Enemy
-	{
-		var Blinky:Enemy;
-		var layers:Array<String>;
-
-		layers = ["assets/data/Player/head/cloth_hood_male.png",
-			"assets/data/Player/belt/rope_male.png",
-			"assets/data/Player/torso/brown_shirt_male.png",
-			"assets/data/Player/legs/robe_skirt_male.png",
-			"assets/data/Player/body/male/skeleton.png"];
-		
-		Blinky = new Enemy(448, 352, null, layers, 64, 64);
-		
-		return Blinky;
-	}
-	
-
-
 	override public function update()
 	{
 		super.update();

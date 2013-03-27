@@ -100,42 +100,70 @@ class Enemy extends LayeredSprite
 	
 	override public function update()
 	{
-		// Let's have a look at what tile we're in
-		var tileX = FlxU.floor(x / 32);
-		var tileY = FlxU.floor(y / 32);
-		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
-		
-		// Nearest tile border
-		var borderX = FlxU.round(x / 32) * 32;
-		var borderY = FlxU.round(y / 32) * 32;
-		
-		if (FlxU.abs(x - borderX) < 2)
+		if (reverse == true) 
 		{
-			x = borderX;
-		}
-		
-		if (FlxU.abs(y - borderY) < 2)
-		{
-			y = borderY;
-		}
-		
-		if (x == borderX && y == borderY)
-		{
+			// If there's a reverse directive... reverse!
+			switch(facing)
+			{
+				case FlxObject.LEFT:
+					{
+						facing = FlxObject.RIGHT;
+					}
+				case FlxObject.RIGHT:
+					{
+						facing = FlxObject.LEFT;
+					}
+				case FlxObject.UP:
+					{
+						facing = FlxObject.DOWN;
+					}
+				case FlxObject.DOWN:
+					{
+						facing = FlxObject.UP;
+					}
+			}
 			
-			var tileType:Int = DungeonWalls.getTile(tileX, tileY);
-			if (tileType == 28 || tileType == 29)
+			reverse = false;
+		}
+		else
+		{
+			// Let's have a look at what tile we're in
+			var tileX = FlxU.floor(x / 32);
+			var tileY = FlxU.floor(y / 32);
+			var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
+			
+			// Nearest tile border
+			var borderX = FlxU.round(x / 32) * 32;
+			var borderY = FlxU.round(y / 32) * 32;
+			
+			if (FlxU.abs(x - borderX) < 2)
+			{
+				x = borderX;
+			}
+			
+			if (FlxU.abs(y - borderY) < 2)
+			{
+				y = borderY;
+			}
+			
+			if (x == borderX && y == borderY)
 			{
 				
-				chooseFacing(tileType, tilePos);
+				var tileType:Int = DungeonWalls.getTile(tileX, tileY);
+				if (tileType == 28 || tileType == 29)
+				{
+					
+					chooseFacing(tileType, tilePos);
+				}
+				else 
+				{	// At this point, we're not in an intersection.
+					// Check to see if we're about to bash into a wall.  If so, we're
+					// in a corner.
+					checkCorner();
+				}
 			}
-			else 
-			{	// At this point, we're not in an intersection.
-				// Check to see if we're about to bash into a wall.  If so, we're
-				// in a corner.
-				checkCorner();
-			}
+		
 		}
-
 		// By this point we should have a Facing for our Enemy
 		velocity.x = 0;
 		velocity.y = 0;
@@ -269,7 +297,6 @@ class Enemy extends LayeredSprite
 						{
 			facing = FlxObject.UP;
 		}
-	
 	}
 	
 	private function checkCorner():Void 
@@ -299,11 +326,8 @@ class Enemy extends LayeredSprite
 					{
 						facing = FlxObject.LEFT;
 					}							
-	
 				}
 			}	
-		
 		}
 	}
-	
 }
