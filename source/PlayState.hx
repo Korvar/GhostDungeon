@@ -56,6 +56,7 @@ class PlayState extends FlxState
 		// Because I didn't set up my tilemap 100% properly, set some tile properties.
 		DungeonWalls.setTileProperties(28, FlxObject.NONE); // Intersection
 		DungeonWalls.setTileProperties(29, FlxObject.NONE); // Intersection where the enemies won't go up.
+		DungeonWalls.setTileProperties(30, FlxObject.NONE); // Monsters are slow
 		
 		FlxG.width = 640;
 		FlxG.height = 480;

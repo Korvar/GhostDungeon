@@ -40,7 +40,7 @@ class Enemy extends LayeredSprite
 	var startPoint:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
 		
 
-	static private var runSpeed = 4;  // Needs to be a multiple of 2
+	static private var runSpeed = 3.8;  // Needs to be a multiple of 2
 	static private var margin = 1; 
 	static private var size = 32;
 
@@ -127,6 +127,7 @@ class Enemy extends LayeredSprite
 		var borderX = FlxU.round(x / 32) * 32;
 		var borderY = FlxU.round(y / 32) * 32;
 		
+		// Snap to tile border
 		if (FlxU.abs(x - borderX) < 2)
 		{
 			x = borderX;
@@ -213,6 +214,16 @@ class Enemy extends LayeredSprite
 		x += velocity.x;
 		y += velocity.y;
 		
+		// Teleporter!
+		if (x > 896)
+		{
+			x = -32;
+		}
+		else if (x < -32)
+		{	
+			x = 896;
+		}
+		
 		super.update();
 	}
 	
@@ -263,19 +274,27 @@ class Enemy extends LayeredSprite
 		}
 		
 		// Disallow squares that are occupied
-		if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0)
+		if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0
+			&&
+			DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 30)
 		{
 			distUp = 9999;
 		}
-		if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0)
+		if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0
+			&&
+			DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 30)
 		{
 			distDown = 9999;
 		}
-		if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0)
+		if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0
+			&&
+			DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 30)
 		{
 			distLeft = 9999;
 		}
-		if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0)
+		if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0
+			&&
+			DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 30)
 		{
 			distRight = 9999;
 		}
@@ -317,6 +336,8 @@ class Enemy extends LayeredSprite
 						{
 			facing = FlxObject.UP;
 		}
+		
+
 	}
 	
 	private function checkCorner():Void 
