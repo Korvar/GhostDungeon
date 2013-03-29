@@ -18,8 +18,6 @@ import org.flixel.FlxCamera;
  */
 class PlayState extends FlxState
 {
-
-	
 	#if debug
 	var tempTestText1:FlxText;
 	var tempTestText2:FlxText;	
@@ -39,6 +37,11 @@ class PlayState extends FlxState
 	var coins:FlxGroup;
 	var powerPills:FlxGroup;
 	
+	var mode:Int;
+	
+	var dotsLeft:Int;
+	var dotsEaten:Int;
+	
 	public function new() 
 	{
 		super();
@@ -46,8 +49,6 @@ class PlayState extends FlxState
 	
 	override public function create():Void
 	{
-		var tileInstances:Array<Int>;
-		
 		FlxG.mouse.hide();
 		
 		// Load the tilemap
@@ -60,12 +61,12 @@ class PlayState extends FlxState
 		
 		FlxG.width = 640;
 		FlxG.height = 480;
-		// FlxG.worldBounds = new FlxRect(-DungeonWalls.width, -DungeonWalls.height, DungeonWalls.width, DungeonWalls.height);		
 		
 		add(DungeonWalls);
 				
 		coins = setupCoins();
 		add(coins);
+		dotsLeft = coins.countLiving();
 		
 		player = setUpPlayer();
 
@@ -90,8 +91,9 @@ class PlayState extends FlxState
 		#end 
 		
 		blinky = new Blinky(448, 352);
-		add(blinky);
 		add(blinky.layers);
+		add(blinky);
+
 		
 		pinky = new Pinky(352, 416);
 		add(pinky);
@@ -101,6 +103,12 @@ class PlayState extends FlxState
 		inky = new Inky(448, 352, blinky);
 		add(inky);
 		add(inky.layers);
+		
+		clyde = new Clyde(512, 416);
+		add(clyde);
+		add(clyde.layers);
+		
+		mode = Enemy.SCATTER;
 
 	}
 	
@@ -137,25 +145,36 @@ class PlayState extends FlxState
 		var overlapFlag:Bool = FlxG.overlap(player, coins, coinCollect);
 
 		#if debug
+		
+		
 
-		if (overlapFlag)
+		if (FlxG.keys.justPressed("M"))
 		{
-			tempTestText1.text = "Overlaps!";
+			mode = (mode + 1) % 3; // cycle through ATTACK, SCATTER and FRIGHTENED
+			for (enemy in [blinky, inky, pinky, clyde])
+			{
+				enemy.setMode(mode);
+			}
 		}
-		else
+
+		switch(mode)
 		{
-			tempTestText1.text = "Doesn't Overlap!";
+				case Enemy.ATTACK:
+					tempTestText1.text = "ATTACK!";
+				case Enemy.SCATTER:
+					tempTestText1.text = "SCATTER!";
+				case Enemy.FRIGHTENED:
+					tempTestText1.text = "FRIGHTENED!";
+				case Enemy.CAGED:
+					tempTestText1.text = "CAGED!";
+				case Enemy.RELEASED:
+					tempTestText1.text = "RELEASED!";
+				case Enemy.DEAD:
+					tempTestText1.text = "DEAD!";
 		}
 		
 
-		if (player.overlaps(coins))
-		{
-			tempTestText2.text = "Overlaps!";
-		}
-		else
-		{
-			tempTestText2.text = "Doesn't Overlap!";
-		}
+		tempTestText2.text = Std.string(FlxG.score) + " " + Std.string(coins.countLiving()) + " " + Std.string(coins.countDead());
 
 		#end 
 		

@@ -17,12 +17,12 @@ class Inky extends Enemy
 	
 	public function new(X:Float=0, Y:Float=0, myBlinky:Blinky) 
 	{
-		var layers:Array<String>;
+		var inkyLayers:Array<String>;
 		
 		scatterTarget = new FlxPoint(28, 33);
 		blinky = myBlinky;
 
-		layers = [
+		inkyLayers = [
 			"assets/data/Player/body/male/eyes/red.png",
 			"assets/data/Player/belt/leather_male.png",
 			"assets/data/Player/head/leather_cap_male.png",
@@ -31,7 +31,11 @@ class Inky extends Enemy
 			"assets/data/Player/behind_body/quiver.png",
 			];
 		
-		super(X, Y, null, layers, 64, 64);
+		#if debug
+		targetColour = 0xFF00FFFF;
+		#end		
+			
+		super(X, Y, null, inkyLayers, 64, 64);
 	}
 	
 	override function checkAI():FlxPoint

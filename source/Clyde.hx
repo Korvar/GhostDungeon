@@ -12,16 +12,20 @@ class Clyde extends Enemy
 
 public function new(X:Float=0, Y:Float=0) 
 	{
-		var layers:Array<String>;
+		var clydeLayers:Array<String>;
 		
 		scatterTarget = new FlxPoint(3, 36);
 
-		layers = [
+		clydeLayers = [
 			"assets/data/Player/body/male/eyes/red.png",
 			"assets/data/Player/body/male/skeleton.png"
 			];
 		
-		super(X, Y, null, layers, 64, 64);
+		#if debug
+		targetColour = 0xFFCC3232;
+		#end
+			
+		super(X, Y, null, clydeLayers, 64, 64);
 		
 	}
 	

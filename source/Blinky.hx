@@ -2,6 +2,7 @@ package ;
 import org.flixel.FlxPoint;
 import org.flixel.FlxG;
 import org.flixel.FlxU;
+import org.flixel.FlxText;
 
 /**
  * ...
@@ -10,21 +11,42 @@ import org.flixel.FlxU;
 class Blinky extends Enemy
 {
 	var cruiseElroy:Bool = false;
+	
+	#if debug
+	var tempTestText1:FlxText;
+	var tempTestText2:FlxText;	
+	#end	
 
 	public function new(X:Float=0, Y:Float=0) 
 	{
-		var layers:Array<String>;
+		var blinkyLayers:Array<String>;
 		
-		scatterTarget = new FlxPoint(28, -3);
+		scatterTarget = new FlxPoint(26, -3);
 
-		layers = ["assets/data/Player/head/cloth_hood_male.png",
+		blinkyLayers = ["assets/data/Player/head/cloth_hood_male.png",
 			"assets/data/Player/body/male/eyes/red.png",
 			"assets/data/Player/belt/rope_male.png",
 			"assets/data/Player/torso/brown_shirt_male.png",
 			"assets/data/Player/legs/robe_skirt_male.png",
 			"assets/data/Player/body/male/skeleton.png"];
+			
+		#if debug
+		targetColour = 0xFFFF0000;
+		#end
 		
-		super(X, Y, null, layers, 64, 64);
+
+		
+		super(X, Y, null, blinkyLayers, 64, 64);
+		
+		#if debug
+		tempTestText1 = new FlxText(0, FlxG.height - 60, FlxG.width, "", 20);
+		tempTestText2 = new FlxText(0, FlxG.height - 30, FlxG.width, "", 20);
+		
+		tempTestText1.color = tempTestText2.color = 0xffffff;
+		tempTestText1.scrollFactor = tempTestText2.scrollFactor = new FlxPoint(0,0);
+		FlxG.state.add(tempTestText1);
+		FlxG.state.add(tempTestText2);
+		#end
 		
 	}
 	
@@ -60,7 +82,38 @@ class Blinky extends Enemy
 			case Enemy.FRIGHTENED:
 				target = scatterTarget; // target isn't used, but set the variable just in case!
 		}
+		
+		#if debug
+		var tileX = FlxU.floor(x / 32);
+		var tileY = FlxU.floor(y / 32);
+		tempTestText1.text = Std.string(tileX) + " " + Std.string(tileY) + " -> " + Std.string(target.x) + " " + Std.string(target.y);
+		#end
+		
 		return(target);
 	}
 	
+	#if debug
+	override private function chooseFacing(tileType:Int, tilePos:FlxPoint):Void
+	{
+		super.chooseFacing(tileType, tilePos);
+		
+		var distUp:Float;
+		var distDown:Float;
+		var distLeft:Float;
+		var distRight:Float;
+		
+		var tileUp:FlxPoint = new FlxPoint(tilePos.x, tilePos.y - 1);
+		var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
+		var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
+		var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
+		
+		distUp = FlxU.getDistance(target, tileUp);
+		distDown = FlxU.getDistance(target, tileDown);
+		distLeft = FlxU.getDistance(target, tileLeft);
+		distRight = FlxU.getDistance(target, tileRight);
+		
+		tempTestText2.text = FlxU.formatArray([FlxU.roundDecimal(distUp,2), FlxU.roundDecimal(distDown,2), FlxU.roundDecimal(distLeft,2), FlxU.roundDecimal(distRight,2)]);
+		
+	}
+	#end
 }

@@ -17,11 +17,12 @@ class Enemy extends LayeredSprite
 {
 	var DungeonWalls:FlxTilemap;
 	
-	static var ATTACK:Int = 0;
-	static var SCATTER:Int = 1;
-	static var FRIGHTENED:Int = 2;
-	static var CAGED:Int = 3;
-	static var DEAD:Int = 4;
+	static public var ATTACK:Int = 0;
+	static public var SCATTER:Int = 1;
+	static public var FRIGHTENED:Int = 2;
+	static public var CAGED:Int = 3;
+	static public var RELEASED:Int = 4;
+	static public var DEAD:Int = 5;
 	
 	static var speed = 4;
 	
@@ -38,9 +39,13 @@ class Enemy extends LayeredSprite
 	var scatterTarget:FlxPoint; // In tile scale, the target of the enemy in SCATTER mode.
 	
 	var startPoint:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
+	
+	#if debug
+	var targetSprite:FlxSprite;
+	var targetColour:Int;
+	#end
 		
 
-	static private var runSpeed = 3.8;  // Needs to be a multiple of 2
 	static private var margin = 1; 
 	static private var size = 32;
 
@@ -59,13 +64,6 @@ class Enemy extends LayeredSprite
 		
 		origin = new FlxPoint(FlxU.floor(X), FlxU.floor(Y));
 		
-		#if debug
-		drawLine(x, y, x, y + height, 0xff0000, 2);
-		drawLine(x, y + height, x + width, y + height, 0xff0000, 2);
-		drawLine(x + width, y + height, x + width, y, 0xff0000, 2);
-		drawLine(x + width, y, x, y, 0xff0000, 2);
-		#end
-	
 		for (layer in layers.members)
 		{
 			var tmpSprite = cast(layer, FlxSprite);
@@ -76,6 +74,14 @@ class Enemy extends LayeredSprite
 		}
 		
 		moves = false; // Don't use the standard moving code
+		
+		#if debug
+		targetSprite = new FlxSprite(448, 352);
+		targetSprite.makeGraphic(32, 32, targetColour);
+		FlxG.state.add(targetSprite);
+		targetSprite.solid = false;
+		targetSprite.moves = false;
+		#end
 	}
 	
 	
@@ -106,28 +112,12 @@ class Enemy extends LayeredSprite
 	
 	override public function update()
 	{
-		#if debug
-		if (FlxG.keys.justPressed("M"))
-		{
-			if (mode != FRIGHTENED)
-			{
-				reverse = true;
-			}
-			mode = (mode + 1) % 3; // cycle through ATTACK, SCATTER and FRIGHTENED
-		}
-		#end
-		
 
-		// Let's have a look at what tile we're in
-		var tileX = FlxU.floor(x / 32);
-		var tileY = FlxU.floor(y / 32);
-		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
-		
+		// Snap to tile border	
 		// Nearest tile border
-		var borderX = FlxU.round(x / 32) * 32;
-		var borderY = FlxU.round(y / 32) * 32;
-		
-		// Snap to tile border
+		var borderX = FlxU.round(x / 32.0) * 32;
+		var borderY = FlxU.round(y / 32.0) * 32;
+
 		if (FlxU.abs(x - borderX) < 2)
 		{
 			x = borderX;
@@ -137,6 +127,11 @@ class Enemy extends LayeredSprite
 		{
 			y = borderY;
 		}
+		
+		// Let's have a look at what tile we're in
+		var tileX = FlxU.floor(x / 32);
+		var tileY = FlxU.floor(y / 32);
+		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
 		
 		if (x == borderX && y == borderY) // i.e. we've just entered a tile
 		{
@@ -252,8 +247,11 @@ class Enemy extends LayeredSprite
 		else
 		{
 			target = checkAI();
+			#if debug
+			targetSprite.x = tilePos.x * 32;
+			targetSprite.y = tilePos.y * 32;
+			#end
 
-			
 			distUp = FlxU.getDistance(target, tileUp);
 			distDown = FlxU.getDistance(target, tileDown);
 			distLeft = FlxU.getDistance(target, tileLeft);
@@ -274,27 +272,19 @@ class Enemy extends LayeredSprite
 		}
 		
 		// Disallow squares that are occupied
-		if (DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 0
-			&&
-			DungeonWalls.getTile(FlxU.floor(tileUp.x), FlxU.floor(tileUp.y)) != 30)
+		if (overlapsAt(x, y - 32, DungeonWalls))
 		{
 			distUp = 9999;
 		}
-		if (DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 0
-			&&
-			DungeonWalls.getTile(FlxU.floor(tileDown.x), FlxU.floor(tileDown.y)) != 30)
+		if (overlapsAt(x, y + 32, DungeonWalls))		
 		{
 			distDown = 9999;
 		}
-		if (DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 0
-			&&
-			DungeonWalls.getTile(FlxU.floor(tileLeft.x), FlxU.floor(tileLeft.y)) != 30)
+		if (overlapsAt(x - 32, y, DungeonWalls))
 		{
 			distLeft = 9999;
 		}
-		if (DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 0
-			&&
-			DungeonWalls.getTile(FlxU.floor(tileRight.x), FlxU.floor(tileRight.y)) != 30)
+		if (overlapsAt(x + 32, y, DungeonWalls))
 		{
 			distRight = 9999;
 		}
@@ -333,7 +323,7 @@ class Enemy extends LayeredSprite
 			facing = FlxObject.LEFT;
 		}
 		if (distUp <= distLeft && distUp <= distRight && distUp <= distDown)
-						{
+		{
 			facing = FlxObject.UP;
 		}
 		
@@ -370,5 +360,14 @@ class Enemy extends LayeredSprite
 				}
 			}	
 		}
+	}
+	
+	public function setMode(Mode:Int)
+	{
+		if (mode != FRIGHTENED)
+		{
+			reverse = true;
+		}
+		mode = Mode;
 	}
 }
