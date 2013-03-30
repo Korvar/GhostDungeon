@@ -32,6 +32,8 @@ class PlayState extends FlxState
 	var inky:Enemy;
 	var clyde:Enemy;
 	
+	var enemies:FlxGroup;
+	
 	public var DungeonWalls:FlxTilemap;
 	
 	var coins:FlxGroup;
@@ -90,23 +92,27 @@ class PlayState extends FlxState
 		oldPY = player.y;
 		#end 
 		
+		enemies = new FlxGroup();
+		
 		blinky = new Blinky(448, 352);
-		add(blinky.layers);
-		add(blinky);
+		enemies.add(blinky.layers);
+		enemies.add(blinky);
 
 		
 		pinky = new Pinky(352, 416);
-		add(pinky);
-		add(pinky.layers);
+		enemies.add(pinky);
+		enemies.add(pinky.layers);
 		
 		// inky = new Inky(416, 416, blinky);
 		inky = new Inky(448, 352, blinky);
-		add(inky);
-		add(inky.layers);
+		enemies.add(inky);
+		enemies.add(inky.layers);
 		
 		clyde = new Clyde(512, 416);
-		add(clyde);
-		add(clyde.layers);
+		enemies.add(clyde);
+		enemies.add(clyde.layers);
+		
+		add(enemies);
 		
 		mode = Enemy.SCATTER;
 

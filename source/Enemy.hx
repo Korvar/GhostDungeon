@@ -30,7 +30,7 @@ class Enemy extends LayeredSprite
 	
 	var player:Player;  // Used to get various bits of information about the player for AI purposes
 	
-	var mode:Int;  // Which mode the enemy is in, ATTACK, SCATTER or FRIGHTENED
+	var mode:Int;  // Which mode the enemy is in, ATTACK, SCATTER, FRIGHTENED etc.
 	
 	var reverse:Bool;  // Whether there is a "reverse" directive
 	
@@ -38,7 +38,8 @@ class Enemy extends LayeredSprite
 	
 	var scatterTarget:FlxPoint; // In tile scale, the target of the enemy in SCATTER mode.
 	
-	var startPoint:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
+	var startPoint:FlxPoint; // in game scale, the origin of the enemy.
+	var startTile:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
 	
 	#if debug
 	var targetSprite:FlxSprite;
@@ -59,10 +60,11 @@ class Enemy extends LayeredSprite
 		width = size;
 		height = size;
 		centerOffsets(false);
-		mode = SCATTER;
+		mode = CAGED;
 		
 		
-		origin = new FlxPoint(FlxU.floor(X), FlxU.floor(Y));
+		startPoint = new FlxPoint(FlxU.floor(X), FlxU.floor(Y));
+		startTile = new FlxPoint(FlxU.floor(X / 32), FlxU.floor(Y / 32));
 		
 		for (layer in layers.members)
 		{

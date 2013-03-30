@@ -38,6 +38,8 @@ class Blinky extends Enemy
 		
 		super(X, Y, null, blinkyLayers, 64, 64);
 		
+		mode = Enemy.SCATTER;
+		
 		#if debug
 		tempTestText1 = new FlxText(0, FlxG.height - 60, FlxG.width, "", 20);
 		tempTestText2 = new FlxText(0, FlxG.height - 30, FlxG.width, "", 20);
