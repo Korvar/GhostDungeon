@@ -156,18 +156,13 @@ class PlayState extends FlxState
 		
 		
 		var overlapFlag:Bool = FlxG.overlap(player, coins, coinCollect);
-
+		FlxG.overlap(player, powerPills, pillCollect);
+		
 		#if debug
-		
-		
-
 		if (FlxG.keys.justPressed("M"))
 		{
-			mode = (mode + 1) % 3; // cycle through ATTACK, SCATTER and FRIGHTENED
-			for (enemy in [blinky, inky, pinky, clyde])
-			{
-				enemy.setMode(mode);
-			}
+			// cycle through ATTACK, SCATTER and FRIGHTENED
+			setMode((mode + 1) % 3);
 		}
 		
 		if (FlxG.keys.justPressed("R"))
@@ -283,6 +278,14 @@ class PlayState extends FlxState
 		FlxG.play("assets/data/completetask_0.mp3");
 	}
 	
+	private function pillCollect(player:FlxObject, pill:FlxObject):Void
+	{
+		pill.kill();
+		FlxG.score += 50;
+		FlxG.play("assets/data/completetask_0.mp3");
+		setMode(Enemy.FRIGHTENED);
+	}
+	
 	private function setupPowerPills()
 	{
 		var powerPills:FlxGroup = new FlxGroup();
@@ -296,5 +299,14 @@ class PlayState extends FlxState
 			powerPills.add(pill);
 		}
 		return powerPills;
+	}
+	
+	private function setMode(Mode:Int):Void 
+	{
+		mode = Mode;
+		for (enemy in [blinky, inky, pinky, clyde])
+		{
+			enemy.setMode(Mode);
+		}
 	}
 }
