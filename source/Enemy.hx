@@ -452,4 +452,9 @@ class Enemy extends LayeredSprite
 		moves = false;
 		facing = FlxObject.LEFT;
 	}
+	
+	public function getMode():Int
+	{
+		return mode;
+	}
 }

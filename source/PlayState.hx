@@ -44,6 +44,8 @@ class PlayState extends FlxState
 	var dotsLeft:Int;
 	var dotsEaten:Int;
 	
+	var enemyKillScore:Int = 200;
+	
 	public function new() 
 	{
 		super();
@@ -98,21 +100,22 @@ class PlayState extends FlxState
 		enemies = new FlxGroup();
 		
 		blinky = new Blinky(448, 352);
-		enemies.add(blinky.layers);
+		add(blinky.layers); //The layers get added to the Playstate, but not the enemies list.
+							// Otherwise they will collide with the player and that would be a pain.
 		enemies.add(blinky);
 		
 		pinky = new Pinky(416, 448);
 		enemies.add(pinky);
-		enemies.add(pinky.layers);
+		add(pinky.layers);
 		
 		// inky = new Inky(416, 416, blinky);
 		inky = new Inky(448, 448, blinky);
 		enemies.add(inky);
-		enemies.add(inky.layers);
+		add(inky.layers);
 		
 		clyde = new Clyde(512, 416);
 		enemies.add(clyde);
-		enemies.add(clyde.layers);
+		add(clyde.layers);
 		
 		add(enemies);
 		FlxG.watch(clyde, "mode");
@@ -155,8 +158,9 @@ class PlayState extends FlxState
 		super.update();
 		
 		
-		var overlapFlag:Bool = FlxG.overlap(player, coins, coinCollect);
+		FlxG.overlap(player, coins, coinCollect);
 		FlxG.overlap(player, powerPills, pillCollect);
+		FlxG.overlap(player, enemies, enemyCollide);
 		
 		#if debug
 		if (FlxG.keys.justPressed("M"))
@@ -284,6 +288,7 @@ class PlayState extends FlxState
 		FlxG.score += 50;
 		FlxG.play("assets/data/completetask_0.mp3");
 		setMode(Enemy.FRIGHTENED);
+		enemyKillScore = 200;
 	}
 	
 	private function setupPowerPills()
@@ -307,6 +312,17 @@ class PlayState extends FlxState
 		for (enemy in [blinky, inky, pinky, clyde])
 		{
 			enemy.setMode(Mode);
+		}
+	}
+	
+	private function enemyCollide(player:FlxObject, enemyObject:FlxObject):Void
+	{
+		var enemy:Enemy = cast(enemyObject, Enemy);
+		if (mode == Enemy.FRIGHTENED && enemy.getMode() != Enemy.DEAD)
+		{
+			  enemy.setMode(Enemy.DEAD);
+			  FlxG.score += enemyKillScore;
+			  enemyKillScore *= 2;
 		}
 	}
 }
