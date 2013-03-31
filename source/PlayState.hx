@@ -26,6 +26,7 @@ class PlayState extends FlxState
 	#end	
 	
 	public var player:Player;
+	var playerKilled:Bool = false;
 	
 	var blinky:Blinky;
 	var pinky:Pinky;
@@ -323,6 +324,21 @@ class PlayState extends FlxState
 			  enemy.setMode(Enemy.DEAD);
 			  FlxG.score += enemyKillScore;
 			  enemyKillScore *= 2;
+		}
+		else if (enemy.getMidpoint() != Enemy.DEAD && playerKilled == false)
+		{
+			playerKilled = true;
+			player.hurt();
+			if (player.alive())
+			{
+				// reset level
+			}
+			else
+			{
+				// game over!
+				// FlxG.switchState(GameOverState);
+			}
+			
 		}
 	}
 }
