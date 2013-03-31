@@ -70,6 +70,9 @@ class PlayState extends FlxState
 		add(coins);
 		dotsLeft = coins.countLiving();
 		
+		powerPills = setupPowerPills();
+		add(powerPills);
+		
 		player = setUpPlayer();
 
 		add(player.layers);
@@ -112,12 +115,12 @@ class PlayState extends FlxState
 		enemies.add(clyde.layers);
 		
 		add(enemies);
-		FlxG.watch(inky, "mode");
-		FlxG.watch(inky, "x");
-		FlxG.watch(inky, "y");
-		FlxG.watch(inky, "pathSpeed");
-		FlxG.watch(inky, "pathAngle");
-		FlxG.watch(inky, "path");
+		FlxG.watch(clyde, "mode");
+		FlxG.watch(clyde, "x");
+		FlxG.watch(clyde, "y");
+		FlxG.watch(clyde, "pathSpeed");
+		FlxG.watch(clyde, "pathAngle");
+		FlxG.watch(clyde, "path");
 		mode = Enemy.SCATTER;
 
 	}
@@ -252,10 +255,6 @@ class PlayState extends FlxState
 		{
 			coin = new Coin(coinsPos[i][0], coinsPos[i][1]);
 			coins.add(coin);
-			#if debug
-			trace(i);
-			trace(coinsPos[i][0] + " " + coinsPos[i][1]);
-			#end
 		}
 		
 		return(coins);
@@ -282,5 +281,20 @@ class PlayState extends FlxState
 		coin.kill();
 		FlxG.score += 10;
 		FlxG.play("assets/data/completetask_0.mp3");
+	}
+	
+	private function setupPowerPills()
+	{
+		var powerPills:FlxGroup = new FlxGroup();
+		var pillsPos:Array<Array<Int>>;
+		var pill:FlxSprite; 
+		
+		pillsPos = [[832, 736], [32, 736], [832, 96], [32, 96]];
+		for (i in 0...pillsPos.length)
+		{
+			pill = new Crystal(pillsPos[i][0],  pillsPos[i][1]);
+			powerPills.add(pill);
+		}
+		return powerPills;
 	}
 }

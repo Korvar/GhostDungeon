@@ -115,7 +115,7 @@ class Enemy extends LayeredSprite
 	{
 		
 		#if debug
-		if (FlxG.keys.justPressed(modeKey) && !FlxG.keys.SHIFT)
+		if (FlxG.keys.justPressed(modeKey) && !FlxG.keys.SHIFT && !FlxG.keys.CONTROL)
 		{
 			mode = (mode + 1) % 7; // cycle through all modes
 		}
@@ -123,6 +123,11 @@ class Enemy extends LayeredSprite
 		if (FlxG.keys.justPressed(modeKey) && FlxG.keys.SHIFT && mode == CAGED)
 		{
 			mode = RELEASED;
+		}
+		
+		if (FlxG.keys.justPressed(modeKey) && FlxG.keys.CONTROL)
+		{
+			mode = DEAD;
 		}
 		
 		#end
@@ -178,8 +183,16 @@ class Enemy extends LayeredSprite
 					facing = FlxObject.RIGHT;
 				if (x == 448 && y > 352)
 					facing = FlxObject.UP;
-				targetSprite.x = x;
-				targetSprite.y = y;
+			}
+			
+			if (mode == INCOMING)
+			{
+				if (x == 448 && y  < startPoint.y)
+					facing = FlxObject.DOWN;
+				if (y == startPoint.y && x > startPoint.x)
+					facing = FlxObject.LEFT;
+				if (y == startPoint.y && x < startPoint.x)
+					facing = FlxObject.RIGHT;
 			}
 			
 			if (reverse == true && mode <= 2) // ATTACK, SCATTER, FRIGHTENED
