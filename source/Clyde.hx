@@ -27,6 +27,9 @@ public function new(X:Float=0, Y:Float=0)
 			
 		super(X, Y, null, clydeLayers, 64, 64);
 		
+		#if debug
+		modeKey = "C";
+		#end
 	}
 	
 	
@@ -66,6 +69,8 @@ public function new(X:Float=0, Y:Float=0)
 				target = scatterTarget;
 			case Enemy.FRIGHTENED:
 				target = scatterTarget; // target isn't used, but set the variable just in case!
+			case Enemy.DEAD:
+				target = super.checkAI();
 		}
 		return(target);
 	}

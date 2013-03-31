@@ -36,6 +36,10 @@ class Inky extends Enemy
 		#end		
 			
 		super(X, Y, null, inkyLayers, 64, 64);
+		
+		#if debug
+		modeKey = "I";
+		#end
 	}
 	
 	override function checkAI():FlxPoint
@@ -81,6 +85,8 @@ class Inky extends Enemy
 				target = scatterTarget;
 			case Enemy.FRIGHTENED:
 				target = scatterTarget; // target isn't used, but set the variable just in case!
+			case Enemy.DEAD:
+				target = super.checkAI();				
 		}
 		return(target);
 	}

@@ -5,6 +5,7 @@ package ;
  * @author Mike Cugley
  */
 
+ import org.flixel.FlxPath;
  import org.flixel.FlxPoint;
  import org.flixel.FlxState;
  import org.flixel.FlxTilemap;
@@ -12,6 +13,7 @@ package ;
  import org.flixel.FlxU;
  import org.flixel.FlxObject;
  import org.flixel.FlxSprite;
+ 
  
 class Enemy extends LayeredSprite
 {
@@ -22,7 +24,8 @@ class Enemy extends LayeredSprite
 	static public var FRIGHTENED:Int = 2;
 	static public var CAGED:Int = 3;
 	static public var RELEASED:Int = 4;
-	static public var DEAD:Int = 5;
+	static public var INCOMING:Int = 5;
+	static public var DEAD:Int = 6;
 	
 	static var speed = 4;
 	
@@ -44,6 +47,7 @@ class Enemy extends LayeredSprite
 	#if debug
 	var targetSprite:FlxSprite;
 	var targetColour:Int;
+	var modeKey:String = "";
 	#end
 		
 
@@ -91,34 +95,45 @@ class Enemy extends LayeredSprite
 	{
 		// Used to check which direction to go on coming to an intersection.
 		// specifically find a tile target
+		// Each Enemy has a specific algorithm for determining the target when
+		// they are in "ATTACK" mode, so only deal with things that all the 
+		// enemies do.
+		
 		var target:FlxPoint = new FlxPoint();
 		
 		var player = cast(FlxG.state, PlayState).player;
 		
-		switch(mode)
+		if (mode == DEAD)
 		{
-			case ATTACK:
-				{
-					target.x = player.x;
-					target.y = player.y;
-					target.x = FlxU.floor(target.x / 32);
-					target.y = FlxU.floor(target.y / 32);
-				}
-			case SCATTER:
-				target = scatterTarget;
-			case FRIGHTENED:
-				target = scatterTarget; // target isn't used, but set the variable just in case!
+			target.x = 14;
+			target.y = 11;
 		}
 		return(target);
 	}
 	
 	override public function update()
 	{
+		
+		#if debug
+		if (FlxG.keys.justPressed(modeKey) && !FlxG.keys.SHIFT)
+		{
+			mode = (mode + 1) % 7; // cycle through all modes
+		}
+		
+		if (FlxG.keys.justPressed(modeKey) && FlxG.keys.SHIFT && mode == CAGED)
+		{
+			mode = RELEASED;
+		}
+		
+		#end
+		
 
 		// Snap to tile border	
 		// Nearest tile border
 		var borderX = FlxU.round(x / 32.0) * 32;
 		var borderY = FlxU.round(y / 32.0) * 32;
+
+		
 
 		if (FlxU.abs(x - borderX) < 2)
 		{
@@ -129,6 +144,7 @@ class Enemy extends LayeredSprite
 		{
 			y = borderY;
 		}
+
 		
 		// Let's have a look at what tile we're in
 		var tileX = FlxU.floor(x / 32);
@@ -137,34 +153,41 @@ class Enemy extends LayeredSprite
 		
 		if (x == borderX && y == borderY) // i.e. we've just entered a tile
 		{
-			if (reverse == true) 
+			// If the mode is DEAD, and it has reached the entrance to the ghost box
+			if (mode == Enemy.DEAD && x == 448 && y == 352)
 			{
-				// If there's a reverse directive... reverse!
-				switch(facing)
-				{
-					case FlxObject.LEFT:
-						{
-							facing = FlxObject.RIGHT;
-						}
-					case FlxObject.RIGHT:
-						{
-							facing = FlxObject.LEFT;
-						}
-					case FlxObject.UP:
-						{
-							facing = FlxObject.DOWN;
-						}
-					case FlxObject.DOWN:
-						{
-							facing = FlxObject.UP;
-						}
-				}
-				
-				reverse = false;
+				incomingEnemy();
+			}
+			
+			if (mode == INCOMING && x == startPoint.x && y == startPoint.y) // Come to the end of the INCOMING path
+			{
+				mode = CAGED;
+			}
+			
+			
+			if (mode == RELEASED && x == 448 && y == 352) // should have reached end of release path
+			{
+				mode = cast(FlxG.state, PlayState).mode;
+			}
+			
+			if (mode == RELEASED)
+			{
+				if (x > 448)
+					facing = FlxObject.LEFT;
+				if (x < 448)
+					facing = FlxObject.RIGHT;
+				if (x == 448 && y > 352)
+					facing = FlxObject.UP;
+				targetSprite.x = x;
+				targetSprite.y = y;
+			}
+			
+			if (reverse == true && mode <= 2) // ATTACK, SCATTER, FRIGHTENED
+			{
+				reverseEnemy();
 			}
 			else
 			{
-				
 				var tileType:Int = DungeonWalls.getTile(tileX, tileY);
 				if (tileType == 28 || tileType == 29)
 				{
@@ -179,7 +202,7 @@ class Enemy extends LayeredSprite
 				}
 			}
 		}
-		
+
 		// By this point we should have a Facing for our Enemy
 		velocity.x = 0;
 		velocity.y = 0;
@@ -207,9 +230,10 @@ class Enemy extends LayeredSprite
 					play("walkdown");
 				}
 		}
-		
+
 		x += velocity.x;
 		y += velocity.y;
+		
 		
 		// Teleporter!
 		if (x > 896)
@@ -235,6 +259,8 @@ class Enemy extends LayeredSprite
 		var tileDown:FlxPoint = new FlxPoint(tilePos.x, tilePos.y + 1);
 		var tileLeft:FlxPoint = new FlxPoint(tilePos.x - 1, tilePos.y);
 		var tileRight:FlxPoint = new FlxPoint(tilePos.x + 1, tilePos.y);
+		
+
 		
 		if (mode == FRIGHTENED) 
 		{
@@ -328,7 +354,7 @@ class Enemy extends LayeredSprite
 		{
 			facing = FlxObject.UP;
 		}
-		
+
 
 	}
 	
@@ -364,6 +390,38 @@ class Enemy extends LayeredSprite
 		}
 	}
 	
+	private function reverseEnemy():Void 
+	{
+		// If there's a reverse directive... reverse!
+		switch(facing)
+		{
+			case FlxObject.LEFT:
+				{
+					facing = FlxObject.RIGHT;
+				}
+			case FlxObject.RIGHT:
+				{
+					facing = FlxObject.LEFT;
+				}
+			case FlxObject.UP:
+				{
+					facing = FlxObject.DOWN;
+				}
+			case FlxObject.DOWN:
+				{
+					facing = FlxObject.UP;
+				}
+		}
+		
+		reverse = false;
+	}
+	
+	private function incomingEnemy():Void 
+	{
+		mode = Enemy.INCOMING;
+
+	}
+	
 	public function setMode(Mode:Int)
 	{
 		if (mode != FRIGHTENED)
@@ -371,5 +429,14 @@ class Enemy extends LayeredSprite
 			reverse = true;
 		}
 		mode = Mode;
+	}
+	
+	public function resetEnemy()
+	{
+		mode = Enemy.CAGED;
+		x = startPoint.x;
+		y = startPoint.y;
+		moves = false;
+		facing = FlxObject.LEFT;
 	}
 }

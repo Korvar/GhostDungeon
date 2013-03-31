@@ -39,7 +39,7 @@ class PlayState extends FlxState
 	var coins:FlxGroup;
 	var powerPills:FlxGroup;
 	
-	var mode:Int;
+	public var mode:Int;
 	
 	var dotsLeft:Int;
 	var dotsEaten:Int;
@@ -97,14 +97,13 @@ class PlayState extends FlxState
 		blinky = new Blinky(448, 352);
 		enemies.add(blinky.layers);
 		enemies.add(blinky);
-
 		
-		pinky = new Pinky(352, 416);
+		pinky = new Pinky(416, 448);
 		enemies.add(pinky);
 		enemies.add(pinky.layers);
 		
 		// inky = new Inky(416, 416, blinky);
-		inky = new Inky(448, 352, blinky);
+		inky = new Inky(448, 448, blinky);
 		enemies.add(inky);
 		enemies.add(inky.layers);
 		
@@ -113,7 +112,12 @@ class PlayState extends FlxState
 		enemies.add(clyde.layers);
 		
 		add(enemies);
-		
+		FlxG.watch(inky, "mode");
+		FlxG.watch(inky, "x");
+		FlxG.watch(inky, "y");
+		FlxG.watch(inky, "pathSpeed");
+		FlxG.watch(inky, "pathAngle");
+		FlxG.watch(inky, "path");
 		mode = Enemy.SCATTER;
 
 	}
@@ -162,6 +166,11 @@ class PlayState extends FlxState
 				enemy.setMode(mode);
 			}
 		}
+		
+		if (FlxG.keys.justPressed("R"))
+		{
+			resetEnemies();
+		}
 
 		switch(mode)
 		{
@@ -175,6 +184,8 @@ class PlayState extends FlxState
 					tempTestText1.text = "CAGED!";
 				case Enemy.RELEASED:
 					tempTestText1.text = "RELEASED!";
+				case Enemy.INCOMING:
+					tempTestText1.text = "INCOMING!";
 				case Enemy.DEAD:
 					tempTestText1.text = "DEAD!";
 		}
@@ -255,6 +266,14 @@ class PlayState extends FlxState
 		for (coin in coins.members)
 		{
 			coin.revive();
+		}
+	}
+	
+	function resetEnemies():Void
+	{
+		for (enemy in [blinky, pinky, inky, clyde])
+		{
+			enemy.resetEnemy();
 		}
 	}
 	

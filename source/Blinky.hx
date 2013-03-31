@@ -41,6 +41,7 @@ class Blinky extends Enemy
 		mode = Enemy.SCATTER;
 		
 		#if debug
+		modeKey = "B";
 		tempTestText1 = new FlxText(0, FlxG.height - 60, FlxG.width, "", 20);
 		tempTestText2 = new FlxText(0, FlxG.height - 30, FlxG.width, "", 20);
 		
@@ -83,6 +84,10 @@ class Blinky extends Enemy
 				}
 			case Enemy.FRIGHTENED:
 				target = scatterTarget; // target isn't used, but set the variable just in case!
+			case Enemy.DEAD:
+				{
+					target = super.checkAI();
+				}
 		}
 		
 		#if debug
@@ -118,4 +123,16 @@ class Blinky extends Enemy
 		
 	}
 	#end
+	
+	override private function incomingEnemy():Void 
+	{
+		// Blinky never goes in the cage
+		mode = cast(FlxG.state, PlayState).mode;
+	}
+	
+	override public function resetEnemy()
+	{
+		super.resetEnemy();
+		mode = cast(FlxG.state, PlayState).mode;
+	}
 }
