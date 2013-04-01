@@ -1,4 +1,9 @@
-package;
+package ;
+
+/**
+ * ...
+ * @author Mike Cugley
+ */
 
 import nme.Assets;
 import nme.geom.Rectangle;
@@ -11,10 +16,11 @@ import org.flixel.FlxSprite;
 import org.flixel.FlxState;
 import org.flixel.FlxText;
 import org.flixel.FlxU;
-
-class MenuState extends FlxState
+ 
+class GameOverState extends FlxState
 {
-	var titleText:FlxText;
+
+	var gameOverText:FlxText;
 	var menuText:FlxText;
 	
 	override public function create():Void
@@ -26,14 +32,12 @@ class MenuState extends FlxState
 		#end		
 		FlxG.mouse.show();
 		
-		titleText = new FlxText(0, FlxG.height / 2, FlxG.width, "Ghost Dungeon", 32 );
-		titleText.color = 0xFFFFFF;
-		titleText.alignment = "center";
-		add(titleText);
+		gameOverText = new FlxText(0, FlxG.height / 2, FlxG.width, "Game Over!", 32 );
+		gameOverText.color = 0xFFFFFF;
+		add(gameOverText);
 		
-		menuText = new FlxText(0, FlxG.height / 2 + 50, FlxG.width, "Click to start!", 20);
+		menuText = new FlxText(0, FlxG.height / 2 + 50, FlxG.width, "Click to restart!", 20);
 		menuText.color = 0xFFFFFF;
-		menuText.alignment = "center";
 		add(menuText);
 	}
 	
@@ -46,9 +50,10 @@ class MenuState extends FlxState
 	{
 		super.update();
 		
-		if (FlxG.mouse.justPressed())
+		if (FlxG.mouse.justPressed() || FlxG.keys.any())
 		{
 			FlxG.switchState(new PlayState());
 		}
-	}	
+	}
+	
 }

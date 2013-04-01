@@ -18,9 +18,13 @@ class Player extends LayeredSprite
 	static private var margin = 1; 
 	static private var size = 32;
 	
+	#if debug
+	var message:String = "";
+	#end
+	
 	public function new(X:Float = 0, Y:Float = 0, SimpleGraphic:Dynamic = null, Layers:Array<String>, Width:Int = 0, Height:Int = 0) 
 	{
-		DungeonWalls = cast(FlxG.state, PlayState).DungeonWalls;
+		DungeonWalls = Registry.DungeonWalls;
 		
 		// trace(SimpleGraphic);
 		super(X, Y, SimpleGraphic, Layers, Width, Height);
@@ -29,15 +33,12 @@ class Player extends LayeredSprite
 		width = size;
 		height = size;
 		centerOffsets(false);
-		x = 448;
-		y = 544;
 		solid = true;
 		
+		health = 3;
+		
 		#if debug
-		drawLine(x, y, x, y + height, 0xff0000, 2);
-		drawLine(x, y + height, x + width, y + height, 0xff0000, 2);
-		drawLine(x + width, y + height, x + width, y, 0xff0000, 2);
-		drawLine(x + width, y, x, y, 0xff0000, 2);
+		FlxG.watch(this, "message");
 		#end
 	
 		for (layer in layers.members)
@@ -49,6 +50,8 @@ class Player extends LayeredSprite
 
 		}
 		
+		cast(layers.members[0], FlxSprite).addAnimationCallback(animationCallback);
+		
 		moves = false; // Don't use the standard moving code
 	}
 	
@@ -56,6 +59,21 @@ class Player extends LayeredSprite
 	{
 		// velocity.x = 0;
 		// velocity.y = 0;
+		
+		if (Registry.playerDead)
+		{
+			velocity.x = 0;
+			velocity.y = 0;
+			
+			if (_curAnim != null)
+			{
+				if (_curFrame >= _curAnim.frames.length)
+					resetPlayer();
+			}
+			
+			
+			return;
+		}
 		
 		if (overlapsAt(x + velocity.x, y, DungeonWalls))
 		{	
@@ -135,26 +153,6 @@ class Player extends LayeredSprite
 			}
 		}
 			
-		// I actually need to do this if the player isn't holding "down" but the facing is "down" -
-		// at the moment, this will be interrupted if the player is holding left or right, which
-		// interrupts this, and will make the player "stick"
-			
-		//{
-			//if (pDiffX <= 3)
-			//{
-				//x = Std.int(pBorderX);
-				//velocity.x = 0;
-			//}
-			//if (pDiffY <= 3)
-			//{
-				//y = Std.int(pBorderY);
-				//velocity.y = 0;
-			//}
-		//}
-		//
-		// Check to see if we've gotten stuck
-		//deStick();
-		
 		// Find the right animation to play
 		if (velocity.x < 0)
 		{
@@ -267,4 +265,30 @@ class Player extends LayeredSprite
 		}
 	}
 	
+	public function resetPlayer()
+	{
+		x = 448;
+		y = 544;
+		facing = FlxObject.RIGHT;
+		Registry.deathAnim = false;
+		Registry.playerDead = false;
+	}
+	
+	override public function hurt(Damage: Float):Void
+	{
+		super.hurt(Damage);
+		play("hurt");
+	}
+	
+	function animationCallback(Name:String, frameNum:Int, frameIndex:Int)
+	{
+		message = Name;
+		if (Name == "hurt")
+		{
+			if (frameNum >= 5)
+			{
+				resetPlayer();
+			}
+		}
+	}
 }

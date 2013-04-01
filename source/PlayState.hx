@@ -47,6 +47,9 @@ class PlayState extends FlxState
 	
 	var enemyKillScore:Int = 200;
 	
+	var deathAnim:Bool = false;
+	var deathAnimGroup:FlxGroup;
+	
 	public function new() 
 	{
 		super();
@@ -68,6 +71,7 @@ class PlayState extends FlxState
 		FlxG.height = 480;
 		
 		add(DungeonWalls);
+		Registry.DungeonWalls = DungeonWalls;
 				
 		coins = setupCoins();
 		add(coins);
@@ -119,14 +123,12 @@ class PlayState extends FlxState
 		add(clyde.layers);
 		
 		add(enemies);
-		FlxG.watch(clyde, "mode");
-		FlxG.watch(clyde, "x");
-		FlxG.watch(clyde, "y");
-		FlxG.watch(clyde, "pathSpeed");
-		FlxG.watch(clyde, "pathAngle");
-		FlxG.watch(clyde, "path");
 		mode = Enemy.SCATTER;
 
+		// Setting up for the Death Animation
+		deathAnimGroup = new FlxGroup();
+		deathAnimGroup.add(player);
+		// add(deathAnimGroup);
 	}
 	
 	
@@ -134,7 +136,6 @@ class PlayState extends FlxState
 	{
 		var layers:Array<String>;
 		var tempPlayer:Player;
-		
 		
 		// layers go in descending order, that is, the top layer first.
 		layers=["assets/data/Player/hands/metal_gloves_male.png",
@@ -146,18 +147,19 @@ class PlayState extends FlxState
 		"assets/data/Player/body/male/tanned2.png",
 		"assets/data/Player/behind_body/quiver.png"];
 		
-		tempPlayer = new Player(432, 544, null, layers, 64, 64);
+		tempPlayer = new Player(448, 544, null, layers, 64, 64);
 
-		
 		return tempPlayer;
+	}
+	
+	function resetPlayer():Void
+	{
 
 	}
 	
 	override public function update():Void
 	{
-		
 		super.update();
-		
 		
 		FlxG.overlap(player, coins, coinCollect);
 		FlxG.overlap(player, powerPills, pillCollect);
@@ -316,7 +318,7 @@ class PlayState extends FlxState
 		}
 	}
 	
-	private function enemyCollide(player:FlxObject, enemyObject:FlxObject):Void
+	private function enemyCollide(Player:FlxObject, enemyObject:FlxObject):Void
 	{
 		var enemy:Enemy = cast(enemyObject, Enemy);
 		if (mode == Enemy.FRIGHTENED && enemy.getMode() != Enemy.DEAD)
@@ -325,18 +327,22 @@ class PlayState extends FlxState
 			  FlxG.score += enemyKillScore;
 			  enemyKillScore *= 2;
 		}
-		else if (enemy.getMidpoint() != Enemy.DEAD && playerKilled == false)
+		else if (enemy.getMode() != Enemy.DEAD && Registry.playerDead == false)
 		{
-			playerKilled = true;
-			player.hurt();
-			if (player.alive())
+			player.hurt(1);
+			if (player.alive)
 			{
+				// "Death" animation
+				Registry.deathAnim = true;
+				Registry.playerDead = true;
+			
 				// reset level
+				resetEnemies();
 			}
 			else
 			{
 				// game over!
-				// FlxG.switchState(GameOverState);
+				FlxG.switchState(new GameOverState());
 			}
 			
 		}

@@ -113,6 +113,8 @@ class Enemy extends LayeredSprite
 	
 	override public function update()
 	{
+		if (Registry.deathAnim)
+			return;
 		
 		#if debug
 		if (FlxG.keys.justPressed(modeKey) && !FlxG.keys.SHIFT && !FlxG.keys.CONTROL)
