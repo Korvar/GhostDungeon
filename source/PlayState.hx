@@ -155,7 +155,7 @@ class PlayState extends FlxState
 	
 	function resetPlayer():Void
 	{
-
+		player.resetPlayer();
 	}
 	
 	override public function update():Void
