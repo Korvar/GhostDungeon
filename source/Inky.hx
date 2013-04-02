@@ -37,6 +37,8 @@ class Inky extends Enemy
 			
 		super(X, Y, null, inkyLayers, 64, 64);
 		
+		dotLimit = 30;
+		
 		#if debug
 		modeKey = "I";
 		#end
@@ -90,4 +92,19 @@ class Inky extends Enemy
 		}
 		return(target);
 	}
+
+	override public function resetEnemy()
+	{
+		super.resetEnemy();
+		if (FlxG.level == 1)
+		{
+			dotLimit = 30;
+		}
+		else
+		{
+			dotLimit = 0;
+		}
+			
+	}
+	
 }

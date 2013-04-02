@@ -30,6 +30,7 @@ class Enemy extends LayeredSprite
 	static var speed = 4;
 	
 	var dotcounter:Int; // Used for various AI purposes
+	var dotLimit:Int;
 	
 	var player:Player;  // Used to get various bits of information about the player for AI purposes
 	
@@ -65,7 +66,9 @@ class Enemy extends LayeredSprite
 		height = size;
 		centerOffsets(false);
 		mode = CAGED;
-		
+		dotcounter = 0;
+		dotLimit = 0;
+	
 		
 		startPoint = new FlxPoint(FlxU.floor(X), FlxU.floor(Y));
 		startTile = new FlxPoint(FlxU.floor(X / 32), FlxU.floor(Y / 32));
@@ -134,24 +137,23 @@ class Enemy extends LayeredSprite
 		
 		#end
 		
-
+		if (dotcounter >= dotLimit && mode == CAGED)
+		{
+			mode = RELEASED;
+		}
+			
 		// Snap to tile border	
 		// Nearest tile border
 		var borderX = FlxU.round(x / 32.0) * 32;
 		var borderY = FlxU.round(y / 32.0) * 32;
-
-		
-
 		if (FlxU.abs(x - borderX) < 2)
 		{
 			x = borderX;
 		}
-		
 		if (FlxU.abs(y - borderY) < 2)
 		{
 			y = borderY;
 		}
-
 		
 		// Let's have a look at what tile we're in
 		var tileX = FlxU.floor(x / 32);
@@ -453,10 +455,20 @@ class Enemy extends LayeredSprite
 		y = startPoint.y;
 		moves = false;
 		facing = FlxObject.LEFT;
+		if (Registry.playerDead == true)
+			dotcounter = 0;		
 	}
 	
 	public function getMode():Int
 	{
 		return mode;
+	}
+	
+	public function addDot()
+	{
+		if (mode == CAGED)
+		{
+			dotcounter += 1;
+		}
 	}
 }

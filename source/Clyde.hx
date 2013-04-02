@@ -27,6 +27,8 @@ public function new(X:Float=0, Y:Float=0)
 			
 		super(X, Y, null, clydeLayers, 64, 64);
 		
+		dotLimit = 60;
+		
 		#if debug
 		modeKey = "C";
 		#end
@@ -75,4 +77,17 @@ public function new(X:Float=0, Y:Float=0)
 		return(target);
 	}
 	
+		override public function resetEnemy()
+	{
+		super.resetEnemy();
+		switch FlxG.level 
+		{
+			case 1:
+				dotLimit = 60;
+			case 2:
+				dotLimit = 50;
+			case 3:
+				dotLimit = 0;
+		}
+	}
 }

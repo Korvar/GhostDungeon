@@ -123,6 +123,9 @@ class PlayState extends FlxState
 		enemies.add(clyde);
 		add(clyde.layers);
 		
+		FlxG.watch(inky, "dotcounter");
+		FlxG.watch(clyde, "dotcounter");
+		
 		add(enemies);
 		mode = Enemy.SCATTER;
 
@@ -171,6 +174,8 @@ class PlayState extends FlxState
 			// Victory!
 			
 			// Do some kind of victory thing
+			
+			// Reset everything
 			resetCoins();
 			resetEnemies();
 			resetPlayer();
@@ -297,6 +302,8 @@ class PlayState extends FlxState
 		coin.kill();
 		FlxG.score += 10;
 		FlxG.play("assets/data/completetask_0.mp3");
+		Registry.dotsLeft = coins.countLiving();
+		updateDotCounters();
 	}
 	
 	private function pillCollect(player:FlxObject, pill:FlxObject):Void
@@ -368,5 +375,47 @@ class PlayState extends FlxState
 			}
 			
 		}
+	}
+	
+	function updateDotCounters()
+	{
+		for (enemy in [inky, clyde])
+		{
+			if (enemy.getMode() == Enemy.CAGED)
+			{
+				enemy.addDot();
+				break;
+			}
+		}
+	}
+	
+	function setupLevelArray()
+	{
+		var levelArray:Array<LevelInfo>;
+		
+		levelArray = new Array<LevelInfo>();
+		
+		levelArray[1] = {pacManSpeed: 0.80, ghostSpeed: 0.75, ghostTunnelSpeed: 0.4, elroy1DotsLeft: 20, elroy1Speed: 0.80, elroy2DotsLeft: 10, elroy2Speed: 0.85, frightenedPacManSpeed: 0.90, frightenedGhostSpeed: 0.50, frightenedTime: 6, flashtimes: 5, scatter1: 7, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 20, scatter4: 5};
+		levelArray[2] = { pacManSpeed: 0.90, ghostSpeed: 0.85, ghostTunnelSpeed: 0.45, elroy1DotsLeft: 30, elroy1Speed: 0.90, elroy2DotsLeft: 15, elroy2Speed: 0.95, frightenedPacManSpeed: 0.95, frightenedGhostSpeed: 0.55, frightenedTime: 5, flashtimes: 5, scatter1: 7, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1033, scatter4: 0};	
+		levelArray[3] = { pacManSpeed: 0.90, ghostSpeed: 0.85, ghostTunnelSpeed: 0.45, elroy1DotsLeft: 40, elroy1Speed: 0.90, elroy2DotsLeft: 20, elroy2Speed: 0.95, frightenedPacManSpeed: 0.95, frightenedGhostSpeed: 0.55, frightenedTime: 4, flashtimes: 5, scatter1: 7, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1033, scatter4: 0};
+		levelArray[4] = { pacManSpeed: 0.90, ghostSpeed: 0.85, ghostTunnelSpeed: 0.45, elroy1DotsLeft: 40, elroy1Speed: 0.90, elroy2DotsLeft: 20, elroy2Speed: 0.95, frightenedPacManSpeed: 0.95, frightenedGhostSpeed: 0.55, frightenedTime: 3, flashtimes: 5, scatter1: 7, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1033, scatter4: 0 };
+		levelArray[5] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 40, elroy1Speed: 1.00, elroy2DotsLeft: 20, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 2, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0 };
+		levelArray[6] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 50, elroy1Speed: 1.00, elroy2DotsLeft: 25, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 5, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0 };
+		levelArray[7] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 50, elroy1Speed: 1.00, elroy2DotsLeft: 25, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 2, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[8] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 50, elroy1Speed: 1.00, elroy2DotsLeft: 25, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 2, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[9] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 60, elroy1Speed: 1.00, elroy2DotsLeft: 30, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 1, flashtimes: 3, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[10] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 60, elroy1Speed: 1.00, elroy2DotsLeft: 30, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 5, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[11] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 60, elroy1Speed: 1.00, elroy2DotsLeft: 30, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 2, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[12] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 80, elroy1Speed: 1.00, elroy2DotsLeft: 40, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 1, flashtimes: 3, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[13] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 80, elroy1Speed: 1.00, elroy2DotsLeft: 40, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 1, flashtimes: 3, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[14] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 80, elroy1Speed: 1.00, elroy2DotsLeft: 40, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 3, flashtimes: 5, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[15] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 100, elroy1Speed: 1.00, elroy2DotsLeft: 50, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 1, flashtimes: 3, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[16] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 100, elroy1Speed: 1.00, elroy2DotsLeft: 50, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 1, flashtimes: 3, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[17] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 100, elroy1Speed: 1.00, elroy2DotsLeft: 50, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 0, flashtimes: 0, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[18] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 100, elroy1Speed: 1.00, elroy2DotsLeft: 50, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 1, flashtimes: 3, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[19] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 120, elroy1Speed: 1.00, elroy2DotsLeft: 60, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 0, flashtimes: 0, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[20] = { pacManSpeed: 1.00, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 120, elroy1Speed: 1.00, elroy2DotsLeft: 60, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 0, flashtimes: 0, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		levelArray[21] = { pacManSpeed: 0.90, ghostSpeed: 0.95, ghostTunnelSpeed: 0.5, elroy1DotsLeft: 120, elroy1Speed: 1.00, elroy2DotsLeft: 60, elroy2Speed: 1.05, frightenedPacManSpeed: 1.00, frightenedGhostSpeed: 0.60, frightenedTime: 0, flashtimes: 0, scatter1: 5, chase1: 20, scatter2: 7, chase2: 20, scatter3: 5, chase3: 1037, scatter4: 0  };
+		Registry.levelInfo = levelArray;
 	}
 }

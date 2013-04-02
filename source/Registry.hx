@@ -27,7 +27,11 @@ class Registry
 	static public var INCOMING:Int = 5;
 	static public var DEAD:Int = 6;
 	
+	static public var dotsLeft:Int;
+	
 	static public var message:String;
+	
+	static public var levelInfo:Array<LevelInfo>;
 	
 	public function new() 
 	{

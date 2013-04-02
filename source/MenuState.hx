@@ -35,6 +35,7 @@ class MenuState extends FlxState
 		menuText.color = 0xFFFFFF;
 		menuText.alignment = "center";
 		add(menuText);
+		
 	}
 	
 	override public function destroy():Void
