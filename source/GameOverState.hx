@@ -32,12 +32,19 @@ class GameOverState extends FlxState
 		#end		
 		FlxG.mouse.show();
 		
-		gameOverText = new FlxText(0, FlxG.height / 2, FlxG.width, "Game Over!", 32 );
+		gameOverText = new FlxText(0, FlxG.height / 3, FlxG.width, "Game Over!", 32 );
 		gameOverText.color = 0xFFFFFF;
+		gameOverText.alignment = "center";
 		add(gameOverText);
 		
-		menuText = new FlxText(0, FlxG.height / 2 + 50, FlxG.width, "Click to restart!", 20);
+		var scoreText = new FlxText(0, FlxG.height / 2, FlxG.width, "You scored: " + Std.string(FlxG.score), 28);
+		scoreText.color = 0xFF0000;
+		scoreText.alignment = "center";
+		add(scoreText);
+		
+		menuText = new FlxText(0, FlxG.height * 2 / 3, FlxG.width, "Click to restart!", 20);
 		menuText.color = 0xFFFFFF;
+		menuText.alignment = "center";
 		add(menuText);
 	}
 	

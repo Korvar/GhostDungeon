@@ -69,6 +69,7 @@ class PlayState extends FlxState
 		
 		FlxG.width = 640;
 		FlxG.height = 480;
+		FlxG.level = 1;
 		
 		add(DungeonWalls);
 		Registry.DungeonWalls = DungeonWalls;
@@ -164,6 +165,19 @@ class PlayState extends FlxState
 		FlxG.overlap(player, coins, coinCollect);
 		FlxG.overlap(player, powerPills, pillCollect);
 		FlxG.overlap(player, enemies, enemyCollide);
+		
+		if (coins.countLiving() == 0 && powerPills.countLiving() == 0)
+		{
+			// Victory!
+			
+			// Do some kind of victory thing
+			resetCoins();
+			resetEnemies();
+			resetPlayer();
+			resetPowerPills();
+			FlxG.level += 1;
+			
+		}
 		
 		#if debug
 		if (FlxG.keys.justPressed("M"))
@@ -307,6 +321,14 @@ class PlayState extends FlxState
 			powerPills.add(pill);
 		}
 		return powerPills;
+	}
+	
+	function resetPowerPills():Void
+	{
+		for (pill in powerPills.members)
+		{
+			pill.revive();
+		}
 	}
 	
 	private function setMode(Mode:Int):Void 
