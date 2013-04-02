@@ -27,7 +27,11 @@ class Registry
 	static public var INCOMING:Int = 5;
 	static public var DEAD:Int = 6;
 	
+	static public var mode:Int;
+	
 	static public var dotsLeft:Int;
+	
+	static public var maxSpeed:Float = 4.0;
 	
 	static public var message:String;
 	

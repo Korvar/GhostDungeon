@@ -59,6 +59,8 @@ class PlayState extends FlxState
 	{
 		FlxG.mouse.hide();
 		
+		setupLevelArray();
+		
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
 		DungeonWalls.loadMap(Assets.getText("assets/data/Dungeon_Walls.csv"), "assets/data/GhostDungeonTiles.png", 32, 32);
@@ -122,9 +124,6 @@ class PlayState extends FlxState
 		clyde = new Clyde(512, 416);
 		enemies.add(clyde);
 		add(clyde.layers);
-		
-		FlxG.watch(inky, "dotcounter");
-		FlxG.watch(clyde, "dotcounter");
 		
 		add(enemies);
 		mode = Enemy.SCATTER;
@@ -341,6 +340,7 @@ class PlayState extends FlxState
 	private function setMode(Mode:Int):Void 
 	{
 		mode = Mode;
+		Registry.mode = Mode;
 		for (enemy in [blinky, inky, pinky, clyde])
 		{
 			enemy.setMode(Mode);

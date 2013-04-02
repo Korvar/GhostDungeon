@@ -2,6 +2,7 @@ package ;
 import org.flixel.FlxGroup;
 import org.flixel.FlxSprite;
 import org.flixel.FlxG;
+import org.flixel.FlxU;
 import org.flixel.FlxObject;
 import org.flixel.FlxTilemap;
 
@@ -14,9 +15,17 @@ class Player extends LayeredSprite
 	var DungeonWalls:FlxTilemap;
 		
 
-	static private var runSpeed = 4;  // Needs to be a multiple of 2
+	private var runSpeed:Float = 4.0;  
 	static private var margin = 1; 
 	static private var size = 32;
+	
+	var tileX:Int;
+	var tileY:Int;
+	var borderX:Int;
+	var borderY:Int;
+	
+	var trueX:Float;
+	var trueY:Float;
 	
 	#if debug
 	var message:String = "";
@@ -29,6 +38,9 @@ class Player extends LayeredSprite
 		// trace(SimpleGraphic);
 		super(X, Y, SimpleGraphic, Layers, Width, Height);
 		
+		trueX = X;
+		trueY = Y;
+		
 		facing = FlxObject.RIGHT;
 		width = size;
 		height = size;
@@ -38,7 +50,15 @@ class Player extends LayeredSprite
 		health = 3;
 		
 		#if debug
-		FlxG.watch(this, "message");
+		FlxG.watch(this, "x");
+		FlxG.watch(this, "trueX");
+		FlxG.watch(this, "tileX");
+		FlxG.watch(this, "borderX");
+		FlxG.watch(this, "y");
+		FlxG.watch(this, "trueY");
+		FlxG.watch(this, "tileY");
+		FlxG.watch(this, "borderY");
+		
 		#end
 	
 		for (layer in layers.members)
@@ -53,12 +73,24 @@ class Player extends LayeredSprite
 		cast(layers.members[0], FlxSprite).addAnimationCallback(animationCallback);
 		
 		moves = false; // Don't use the standard moving code
+		runSpeed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].pacManSpeed;
 	}
 	
 	override public function update()
 	{
 		// velocity.x = 0;
 		// velocity.y = 0;
+		
+		if (Registry.mode == Enemy.FRIGHTENED)
+		{
+			runSpeed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedPacManSpeed;
+		}
+		
+		x = FlxU.floor(trueX);
+		y = FlxU.floor(trueY);
+		
+		tileX = FlxU.floor(x / 32.0) * 32;
+		tileY = FlxU.floor(y / 32.0) * 32;
 		
 		if (Registry.playerDead)
 		{
@@ -70,20 +102,17 @@ class Player extends LayeredSprite
 				if (_curFrame >= _curAnim.frames.length)
 					resetPlayer();
 			}
-			
-			
 			return;
 		}
 		
-		if (overlapsAt(x + velocity.x, y, DungeonWalls))
-		{	
-			velocity.x = 0;
-		}
+		// Nearest tile border
+		borderX = FlxU.round(x / 32.0) * 32;
+		borderY = FlxU.round(y / 32.0) * 32;
 		
-		if (overlapsAt(x, y + velocity.y, DungeonWalls))
-		{
-			velocity.y = 0;
-		}
+		// Snap to tile border	
+		snapToTile(borderX, borderY);
+		
+
 		
 		
 		x = Std.int(x);
@@ -92,8 +121,7 @@ class Player extends LayeredSprite
 		#if debug
 		if (FlxG.keys.justPressed("SPACE"))
 		{
-			x = 448;
-			y = 544;
+			resetPlayer();
 		}
 		#end
 		
@@ -152,7 +180,59 @@ class Player extends LayeredSprite
 				velocity.y = runSpeed;
 			}
 		}
-			
+		
+		var xColCheck:Int;
+		if (velocity.x > 0)
+		{
+			xColCheck = 1;
+		}
+		else if (velocity.x < 0)
+		{
+			xColCheck = -1;
+		}
+		else
+		{
+			xColCheck = 0;
+		}
+		
+		var yColCheck:Int;
+		if (velocity.y > 0)
+		{
+			yColCheck = 1;
+		}
+		else if (velocity.y < 0)
+		{
+			yColCheck = -1;
+		}
+		else
+		{
+			yColCheck = 0;
+		}
+		
+		var tempString:String = "";
+		if (overlapsAt(x + xColCheck, tileY, DungeonWalls))
+		{	
+			velocity.x = 0;
+			snapToTile(borderX, borderY);
+			tempString += "Overlaps at X";
+		}
+		else
+			message = "";
+		
+		if (overlapsAt(tileX, y + yColCheck, DungeonWalls))
+		{
+			velocity.y = 0;
+			snapToTile(borderX, borderY);
+			tempString  += "Overlaps at Y";
+
+		}
+		
+		deStick();
+		
+		message = tempString;
+		
+
+		
 		// Find the right animation to play
 		if (velocity.x < 0)
 		{
@@ -171,7 +251,7 @@ class Player extends LayeredSprite
 			play("walkdown");
 		}
 		
-
+		
 		
 		if (velocity.x == 0 && velocity.y == 0)
 		{
@@ -182,8 +262,12 @@ class Player extends LayeredSprite
 		}
 		
 		// Don't use the standard moving methods
-		x = x + velocity.x;
-		y = y + velocity.y;
+		trueX = trueX + velocity.x;
+		trueY = trueY + velocity.y;
+		
+		x = FlxU.floor(trueX);
+		y = FlxU.floor(trueY);
+		
 		
 		// Teleporter!
 		if (x > 896)
@@ -232,6 +316,7 @@ class Player extends LayeredSprite
 			facing = FlxObject.LEFT;
 			velocity.x = -runSpeed;
 			velocity.y = 0;
+			message = "A";
 		}
 	}
 	
@@ -242,6 +327,7 @@ class Player extends LayeredSprite
 			facing = FlxObject.RIGHT;
 			velocity.x = runSpeed;
 			velocity.y = 0;
+			message = "D";
 		}
 	}
 	
@@ -252,6 +338,7 @@ class Player extends LayeredSprite
 			facing = FlxObject.UP;
 			velocity.y = -runSpeed;
 			velocity.x = 0;
+			message = "W";
 		}
 	}
 	
@@ -261,7 +348,8 @@ class Player extends LayeredSprite
 		{
 			facing = FlxObject.DOWN;
 			velocity.y = runSpeed;
-			velocity.x = 0;			
+			velocity.x = 0;	
+			message = "S";
 		}
 	}
 	
@@ -269,9 +357,13 @@ class Player extends LayeredSprite
 	{
 		x = 448;
 		y = 544;
+		trueX = x;
+		trueY = y;
 		facing = FlxObject.RIGHT;
 		Registry.deathAnim = false;
 		Registry.playerDead = false;
+		
+		runSpeed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].pacManSpeed;
 	}
 	
 	override public function hurt(Damage: Float):Void
@@ -282,13 +374,29 @@ class Player extends LayeredSprite
 	
 	function animationCallback(Name:String, frameNum:Int, frameIndex:Int)
 	{
-		message = Name;
+		//message = Name;
 		if (Name == "hurt")
 		{
 			if (frameNum >= 5)
 			{
 				resetPlayer();
 			}
+		}
+	}
+	
+	private function snapToTile(borderX, borderY):Void 
+	{
+		var borderSnap:Float = runSpeed * 0.9;
+		
+		if (FlxU.abs(trueX - borderX) < borderSnap)
+		{
+			x = borderX;
+			trueX = x;
+		}
+		if (FlxU.abs(trueY - borderY) < borderSnap)
+		{
+			y = borderY;
+			trueY = borderY;
 		}
 	}
 }

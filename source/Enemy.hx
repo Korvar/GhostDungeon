@@ -141,24 +141,18 @@ class Enemy extends LayeredSprite
 		{
 			mode = RELEASED;
 		}
-			
-		// Snap to tile border	
 		// Nearest tile border
 		var borderX = FlxU.round(x / 32.0) * 32;
 		var borderY = FlxU.round(y / 32.0) * 32;
-		if (FlxU.abs(x - borderX) < 2)
-		{
-			x = borderX;
-		}
-		if (FlxU.abs(y - borderY) < 2)
-		{
-			y = borderY;
-		}
+		
+		// Snap to tile border	
+		snapToTile(borderX, borderY);
 		
 		// Let's have a look at what tile we're in
 		var tileX = FlxU.floor(x / 32);
 		var tileY = FlxU.floor(y / 32);
 		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
+
 		
 		if (x == borderX && y == borderY) // i.e. we've just entered a tile
 		{
@@ -437,6 +431,21 @@ class Enemy extends LayeredSprite
 	{
 		mode = Enemy.INCOMING;
 
+	}
+	
+	private function snapToTile(borderX, borderY):Void 
+	{
+		// Nearest tile border
+		var borderX = FlxU.round(x / 32.0) * 32;
+		var borderY = FlxU.round(x / 32.0) * 32;
+		if (FlxU.abs(x - borderX) < 2)
+		{
+			x = borderX;
+		}
+		if (FlxU.abs(y - borderY) < 2)
+		{
+			y = borderY;
+		}
 	}
 	
 	public function setMode(Mode:Int)
