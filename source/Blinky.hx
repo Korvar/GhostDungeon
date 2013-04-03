@@ -50,14 +50,6 @@ class Blinky extends Enemy
 		FlxG.state.add(tempTestText1);
 		FlxG.state.add(tempTestText2);
 		
-		FlxG.watch(this, "x");
-		FlxG.watch(this, "tileX");
-		FlxG.watch(this, "borderX");
-		FlxG.watch(this, "y");
-		FlxG.watch(this, "tileY");
-		FlxG.watch(this, "borderY");
-		FlxG.watch(this, "speed");
-		
 		#end
 		
 	}

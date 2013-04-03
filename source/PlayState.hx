@@ -9,6 +9,7 @@ import org.flixel.FlxText;
 import org.flixel.FlxTilemap;
 import nme.Assets;
 import org.flixel.FlxG;
+import org.flixel.FlxTimer;
 import org.flixel.FlxU;
 import org.flixel.FlxCamera;
 
@@ -41,6 +42,7 @@ class PlayState extends FlxState
 	var powerPills:FlxGroup;
 	
 	public var mode:Int;
+	var oldMode:Int;
 	
 	var dotsLeft:Int;
 	var dotsEaten:Int;
@@ -49,6 +51,9 @@ class PlayState extends FlxState
 	
 	var deathAnim:Bool = false;
 	var deathAnimGroup:FlxGroup;
+	
+	var modeTimer:FlxTimer;
+	var frightenedTimer:FlxTimer;
 	
 	public function new() 
 	{
@@ -60,6 +65,9 @@ class PlayState extends FlxState
 		FlxG.mouse.hide();
 		
 		setupLevelArray();
+		
+		modeTimer = new FlxTimer();
+		frightenedTimer = new FlxTimer();
 		
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
@@ -103,6 +111,12 @@ class PlayState extends FlxState
 		
 		oldPX = player.x;
 		oldPY = player.y;
+		
+		FlxG.watch(modeTimer, "time");
+		FlxG.watch(modeTimer, "timeLeft");
+		FlxG.watch(frightenedTimer, "time");
+		FlxG.watch(frightenedTimer, "timeLeft");
+
 		#end 
 		
 		enemies = new FlxGroup();
@@ -126,14 +140,68 @@ class PlayState extends FlxState
 		add(clyde.layers);
 		
 		add(enemies);
-		mode = Enemy.SCATTER;
+		
+		#if debug
+		FlxG.watch(inky, "dotcounter");
+		FlxG.watch(inky, "mode");
+		#end
 
 		// Setting up for the Death Animation
 		deathAnimGroup = new FlxGroup();
 		deathAnimGroup.add(player);
 		// add(deathAnimGroup);
+		
+		resetLevel();
+		
 	}
 	
+	function resetLevel()
+	{
+		setMode(Enemy.SCATTER);
+		modeTimer.start(Registry.levelInfo[FlxG.level].scatter1, 1, scatter1Done);
+	}
+	
+	function scatter1Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.ATTACK);
+		Timer.start(Registry.levelInfo[FlxG.level].chase1, 1, chase1Done);
+	}
+	
+	function chase1Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.SCATTER);
+		modeTimer.start(Registry.levelInfo[FlxG.level].scatter2, 1, scatter2Done);
+	}
+	
+	function scatter2Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.ATTACK);
+		Timer.start(Registry.levelInfo[FlxG.level].chase2, 1, chase2Done);
+	}
+	
+	function chase2Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.SCATTER);
+		modeTimer.start(Registry.levelInfo[FlxG.level].scatter3, 1, scatter3Done);
+	}
+	
+	function scatter3Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.ATTACK);
+		Timer.start(Registry.levelInfo[FlxG.level].chase3, 1, chase3Done);
+	}
+	
+	function chase3Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.SCATTER);
+		modeTimer.start(Registry.levelInfo[FlxG.level].scatter4, 1, scatter4Done);
+	}
+	
+	function scatter4Done(Timer:FlxTimer)
+	{
+		setMode(Enemy.ATTACK);
+		// And this goes on until the end of the level
+	}
 	
 	function setUpPlayer():Player
 	{
@@ -310,8 +378,17 @@ class PlayState extends FlxState
 		pill.kill();
 		FlxG.score += 50;
 		FlxG.play("assets/data/completetask_0.mp3");
+		oldMode = Registry.mode;
 		setMode(Enemy.FRIGHTENED);
 		enemyKillScore = 200;
+		modeTimer.paused = true;
+		frightenedTimer.start(Registry.levelInfo[FlxG.level].frightenedTime, frightenedDone);
+	}
+	
+	function frightenedDone(Timer:FlxTimer)
+	{
+		modeTimer.start();
+		setMode(oldMode);
 	}
 	
 	private function setupPowerPills()

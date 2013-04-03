@@ -124,6 +124,15 @@ class Enemy extends LayeredSprite
 		if (Registry.deathAnim)
 			return;
 			
+		if (mode == DEAD)
+		{
+			alpha = 0.5;
+		}
+		else
+		{
+			alpha = 1;
+		}
+			
 		#if debug
 		if (FlxG.keys.justPressed(modeKey) && !FlxG.keys.SHIFT && !FlxG.keys.CONTROL)
 		{
@@ -195,6 +204,7 @@ class Enemy extends LayeredSprite
 			if (mode == RELEASED && x == 448 && y == 352) // should have reached end of release path
 			{
 				mode = cast(FlxG.state, PlayState).mode;
+				facing = FlxObject.LEFT;
 			}
 			
 			if (mode == RELEASED)
@@ -473,11 +483,14 @@ class Enemy extends LayeredSprite
 	
 	public function setMode(Mode:Int)
 	{
+		if (mode <= 2) // ATTACK, SCATTER, FRIGHTENED
+		{
+			mode = Mode;
+		}
 		if (mode != FRIGHTENED)
 		{
 			reverse = true;
 		}
-		mode = Mode;
 	}
 	
 	public function resetEnemy()

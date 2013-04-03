@@ -38,6 +38,7 @@ class Inky extends Enemy
 		super(X, Y, null, inkyLayers, 64, 64);
 		
 		dotLimit = 30;
+		mode = Enemy.CAGED;
 		
 		#if debug
 		modeKey = "I";
