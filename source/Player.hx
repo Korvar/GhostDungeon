@@ -73,6 +73,10 @@ class Player extends LayeredSprite
 		{
 			runSpeed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedPacManSpeed;
 		}
+		else
+		{
+			runSpeed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].pacManSpeed;
+		}
 		
 		x = FlxU.floor(trueX);
 		y = FlxU.floor(trueY);
