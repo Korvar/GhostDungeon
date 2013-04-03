@@ -92,6 +92,7 @@ class PlayState extends FlxState
 		add(powerPills);
 		
 		player = setUpPlayer();
+		Registry.player = player;
 
 		add(player.layers);
 		add(player);
@@ -112,11 +113,6 @@ class PlayState extends FlxState
 		oldPX = player.x;
 		oldPY = player.y;
 		
-		FlxG.watch(modeTimer, "time");
-		FlxG.watch(modeTimer, "timeLeft");
-		FlxG.watch(frightenedTimer, "time");
-		FlxG.watch(frightenedTimer, "timeLeft");
-
 		#end 
 		
 		enemies = new FlxGroup();
@@ -142,8 +138,11 @@ class PlayState extends FlxState
 		add(enemies);
 		
 		#if debug
-		FlxG.watch(inky, "dotcounter");
-		FlxG.watch(inky, "mode");
+		FlxG.watch(blinky, "dotcounter");
+		FlxG.watch(blinky, "x");
+		FlxG.watch(blinky, "y");
+		FlxG.watch(blinky, "mode");
+		FlxG.watch(blinky, "deathAnim");
 		#end
 
 		// Setting up for the Death Animation
@@ -427,7 +426,7 @@ class PlayState extends FlxState
 	private function enemyCollide(Player:FlxObject, enemyObject:FlxObject):Void
 	{
 		var enemy:Enemy = cast(enemyObject, Enemy);
-		if (mode == Enemy.FRIGHTENED && enemy.getMode() != Enemy.DEAD)
+		if (mode == Enemy.FRIGHTENED && enemy.getMode() != Enemy.DEAD && Registry.playerDead == false)
 		{
 			  enemy.setMode(Enemy.DEAD);
 			  FlxG.score += enemyKillScore;

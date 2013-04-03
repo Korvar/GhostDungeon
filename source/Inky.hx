@@ -47,7 +47,7 @@ class Inky extends Enemy
 	
 	override function checkAI():FlxPoint
 	{
-		var player = cast(FlxG.state, PlayState).player;
+		var player:Player = Registry.player;
 		var pivot:FlxPoint = new FlxPoint();
 		var blinkyPos:FlxPoint = new FlxPoint();
 		var target:FlxPoint = new FlxPoint();

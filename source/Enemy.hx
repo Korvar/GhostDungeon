@@ -37,11 +37,11 @@ class Enemy extends LayeredSprite
 	var dotcounter:Int; // Used for various AI purposes
 	var dotLimit:Int;
 	
-	var player:Player;  // Used to get various bits of information about the player for AI purposes
-	
 	var mode:Int;  // Which mode the enemy is in, ATTACK, SCATTER, FRIGHTENED etc.
 	
 	var reverse:Bool;  // Whether there is a "reverse" directive
+	var deathAnim:Bool = false;
+	var resetRequest:Bool = false;
 	
 	var target:FlxPoint;  // in tile scale, the current target of the enemy
 	
@@ -87,6 +87,8 @@ class Enemy extends LayeredSprite
 
 		}
 		
+		cast(layers.members[0], FlxSprite).addAnimationCallback(animationCallback);
+		
 		moves = false; // Don't use the standard moving code
 		
 		#if debug
@@ -109,8 +111,6 @@ class Enemy extends LayeredSprite
 		
 		var target:FlxPoint = new FlxPoint();
 		
-		var player = cast(FlxG.state, PlayState).player;
-		
 		if (mode == DEAD)
 		{
 			target.x = 14;
@@ -121,8 +121,23 @@ class Enemy extends LayeredSprite
 	
 	override public function update()
 	{
+
+		
 		if (Registry.deathAnim)
 			return;
+			
+		if (resetRequest == true)
+		{
+			doResetEnemy();
+		}
+			
+		if (deathAnim == true)
+		{
+			velocity.x = 0;
+			velocity.y = 0;
+			super.update();  // don't do any movement; just update animation.
+			return;
+		}
 			
 		if (mode == DEAD)
 		{
@@ -141,12 +156,12 @@ class Enemy extends LayeredSprite
 		
 		if (FlxG.keys.justPressed(modeKey) && FlxG.keys.SHIFT && mode == CAGED)
 		{
-			mode = RELEASED;
+			setMode(RELEASED);
 		}
 		
 		if (FlxG.keys.justPressed(modeKey) && FlxG.keys.CONTROL)
 		{
-			mode = DEAD;
+			setMode(DEAD);
 		}
 		
 		#end
@@ -170,21 +185,7 @@ class Enemy extends LayeredSprite
 		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
 		var tileType:Int = DungeonWalls.getTile(tileX, tileY);
 		
-		if (tileType == 30)
-		{
-			speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostTunnelSpeed;
-		}
-		else
-		{
-			if (mode == FRIGHTENED)
-			{
-				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedGhostSpeed;
-			}
-			else
-			{
-				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostSpeed;
-			}
-		}
+		setSpeed(tileType);
 
 		
 		if (x == borderX && y == borderY) // i.e. we've just entered a tile
@@ -201,33 +202,20 @@ class Enemy extends LayeredSprite
 			}
 			
 			
-			if (mode == RELEASED && x == 448 && y == 352) // should have reached end of release path
+			if (mode == RELEASED && x == 448 && y <= 352) // should have reached end of release path
 			{
-				mode = cast(FlxG.state, PlayState).mode;
+				x = 448;
+				y = 352;
 				facing = FlxObject.LEFT;
+				velocity.x = 0;
+				velocity.y = 0;
+				mode = Registry.mode; // Not setMode because of how it works.
+				
 			}
 			
-			if (mode == RELEASED)
-			{
-				if (x > 448)
-					facing = FlxObject.LEFT;
-				if (x < 448)
-					facing = FlxObject.RIGHT;
-				if (x == 448 && y > 352)
-					facing = FlxObject.UP;
-			}
 			
-			if (mode == INCOMING)
-			{
-				if (x == 448 && y  < startPoint.y)
-					facing = FlxObject.DOWN;
-				if (y == startPoint.y && x > startPoint.x)
-					facing = FlxObject.LEFT;
-				if (y == startPoint.y && x < startPoint.x)
-					facing = FlxObject.RIGHT;
-			}
 			
-			if (reverse == true && mode <= 2) // ATTACK, SCATTER, FRIGHTENED
+			if (reverse == true && mode <= FRIGHTENED) // ATTACK, SCATTER, FRIGHTENED
 			{
 				reverseEnemy();
 			}
@@ -245,7 +233,43 @@ class Enemy extends LayeredSprite
 					checkCorner();
 				}
 			}
+			
+			if (mode == RELEASED)
+			{
+				if (x > 448)
+					facing = FlxObject.LEFT;
+				if (x < 448)
+					facing = FlxObject.RIGHT;
+				if (x == 448 && y > 352)
+					facing = FlxObject.UP;
+				if (y <= 352)
+				{
+					x = 448;
+					y = 352;
+					facing = FlxObject.LEFT;
+					velocity.x = 0;
+					velocity.y = 0;
+				}
+				
+				#if debug
+				targetSprite.x = 448;
+				targetSprite.y = 352;
+				#end
+			}
+
+			if (mode == INCOMING)
+			{
+				if (x == 448 && y  < startPoint.y)
+					facing = FlxObject.DOWN;
+				if (y == startPoint.y && x > startPoint.x)
+					facing = FlxObject.LEFT;
+				if (y == startPoint.y && x < startPoint.x)
+					facing = FlxObject.RIGHT;
+			}
 		}
+		
+
+			
 
 		// By this point we should have a Facing for our Enemy
 		velocity.x = 0;
@@ -346,21 +370,25 @@ class Enemy extends LayeredSprite
 		}
 		
 		// Disallow squares that are occupied
-		if (overlapsAt(x, y - 32, DungeonWalls))
+		// Except when "INCOMING" or "RELEASED"
+		if (mode != INCOMING && mode != RELEASED)
 		{
-			distUp = 9999;
-		}
-		if (overlapsAt(x, y + 32, DungeonWalls))		
-		{
-			distDown = 9999;
-		}
-		if (overlapsAt(x - 32, y, DungeonWalls))
-		{
-			distLeft = 9999;
-		}
-		if (overlapsAt(x + 32, y, DungeonWalls))
-		{
-			distRight = 9999;
+			if (overlapsAt(x, y - 32, DungeonWalls))
+			{
+				distUp = 9999;
+			}
+			if (overlapsAt(x, y + 32, DungeonWalls))		
+			{
+				distDown = 9999;
+			}
+			if (overlapsAt(x - 32, y, DungeonWalls))
+			{
+				distLeft = 9999;
+			}
+			if (overlapsAt(x + 32, y, DungeonWalls))
+			{
+				distRight = 9999;
+			}
 		}
 		
 		// Disallow reversing
@@ -439,27 +467,30 @@ class Enemy extends LayeredSprite
 	private function reverseEnemy():Void 
 	{
 		// If there's a reverse directive... reverse!
-		switch(facing)
+		if (mode <= FRIGHTENED)
 		{
-			case FlxObject.LEFT:
-				{
-					facing = FlxObject.RIGHT;
-				}
-			case FlxObject.RIGHT:
-				{
-					facing = FlxObject.LEFT;
-				}
-			case FlxObject.UP:
-				{
-					facing = FlxObject.DOWN;
-				}
-			case FlxObject.DOWN:
-				{
-					facing = FlxObject.UP;
-				}
+			switch(facing)
+			{
+				case FlxObject.LEFT:
+					{
+						facing = FlxObject.RIGHT;
+					}
+				case FlxObject.RIGHT:
+					{
+						facing = FlxObject.LEFT;
+					}
+				case FlxObject.UP:
+					{
+						facing = FlxObject.DOWN;
+					}
+				case FlxObject.DOWN:
+					{
+						facing = FlxObject.UP;
+					}
+			}
+			
+			reverse = false;
 		}
-		
-		reverse = false;
 	}
 	
 	private function incomingEnemy():Void 
@@ -483,25 +514,106 @@ class Enemy extends LayeredSprite
 	
 	public function setMode(Mode:Int)
 	{
-		if (mode <= 2) // ATTACK, SCATTER, FRIGHTENED
-		{
-			mode = Mode;
-		}
-		if (mode != FRIGHTENED)
+		if (mode != FRIGHTENED && Mode <= FRIGHTENED)
 		{
 			reverse = true;
 		}
+		if (Mode <= FRIGHTENED && mode <= FRIGHTENED) // ATTACK, SCATTER, FRIGHTENED
+		{
+			mode = Mode;
+			return;
+		}
+		
+		if (Mode == RELEASED && mode == CAGED)
+		{
+			mode = Mode;
+			return;
+		}
+		
+		if (Mode == CAGED && mode == INCOMING)
+		{
+			mode = Mode;
+			return;
+		}
+		
+		if (Mode == INCOMING && mode == DEAD)
+		{ 
+			mode = Mode;
+			return;
+		}
+		
+		if (Mode == DEAD)
+		{
+			mode = DEAD;
+			deathAnim = true;
+			play("hurt");
+			return;
+		}
+
+	}
+	
+	function animationCallback(Name:String, frameNum:Int, frameIndex:Int)
+	{
+		//message = Name;
+		if (Name == "hurt")
+		{
+			if (frameNum >= 5) // end of "hurt" animation
+			{
+				// Wait one second
+				// Flicker one second
+				// play "Rise"
+				play("rise");
+				flicker(1);
+			}
+		}
+		
+		if (Name == "rise" && frameNum >= 5) // end of "rise" animation
+		{
+			deathAnim = false;
+		}
+		
+	}
+	
+	private function setSpeed(tileType:Int):Void 
+	{
+		if (tileType == 30)
+		{
+			speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostTunnelSpeed;
+		}
+		else
+		{
+			if (mode == FRIGHTENED)
+			{
+				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedGhostSpeed;
+			}
+			else
+			{
+				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostSpeed;
+			}
+		}
+	}
+	
+	private function doResetEnemy():Void 
+	{
+		mode = Enemy.CAGED;
+		target = scatterTarget;
+		x = startPoint.x;
+		y = startPoint.y;
+		velocity.x = 0;
+		velocity.y = 0;
+		snapToTile(FlxU.floor(startTile.x), FlxU.floor(startTile.y));
+		moves = false;
+		facing = FlxObject.LEFT;
+		reverse = false;
+		// if (Registry.playerDead == true)
+		// 	dotcounter = 0;	
+		
+		resetRequest = false;
 	}
 	
 	public function resetEnemy()
 	{
-		mode = Enemy.CAGED;
-		x = startPoint.x;
-		y = startPoint.y;
-		moves = false;
-		facing = FlxObject.LEFT;
-		if (Registry.playerDead == true)
-			dotcounter = 0;		
+		resetRequest = true;
 	}
 	
 	public function getMode():Int

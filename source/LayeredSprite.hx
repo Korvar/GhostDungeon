@@ -25,6 +25,7 @@ class LayeredSprite extends FlxSprite
 	var slashDownAnim:Array<Int>;
 	var slashRightAnim:Array<Int>;
 	var hurtAnim:Array<Int>;
+	var riseAnim:Array<Int>;
 	var deadAnim:Array<Int>;
 	var faceUpAnim:Array<Int>;
 	var faceLeftAnim:Array<Int>;
@@ -111,6 +112,7 @@ class LayeredSprite extends FlxSprite
 		slashDownAnim = new Array<Int>();
 		slashRightAnim = new Array<Int>();
 		hurtAnim = new Array<Int>();
+		riseAnim = new Array<Int>();
 		deadAnim = new Array<Int>();
 		faceUpAnim = new Array<Int>();
 		faceLeftAnim = new Array<Int>();
@@ -130,6 +132,7 @@ class LayeredSprite extends FlxSprite
 		slashDownAnim = [182, 183, 184, 185, 186, 187];
 		slashRightAnim = [195, 196, 197, 198, 199, 200];
 		hurtAnim = [260, 261, 262, 263, 264, 265];
+		riseAnim = [265, 264, 263, 262, 261, 260];
 		deadAnim = [265];
 		faceUpAnim = [0,0];
 		faceLeftAnim = [13,13];
@@ -149,6 +152,7 @@ class LayeredSprite extends FlxSprite
 		addAnimation("slashdown", slashDownAnim, 16, true);
 		addAnimation("slashright", slashRightAnim, 16, true);
 		addAnimation("hurt", hurtAnim, 16, false);
+		addAnimation("rise", riseAnim, 16, false);
 		addAnimation("dead", deadAnim, 16, true);
 		addAnimation("faceup", faceUpAnim, 16, false);
 		addAnimation("faceleft", faceLeftAnim, 16, false);

@@ -44,7 +44,7 @@ public function new(X:Float=0, Y:Float=0)
 		var playerPos:FlxPoint = new FlxPoint();
 		var clydePos:FlxPoint = new FlxPoint();
 		var dist:Float;
-		var player = cast(FlxG.state, PlayState).player;
+		var player = Registry.player;
 
 		playerPos.x = player.x;
 		playerPos.y = player.y;

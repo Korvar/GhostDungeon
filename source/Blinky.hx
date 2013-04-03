@@ -3,6 +3,7 @@ import org.flixel.FlxPoint;
 import org.flixel.FlxG;
 import org.flixel.FlxU;
 import org.flixel.FlxText;
+import org.flixel.FlxObject;
 
 /**
  * ...
@@ -60,7 +61,7 @@ class Blinky extends Enemy
 		// specifically find a tile target
 		var target:FlxPoint = new FlxPoint();
 		
-		var player = cast(FlxG.state, PlayState).player;
+		var player = Registry.player;
 		
 		switch(mode)
 		{
@@ -91,11 +92,6 @@ class Blinky extends Enemy
 				}
 		}
 		
-		#if debug
-		var tileX = FlxU.floor(x / 32);
-		var tileY = FlxU.floor(y / 32);
-		tempTestText1.text = Std.string(tileX) + " " + Std.string(tileY) + " -> " + Std.string(target.x) + " " + Std.string(target.y);
-		#end
 		
 		return(target);
 	}
@@ -128,12 +124,20 @@ class Blinky extends Enemy
 	override private function incomingEnemy():Void 
 	{
 		// Blinky never goes in the cage
-		mode = cast(FlxG.state, PlayState).mode;
+		mode = Registry.mode;
 	}
 	
-	override public function resetEnemy()
+	override public function doResetEnemy()
 	{
-		super.resetEnemy();
-		mode = cast(FlxG.state, PlayState).mode;
+		target = scatterTarget;
+		x = startPoint.x;
+		y = startPoint.y;
+		velocity.x = 0;
+		velocity.y = 0;
+		moves = false;
+		facing = FlxObject.LEFT;
+		reverse = false;
+		mode = Registry.mode;
+		resetRequest = false;
 	}
 }
