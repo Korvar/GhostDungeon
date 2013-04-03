@@ -49,18 +49,6 @@ class Player extends LayeredSprite
 		
 		health = 3;
 		
-		#if debug
-		FlxG.watch(this, "x");
-		FlxG.watch(this, "trueX");
-		FlxG.watch(this, "tileX");
-		FlxG.watch(this, "borderX");
-		FlxG.watch(this, "y");
-		FlxG.watch(this, "trueY");
-		FlxG.watch(this, "tileY");
-		FlxG.watch(this, "borderY");
-		
-		#end
-	
 		for (layer in layers.members)
 		{
 			var tmpSprite = cast(layer, FlxSprite);
@@ -272,11 +260,12 @@ class Player extends LayeredSprite
 		// Teleporter!
 		if (x > 896)
 		{
-			x = -32;
+			trueX = x = -32;
+			
 		}
 		else if (x < -32)
 		{	
-			x = 896;
+			trueX = x = 896;
 		}
 		
 		super.update();

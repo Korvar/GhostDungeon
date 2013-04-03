@@ -27,7 +27,12 @@ class Enemy extends LayeredSprite
 	static public var INCOMING:Int = 5;
 	static public var DEAD:Int = 6;
 	
-	static var speed = 4;
+	var speed:Float;
+	
+	var borderX:Int;
+	var borderY:Int;
+	var tileX:Int;
+	var tileY:Int;
 	
 	var dotcounter:Int; // Used for various AI purposes
 	var dotLimit:Int;
@@ -118,7 +123,7 @@ class Enemy extends LayeredSprite
 	{
 		if (Registry.deathAnim)
 			return;
-		
+			
 		#if debug
 		if (FlxG.keys.justPressed(modeKey) && !FlxG.keys.SHIFT && !FlxG.keys.CONTROL)
 		{
@@ -141,17 +146,36 @@ class Enemy extends LayeredSprite
 		{
 			mode = RELEASED;
 		}
+		
+		
 		// Nearest tile border
-		var borderX = FlxU.round(x / 32.0) * 32;
-		var borderY = FlxU.round(y / 32.0) * 32;
+		borderX = FlxU.round(x / 32.0) * 32;
+		borderY = FlxU.round(y / 32.0) * 32;
 		
 		// Snap to tile border	
 		snapToTile(borderX, borderY);
 		
 		// Let's have a look at what tile we're in
-		var tileX = FlxU.floor(x / 32);
-		var tileY = FlxU.floor(y / 32);
+		tileX = FlxU.floor(x / 32);
+		tileY = FlxU.floor(y / 32);
 		var tilePos:FlxPoint = new FlxPoint(tileX, tileY);
+		var tileType:Int = DungeonWalls.getTile(tileX, tileY);
+		
+		if (tileType == 30)
+		{
+			speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostTunnelSpeed;
+		}
+		else
+		{
+			if (mode == FRIGHTENED)
+			{
+				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedGhostSpeed;
+			}
+			else
+			{
+				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostSpeed;
+			}
+		}
 
 		
 		if (x == borderX && y == borderY) // i.e. we've just entered a tile
@@ -199,7 +223,6 @@ class Enemy extends LayeredSprite
 			}
 			else
 			{
-				var tileType:Int = DungeonWalls.getTile(tileX, tileY);
 				if (tileType == 28 || tileType == 29)
 				{
 					
@@ -245,6 +268,8 @@ class Enemy extends LayeredSprite
 		x += velocity.x;
 		y += velocity.y;
 		
+		// Snap to tile border	
+		snapToTile(borderX, borderY);
 		
 		// Teleporter!
 		if (x > 896)
@@ -436,13 +461,11 @@ class Enemy extends LayeredSprite
 	private function snapToTile(borderX, borderY):Void 
 	{
 		// Nearest tile border
-		var borderX = FlxU.round(x / 32.0) * 32;
-		var borderY = FlxU.round(x / 32.0) * 32;
-		if (FlxU.abs(x - borderX) < 2)
+		if (FlxU.abs(x - borderX) < speed * 0.9)
 		{
 			x = borderX;
 		}
-		if (FlxU.abs(y - borderY) < 2)
+		if (FlxU.abs(y - borderY) < speed * 0.9)
 		{
 			y = borderY;
 		}
