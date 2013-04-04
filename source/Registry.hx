@@ -1,5 +1,6 @@
 package ;
 import org.flixel.FlxTilemap;
+import org.flixel.FlxTimer;
 
 /**
  * ...
@@ -36,6 +37,8 @@ class Registry
 	static public var message:String;
 	
 	static public var levelInfo:Array<LevelInfo>;
+	
+	static public var frightenedTimer:FlxTimer;
 	
 	public function new() 
 	{

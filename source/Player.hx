@@ -1,5 +1,6 @@
 package ;
 import org.flixel.FlxGroup;
+import org.flixel.FlxPoint;
 import org.flixel.FlxSprite;
 import org.flixel.FlxG;
 import org.flixel.FlxU;
@@ -26,6 +27,8 @@ class Player extends LayeredSprite
 	
 	var trueX:Float;
 	var trueY:Float;
+	
+	var flareSprite:FlxSprite;
 	
 	#if debug
 	var message:String = "";
@@ -55,8 +58,15 @@ class Player extends LayeredSprite
 			tmpSprite.width = size;
 			tmpSprite.height = size;
 			tmpSprite.centerOffsets(false);
-
 		}
+		
+		flareSprite = new FlxSprite();
+		flareSprite.loadGraphic("assets/data/flare.png", true, false, 128, 128);
+		flareSprite.offset = new FlxPoint( 48, 48);
+		flareSprite.x = x;
+		flareSprite.y = y;
+		flareSprite.alpha = 0;
+		FlxG.state.add(flareSprite);
 		
 		cast(layers.members[0], FlxSprite).addAnimationCallback(animationCallback);
 		
@@ -272,7 +282,25 @@ class Player extends LayeredSprite
 			trueX = x = 896;
 		}
 		
+		if (Registry.mode != Enemy.FRIGHTENED)
+		{
+			flareSprite.alpha = 0;
+		}
+		else
+		{
+			flareSprite.alpha = 1;
+			// Flicker 1 second before the frightened timer runs out.
+			if (Registry.frightenedTimer.timeLeft <= 1 && !flareSprite.flickering)
+			{
+				flareSprite.flicker(1);
+			}
+		}
+		
+		flareSprite.x = x;
+		flareSprite.y = y;
+		
 		super.update();
+
 	}
 	
 	private function deStick():Void 

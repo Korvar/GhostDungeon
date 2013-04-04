@@ -68,6 +68,7 @@ class PlayState extends FlxState
 		
 		modeTimer = new FlxTimer();
 		frightenedTimer = new FlxTimer();
+		Registry.frightenedTimer = frightenedTimer;
 		
 		// Load the tilemap
 		DungeonWalls = new FlxTilemap();
@@ -214,8 +215,7 @@ class PlayState extends FlxState
 		"assets/data/Player/torso/chain/mail_male.png",
 		"assets/data/Player/legs/green_pants_male.png",
 		"assets/data/Player/feet/brown_shoes_male.png",
-		"assets/data/Player/body/male/tanned2.png",
-		"assets/data/Player/behind_body/quiver.png"];
+		"assets/data/Player/body/male/tanned2.png"];
 		
 		tempPlayer = new Player(448, 544, null, layers, 64, 64);
 
