@@ -10,6 +10,7 @@ package ;
  import org.flixel.FlxState;
  import org.flixel.FlxTilemap;
  import org.flixel.FlxG;
+ import org.flixel.FlxTimer;
  import org.flixel.FlxU;
  import org.flixel.FlxObject;
  import org.flixel.FlxSprite;
@@ -49,6 +50,8 @@ class Enemy extends LayeredSprite
 	
 	var startPoint:FlxPoint; // in game scale, the origin of the enemy.
 	var startTile:FlxPoint; // in tile scale, the origin of the enemy.  Used when dead to return to start point.
+	
+	var deathTimer:FlxTimer;
 	
 	#if debug
 	var targetSprite:FlxSprite;
@@ -90,6 +93,8 @@ class Enemy extends LayeredSprite
 		cast(layers.members[0], FlxSprite).addAnimationCallback(animationCallback);
 		
 		moves = false; // Don't use the standard moving code
+		
+		deathTimer = new FlxTimer();
 		
 		#if debug
 		targetSprite = new FlxSprite(448, 352);
@@ -560,10 +565,8 @@ class Enemy extends LayeredSprite
 			if (frameNum >= 5) // end of "hurt" animation
 			{
 				// Wait one second
-				// Flicker one second
-				// play "Rise"
-				play("rise");
-				flicker(1);
+				deathTimer.start(1, 1, deathSequence1);
+				
 			}
 		}
 		
@@ -574,6 +577,20 @@ class Enemy extends LayeredSprite
 		
 	}
 	
+	function deathSequence1(Timer:FlxTimer)
+	{
+		// Flicker one second
+		// play "Rise"
+		play("dead");
+		flicker(1);
+		deathTimer.start(1, 1, deathSequence2);
+	}
+	
+	function deathSequence2(Timer:FlxTimer)
+	{
+		play("rise");
+	}
+	
 	private function setSpeed(tileType:Int):Void 
 	{
 		if (tileType == 30)
@@ -582,13 +599,20 @@ class Enemy extends LayeredSprite
 		}
 		else
 		{
-			if (mode == FRIGHTENED)
+			switch (mode)
 			{
-				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedGhostSpeed;
-			}
-			else
-			{
-				speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostSpeed;
+				case FRIGHTENED:
+				{
+					speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].frightenedGhostSpeed;
+				}
+				case DEAD:
+				{
+					speed = Registry.maxSpeed * 1.5;
+				}
+				default:
+				{
+					speed = Registry.maxSpeed * Registry.levelInfo[FlxG.level].ghostSpeed;
+				}
 			}
 		}
 	}
@@ -628,4 +652,6 @@ class Enemy extends LayeredSprite
 			dotcounter += 1;
 		}
 	}
+	
+
 }

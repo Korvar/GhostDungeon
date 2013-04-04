@@ -160,4 +160,11 @@ class LayeredSprite extends FlxSprite
 		addAnimation("faceright", faceRightAnim, 16, false);
 	}
 	
+	override public function flicker(Duration:Float = 1):Void
+	{
+		for (layer in layers.members)
+		{
+			cast(layer, FlxSprite).flicker(Duration);
+		}
+	}
 }
